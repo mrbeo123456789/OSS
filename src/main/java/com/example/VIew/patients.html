@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,10 +19,6 @@
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <!-- simplebar -->
         <link href="assets/css/simplebar.css" rel="stylesheet" type="text/css" />
-        <!-- Select2 -->
-        <link href="assets/css/select2.min.css" rel="stylesheet" />
-        <!-- Date picker -->
-        <link rel="stylesheet" href="assets/css/flatpickr.min.css">
         <!-- Icons -->
         <link href="assets/css/materialdesignicons.min.css" rel="stylesheet" type="text/css" />
         <link href="assets/css/remixicon.css" rel="stylesheet" type="text/css" />
@@ -310,158 +307,306 @@
                 <div class="container-fluid">
                     <div class="layout-specing">
                         <div class="d-md-flex justify-content-between">
-                            <h5 class="mb-0">Add New Patient</h5>
+                            <h5 class="mb-0">Patients List</h5>
 
                             <nav aria-label="breadcrumb" class="d-inline-block mt-4 mt-sm-0">
                                 <ul class="breadcrumb bg-transparent rounded mb-0 p-0">
                                     <li class="breadcrumb-item"><a href="index.html">Doctris</a></li>
-                                    <li class="breadcrumb-item"><a href="patients.html">Patients</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Add Patient</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Patients</li>
                                 </ul>
                             </nav>
                         </div>
                         
                         <div class="row">
-                            <div class="col-lg-8 mt-4">
-                                <div class="card border-0 p-4 rounded shadow">
-                                    <div class="row align-items-center">
-                                        <div class="col-lg-2 col-md-4">
-                                            <img src="assets/images/client/01.jpg" class="avatar avatar-md-md rounded-pill shadow mx-auto d-block" alt="">
-                                        </div><!--end col-->
-            
-                                        <div class="col-lg-5 col-md-8 text-center text-md-start mt-4 mt-sm-0">
-                                            <h5 class="">Upload your picture</h5>
-                                            <p class="text-muted mb-0">For best results, use an image at least 600px by 600px in either .jpg or .png format</p>
-                                        </div><!--end col-->
-            
-                                        <div class="col-lg-5 col-md-12 text-lg-end text-center mt-4 mt-lg-0">
-                                            <a href="#" class="btn btn-primary">Upload</a>
-                                            <a href="#" class="btn btn-soft-primary ms-2">Remove</a>
-                                        </div><!--end col-->
-                                    </div><!--end row-->
-            
-                                    <form class="mt-4">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="mb-3">
-                                                    <label class="form-label">First Name</label>
-                                                    <input name="name" id="name" type="text" class="form-control" placeholder="First Name :">
-                                                </div>
-                                            </div><!--end col-->
-            
-                                            <div class="col-md-6">
-                                                <div class="mb-3">
-                                                    <label class="form-label">Last Name</label>
-                                                    <input name="name" id="name2" type="text" class="form-control" placeholder="Last Name :">
-                                                </div>
-                                            </div><!--end col-->
-            
-                                            <div class="col-md-6">
-                                                <div class="mb-3">
-                                                    <label class="form-label">Your Email</label>
-                                                    <input name="email" id="email" type="email" class="form-control" placeholder="Your email :">
-                                                </div> 
-                                            </div><!--end col-->
-            
-                                            <div class="col-md-6">
-                                                <div class="mb-3">
-                                                    <label class="form-label">Phone no.</label>
-                                                    <input name="number" id="number" type="text" class="form-control" placeholder="Phone no. :">
-                                                </div>                                                                               
-                                            </div><!--end col-->
+                            <div class="col-12 mt-4">
+                                <div class="table-responsive shadow rounded">
+                                    <table class="table table-center bg-white mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th class="border-bottom p-3" style="min-width: 50px;">Id</th>
+                                                <th class="border-bottom p-3" style="min-width: 180px;">Name</th>
+                                                <th class="border-bottom p-3">Age</th>
+                                                <th class="border-bottom p-3">Gender</th>
+                                                <th class="border-bottom p-3">Address</th>
+                                                <th class="border-bottom p-3">Mobile No.</th>
+                                                <th class="border-bottom p-3">Department</th>
+                                                <th class="border-bottom p-3" style="min-width: 150px;">Date</th>
+                                                <th class="border-bottom p-3">Time</th>
+                                                <th class="border-bottom p-3">Status</th>
+                                                <th class="border-bottom p-3" style="min-width: 100px;"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th class="p-3">1</th>
+                                                <td class="py-3">
+                                                    <a href="#" class="text-dark">
+                                                        <div class="d-flex align-items-center">
+                                                            <img src="assets/images/client/01.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
+                                                            <span class="ms-2">Howard Tanner</span>
+                                                        </div>
+                                                    </a>
+                                                </td>
+                                                <td class="p-3">25</td>
+                                                <td class="p-3">Male</td>
+                                                <td class="p-3">1451 - ABC Street, NY</td>
+                                                <td class="p-3">(+452) 8945 4568</td>
+                                                <td class="p-3">Cardiology</td>
+                                                <td class="p-3">20th Dec 2020</td>
+                                                <td class="p-3">11:00AM</td>
+                                                <td class="p-3"><span class="badge bg-soft-success">Approved</span></td>
+                                                <td class="text-end p-3">
+                                                    <a href="#" class="btn btn-icon btn-pills btn-soft-primary" data-bs-toggle="modal" data-bs-target="#viewprofile"><i class="uil uil-eye"></i></a>
+                                                    <a href="#" class="btn btn-icon btn-pills btn-soft-success" data-bs-toggle="modal" data-bs-target="#editprofile"><i class="uil uil-pen"></i></a>
+                                                    <a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i class="uil uil-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <th class="p-3">2</th>
+                                                <td class="py-3">
+                                                    <a href="#" class="text-dark">
+                                                        <div class="d-flex align-items-center">
+                                                            <img src="assets/images/client/02.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
+                                                            <span class="ms-2">Wendy Filson</span>
+                                                        </div>
+                                                    </a>
+                                                </td>
+                                                <td class="p-3">28</td>
+                                                <td class="p-3">Female</td>
+                                                <td class="p-3">1451 - ABC Street, NY</td>
+                                                <td class="p-3">(+452) 8945 4568</td>
+                                                <td class="p-3">Gynecology</td>
+                                                <td class="p-3">20th Dec 2020</td>
+                                                <td class="p-3">11:00AM</td>
+                                                <td class="p-3"><span class="badge bg-soft-warning">Pending</span></td>
+                                                <td class="text-end p-3">
+                                                    <a href="#" class="btn btn-icon btn-pills btn-soft-primary" data-bs-toggle="modal" data-bs-target="#viewprofile"><i class="uil uil-eye"></i></a>
+                                                    <a href="#" class="btn btn-icon btn-pills btn-soft-success" data-bs-toggle="modal" data-bs-target="#editprofile"><i class="uil uil-pen"></i></a>
+                                                    <a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i class="uil uil-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <th class="p-3">3</th>
+                                                <td class="py-3">
+                                                    <a href="#" class="text-dark">
+                                                        <div class="d-flex align-items-center">
+                                                            <img src="assets/images/client/03.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
+                                                            <span class="ms-2">Faye Bridger</span>
+                                                        </div>
+                                                    </a>
+                                                </td>
+                                                <td class="p-3">28</td>
+                                                <td class="p-3">Female</td>
+                                                <td class="p-3">1451 - ABC Street, NY</td>
+                                                <td class="p-3">(+452) 8945 4568</td>
+                                                <td class="p-3">Psychotherapy</td>
+                                                <td class="p-3">20th Dec 2020</td>
+                                                <td class="p-3">11:00AM</td>
+                                                <td class="p-3"><span class="badge bg-soft-success">Approved</span></td>
+                                                <td class="text-end p-3">
+                                                    <a href="#" class="btn btn-icon btn-pills btn-soft-primary" data-bs-toggle="modal" data-bs-target="#viewprofile"><i class="uil uil-eye"></i></a>
+                                                    <a href="#" class="btn btn-icon btn-pills btn-soft-success" data-bs-toggle="modal" data-bs-target="#editprofile"><i class="uil uil-pen"></i></a>
+                                                    <a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i class="uil uil-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <th class="p-3">4</th>
+                                                <td class="py-3">
+                                                    <a href="#" class="text-dark">
+                                                        <div class="d-flex align-items-center">
+                                                            <img src="assets/images/client/04.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
+                                                            <span class="ms-2">Ronald Curtis</span>
+                                                        </div>
+                                                    </a>
+                                                </td>
+                                                <td class="p-3">25</td>
+                                                <td class="p-3">Male</td>
+                                                <td class="p-3">1451 - ABC Street, NY</td>
+                                                <td class="p-3">(+452) 8945 4568</td>
+                                                <td class="p-3">Orthopedic</td>
+                                                <td class="p-3">20th Dec 2020</td>
+                                                <td class="p-3">11:00AM</td>
+                                                <td class="p-3"><span class="badge bg-soft-success">Approved</span></td>
+                                                <td class="text-end p-3">
+                                                    <a href="#" class="btn btn-icon btn-pills btn-soft-primary" data-bs-toggle="modal" data-bs-target="#viewprofile"><i class="uil uil-eye"></i></a>
+                                                    <a href="#" class="btn btn-icon btn-pills btn-soft-success" data-bs-toggle="modal" data-bs-target="#editprofile"><i class="uil uil-pen"></i></a>
+                                                    <a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i class="uil uil-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <th class="p-3">5</th>
+                                                <td class="py-3">
+                                                    <a href="#" class="text-dark">
+                                                        <div class="d-flex align-items-center">
+                                                            <img src="assets/images/client/05.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
+                                                            <span class="ms-2">Melissa Hibner</span>
+                                                        </div>
+                                                    </a>
+                                                </td>
+                                                <td class="p-3">28</td>
+                                                <td class="p-3">Female</td>
+                                                <td class="p-3">1451 - ABC Street, NY</td>
+                                                <td class="p-3">(+452) 8945 4568</td>
+                                                <td class="p-3">Dental</td>
+                                                <td class="p-3">20th Dec 2020</td>
+                                                <td class="p-3">11:00AM</td>
+                                                <td class="p-3"><span class="badge bg-soft-warning">Pending</span></td>
+                                                <td class="text-end p-3">
+                                                    <a href="#" class="btn btn-icon btn-pills btn-soft-primary" data-bs-toggle="modal" data-bs-target="#viewprofile"><i class="uil uil-eye"></i></a>
+                                                    <a href="#" class="btn btn-icon btn-pills btn-soft-success" data-bs-toggle="modal" data-bs-target="#editprofile"><i class="uil uil-pen"></i></a>
+                                                    <a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i class="uil uil-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <th class="p-3">6</th>
+                                                <td class="py-3">
+                                                    <a href="#" class="text-dark">
+                                                        <div class="d-flex align-items-center">
+                                                            <img src="assets/images/client/06.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
+                                                            <span class="ms-2">Randall Case</span>
+                                                        </div>
+                                                    </a>
+                                                </td>
+                                                <td class="p-3">25</td>
+                                                <td class="p-3">Male</td>
+                                                <td class="p-3">1451 - ABC Street, NY</td>
+                                                <td class="p-3">(+452) 8945 4568</td>
+                                                <td class="p-3">Orthopedic</td>
+                                                <td class="p-3">20th Dec 2020</td>
+                                                <td class="p-3">11:00AM</td>
+                                                <td class="p-3"><span class="badge bg-soft-success">Approved</span></td>
+                                                <td class="text-end p-3">
+                                                    <a href="#" class="btn btn-icon btn-pills btn-soft-primary" data-bs-toggle="modal" data-bs-target="#viewprofile"><i class="uil uil-eye"></i></a>
+                                                    <a href="#" class="btn btn-icon btn-pills btn-soft-success" data-bs-toggle="modal" data-bs-target="#editprofile"><i class="uil uil-pen"></i></a>
+                                                    <a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i class="uil uil-trash"></i></a>
+                                                </td>
+                                            </tr>
 
-                                            <div class="col-md-6">
-                                                <div class="mb-3">
-                                                    <label class="form-label"> Date : </label>
-                                                    <input name="date" type="text" class="flatpickr flatpickr-input form-control" id="checkin-date">
-                                                </div>
-                                            </div><!--end col-->
-            
-                                            <div class="col-md-6">
-                                                <div class="mb-3">
-                                                    <label class="form-label">Departments</label>
-                                                    <select class="form-control department-name select2input">
-                                                        <option value="EY">Eye Care</option>
-                                                        <option value="GY">Gynecologist</option>
-                                                        <option value="PS">Psychotherapist</option>
-                                                        <option value="OR">Orthopedic</option>
-                                                        <option value="DE">Dentist</option>
-                                                        <option value="GA">Gastrologist</option>
-                                                        <option value="UR">Urologist</option>
-                                                        <option value="NE">Neurologist</option>
-                                                    </select>
-                                                </div>
-                                            </div><!--end col-->
-                                        </div><!--end row-->
-            
-                                        <button type="submit" class="btn btn-primary">Add Patient</button>
-                                    </form>
-                                </div>
-                            </div><!--end col-->
-
-                            <div class="col-lg-4 mt-4">
-                                <div class="card rounded border-0 shadow">
-                                    <div class="p-4 border-bottom">
-                                        <h5 class="mb-0">Doctors List</h5>
-                                    </div>
-
-                                    <ul class="list-unstyled mb-0 p-4" data-simplebar style="height: 664px;">
-                                        <li class="d-md-flex align-items-center text-center text-md-start">
-                                            <img src="assets/images/doctors/01.jpg" class="avatar avatar-medium rounded-md shadow" alt="">
-
-                                            <div class="ms-md-3 mt-4 mt-sm-0">
-                                                <a href="#" class="text-dark h6">Dr. Calvin Carlo</a>
-                                                <p class="text-muted my-1">Cardiologist</p>
-                                                <p class="text-muted mb-0">3 Years Experienced</p>
-                                            </div>
-                                        </li>
-
-                                        <li class="d-md-flex align-items-center text-center text-md-start mt-4">
-                                            <img src="assets/images/doctors/02.jpg" class="avatar avatar-medium rounded-md shadow" alt="">
-
-                                            <div class="ms-md-3 mt-4 mt-sm-0">
-                                                <a href="#" class="text-dark h6">Dr. Alex Smith</a>
-                                                <p class="text-muted my-1">Dentist</p>
-                                                <p class="text-muted mb-0">1 Years Experienced</p>
-                                            </div>
-                                        </li>
-
-                                        <li class="d-md-flex align-items-center text-center text-md-start mt-4">
-                                            <img src="assets/images/doctors/03.jpg" class="avatar avatar-medium rounded-md shadow" alt="">
-
-                                            <div class="ms-md-3 mt-4 mt-sm-0">
-                                                <a href="#" class="text-dark h6">Dr. Cristina Luly</a>
-                                                <p class="text-muted my-1">Orthopedic</p>
-                                                <p class="text-muted mb-0">5 Years Experienced</p>
-                                            </div>
-                                        </li>
-
-                                        <li class="d-md-flex align-items-center text-center text-md-start mt-4">
-                                            <img src="assets/images/doctors/04.jpg" class="avatar avatar-medium rounded-md shadow" alt="">
-
-                                            <div class="ms-md-3 mt-4 mt-sm-0">
-                                                <a href="#" class="text-dark h6">Dr. Dwayen Maria</a>
-                                                <p class="text-muted my-1">Gastrologist</p>
-                                                <p class="text-muted mb-0">2 Years Experienced</p>
-                                            </div>
-                                        </li>
-
-                                        <li class="d-md-flex align-items-center text-center text-md-start mt-4">
-                                            <img src="assets/images/doctors/05.jpg" class="avatar avatar-medium rounded-md shadow" alt="">
-
-                                            <div class="ms-md-3 mt-4 mt-sm-0">
-                                                <a href="#" class="text-dark h6">Dr. Jenelia Focia</a>
-                                                <p class="text-muted my-1">Psychotherapist</p>
-                                                <p class="text-muted mb-0">3 Years Experienced</p>
-                                            </div>
-                                        </li>
-
-                                        <li class="mt-4">
-                                            <a href="doctors.html" class="btn btn-primary">All Doctors</a>
-                                        </li>
-                                    </ul>
+                                            <tr>
+                                                <th class="p-3">7</th>
+                                                <td class="py-3">
+                                                    <a href="#" class="text-dark">
+                                                        <div class="d-flex align-items-center">
+                                                            <img src="assets/images/client/07.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
+                                                            <span class="ms-2">Jerry Morena</span>
+                                                        </div>
+                                                    </a>
+                                                </td>
+                                                <td class="p-3">25</td>
+                                                <td class="p-3">Male</td>
+                                                <td class="p-3">1451 - ABC Street, NY</td>
+                                                <td class="p-3">(+452) 8945 4568</td>
+                                                <td class="p-3">Dentist</td>
+                                                <td class="p-3">20th Dec 2020</td>
+                                                <td class="p-3">11:00AM</td>
+                                                <td class="p-3"><span class="badge bg-soft-warning">Pending</span></td>
+                                                <td class="text-end p-3">
+                                                    <a href="#" class="btn btn-icon btn-pills btn-soft-primary" data-bs-toggle="modal" data-bs-target="#viewprofile"><i class="uil uil-eye"></i></a>
+                                                    <a href="#" class="btn btn-icon btn-pills btn-soft-success" data-bs-toggle="modal" data-bs-target="#editprofile"><i class="uil uil-pen"></i></a>
+                                                    <a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i class="uil uil-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <th class="p-3">8</th>
+                                                <td class="py-3">
+                                                    <a href="#" class="text-dark">
+                                                        <div class="d-flex align-items-center">
+                                                            <img src="assets/images/client/08.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
+                                                            <span class="ms-2">Lester McNally</span>
+                                                        </div>
+                                                    </a>
+                                                </td>
+                                                <td class="p-3">25</td>
+                                                <td class="p-3">Male</td>
+                                                <td class="p-3">1451 - ABC Street, NY</td>
+                                                <td class="p-3">(+452) 8945 4568</td>
+                                                <td class="p-3">Gastrology</td>
+                                                <td class="p-3">20th Dec 2020</td>
+                                                <td class="p-3">11:00AM</td>
+                                                <td class="p-3"><span class="badge bg-soft-success">Approved</span></td>
+                                                <td class="text-end p-3">
+                                                    <a href="#" class="btn btn-icon btn-pills btn-soft-primary" data-bs-toggle="modal" data-bs-target="#viewprofile"><i class="uil uil-eye"></i></a>
+                                                    <a href="#" class="btn btn-icon btn-pills btn-soft-success" data-bs-toggle="modal" data-bs-target="#editprofile"><i class="uil uil-pen"></i></a>
+                                                    <a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i class="uil uil-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <th class="p-3">9</th>
+                                                <td class="py-3">
+                                                    <a href="#" class="text-dark">
+                                                        <div class="d-flex align-items-center">
+                                                            <img src="assets/images/client/09.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
+                                                            <span class="ms-2">Christopher Burrell</span>
+                                                        </div>
+                                                    </a>
+                                                </td>
+                                                <td class="p-3">28</td>
+                                                <td class="p-3">Female</td>
+                                                <td class="p-3">1451 - ABC Street, NY</td>
+                                                <td class="p-3">(+452) 8945 4568</td>
+                                                <td class="p-3">Urology</td>
+                                                <td class="p-3">20th Dec 2020</td>
+                                                <td class="p-3">11:00AM</td>
+                                                <td class="p-3"><span class="badge bg-soft-success">Approved</span></td>
+                                                <td class="text-end p-3">
+                                                    <a href="#" class="btn btn-icon btn-pills btn-soft-primary" data-bs-toggle="modal" data-bs-target="#viewprofile"><i class="uil uil-eye"></i></a>
+                                                    <a href="#" class="btn btn-icon btn-pills btn-soft-success" data-bs-toggle="modal" data-bs-target="#editprofile"><i class="uil uil-pen"></i></a>
+                                                    <a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i class="uil uil-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <th class="p-3">10</th>
+                                                <td class="py-3">
+                                                    <a href="#" class="text-dark">
+                                                        <div class="d-flex align-items-center">
+                                                            <img src="assets/images/client/10.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
+                                                            <span class="ms-2">Mary Skeens</span>
+                                                        </div>
+                                                    </a>
+                                                </td>
+                                                <td class="p-3">28</td>
+                                                <td class="p-3">Female</td>
+                                                <td class="p-3">1451 - ABC Street, NY</td>
+                                                <td class="p-3">(+452) 8945 4568</td>
+                                                <td class="p-3">Neurology</td>
+                                                <td class="p-3">20th Dec 2020</td>
+                                                <td class="p-3">11:00AM</td>
+                                                <td class="p-3"><span class="badge bg-soft-warning">Pending</span></td>
+                                                <td class="text-end p-3">
+                                                    <a href="#" class="btn btn-icon btn-pills btn-soft-primary" data-bs-toggle="modal" data-bs-target="#viewprofile"><i class="uil uil-eye"></i></a>
+                                                    <a href="#" class="btn btn-icon btn-pills btn-soft-success" data-bs-toggle="modal" data-bs-target="#editprofile"><i class="uil uil-pen"></i></a>
+                                                    <a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i class="uil uil-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
+                        </div><!--end row-->
+
+                        <div class="row text-center">
+                            <!-- PAGINATION START -->
+                            <div class="col-12 mt-4">
+                                <div class="d-md-flex align-items-center text-center justify-content-between">
+                                    <span class="text-muted me-3">Showing 1 - 10 out of 50</span>
+                                    <ul class="pagination justify-content-center mb-0 mt-3 mt-sm-0">
+                                        <li class="page-item"><a class="page-link" href="javascript:void(0)" aria-label="Previous">Prev</a></li>
+                                        <li class="page-item active"><a class="page-link" href="javascript:void(0)">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="javascript:void(0)">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>
+                                        <li class="page-item"><a class="page-link" href="javascript:void(0)" aria-label="Next">Next</a></li>
+                                    </ul>
+                                </div>
+                            </div><!--end col-->
+                            <!-- PAGINATION END -->
                         </div><!--end row-->
                     </div>
                 </div><!--end container-->
@@ -529,12 +674,88 @@
         </div>
         <!-- Offcanvas End -->
 
-        <!-- View Appintment Start -->
-        <div class="modal fade" id="viewappointment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <!-- Modal start -->
+        <!-- Profile Settings Start -->
+        <div class="modal fade" id="editprofile" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header border-bottom p-3">
+                        <h5 class="modal-title" id="exampleModalLabel">Profile Settings</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-3 pt-4">
+                        <div class="row align-items-center">
+                            <div class="col-lg-2 col-md-4">
+                                <img src="assets/images/doctors/01.jpg" class="avatar avatar-md-md rounded-pill shadow mx-auto d-block" alt="">
+                            </div><!--end col-->
+
+                            <div class="col-lg-5 col-md-8 text-center text-md-start mt-4 mt-sm-0">
+                                <h6 class="">Upload your picture</h6>
+                                <p class="text-muted mb-0">For best results, use an image at least 256px by 256px in either .jpg or .png format</p>
+                            </div><!--end col-->
+
+                            <div class="col-lg-5 col-md-12 text-lg-end text-center mt-4 mt-lg-0">
+                                <a href="#" class="btn btn-primary">Upload</a>
+                                <a href="#" class="btn btn-soft-primary ms-2">Remove</a>
+                            </div><!--end col-->
+                        </div><!--end row-->
+                    
+                        <form class="mt-4">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">First Name</label>
+                                        <input name="name" id="name" type="text" class="form-control" placeholder="First Name :">
+                                    </div>
+                                </div><!--end col-->
+
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Last Name</label>
+                                        <input name="name" id="name2" type="text" class="form-control" placeholder="Last Name :">
+                                    </div>
+                                </div><!--end col-->
+
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Your Email</label>
+                                        <input name="email" id="email" type="email" class="form-control" placeholder="Your email :">
+                                    </div> 
+                                </div><!--end col-->
+
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Phone no.</label>
+                                        <input name="number" id="number" type="text" class="form-control" placeholder="Phone no. :">
+                                    </div>                                                                               
+                                </div><!--end col-->
+
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Your Bio Here</label>
+                                        <textarea name="comments" id="comments" rows="4" class="form-control" placeholder="Bio :"></textarea>
+                                    </div>
+                                </div>
+                            </div><!--end row-->
+                            
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <input type="submit" id="submit" name="send" class="btn btn-primary" value="Save changes">
+                                </div><!--end col-->
+                            </div><!--end row-->
+                        </form><!--end form-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Profile Settings End -->
+
+        <!-- Profile Start -->
+        <div class="modal fade" id="viewprofile" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header border-bottom p-3">
-                        <h5 class="modal-title" id="exampleModalLabel">Appointment Detail</h5>
+                        <h5 class="modal-title" id="exampleModalLabel1">Profile</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body p-3 pt-4">
@@ -584,66 +805,13 @@
                 </div>
             </div>
         </div>
-        <!-- View Appintment End -->
-
-        <!-- Accept Appointment Start -->
-        <div class="modal fade" id="acceptappointment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-body py-5">
-                        <div class="text-center">
-                            <div class="icon d-flex align-items-center justify-content-center bg-soft-success rounded-circle mx-auto" style="height: 95px; width:95px;">
-                                <i class="uil uil-check-circle h1 mb-0"></i>
-                            </div>
-                            <div class="mt-4">
-                                <h4>Accept Appointment</h4>
-                                <p class="para-desc mx-auto text-muted mb-0">Great doctor if you need your family member to get immediate assistance, emergency treatment.</p>
-                                <div class="mt-4">
-                                    <a href="#" class="btn btn-soft-success">Accept</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Accept Appointment End -->
-
-        <!-- Cancel Appointment Start -->
-        <div class="modal fade" id="cancelappointment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-body py-5">
-                        <div class="text-center">
-                            <div class="icon d-flex align-items-center justify-content-center bg-soft-danger rounded-circle mx-auto" style="height: 95px; width:95px;">
-                                <i class="uil uil-times-circle h1 mb-0"></i>
-                            </div>
-                            <div class="mt-4">
-                                <h4>Cancel Appointment</h4>
-                                <p class="para-desc mx-auto text-muted mb-0">Great doctor if you need your family member to get immediate assistance, emergency treatment.</p>
-                                <div class="mt-4">
-                                    <a href="#" class="btn btn-soft-danger">Cancel</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Cancel Appointment End -->
+        <!-- Profile End -->
         <!-- Modal end -->
-        
+
         <!-- javascript -->
-        <script src="assets/js/jquery.min.js"></script>
         <script src="assets/js/bootstrap.bundle.min.js"></script>
         <!-- simplebar -->
         <script src="assets/js/simplebar.min.js"></script>
-        <!-- Select2 -->
-        <script src="assets/js/select2.min.js"></script>
-        <script src="assets/js/select2.init.js"></script>
-        <!-- Datepicker -->
-        <script src="assets/js/flatpickr.min.js"></script>
-        <script src="assets/js/flatpickr.init.js"></script>
         <!-- Icons -->
         <script src="assets/js/feather.min.js"></script>
         <!-- Main Js -->
