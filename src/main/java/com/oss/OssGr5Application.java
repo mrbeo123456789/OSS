@@ -1,4 +1,4 @@
-package com.oss.Controller;
+package com.oss;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
