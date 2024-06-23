@@ -1,5 +1,18 @@
 package com.oss.service;
 
+import com.oss.model.User;
+import com.oss.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+@Service
 public class userservice {
-    // code di nhe may thang ngu
+    @Autowired
+    private UserRepository userRepository;
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
 }
