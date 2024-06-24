@@ -24,31 +24,32 @@ public class UserController {
 
     @GetMapping("/login")
     public String showLoginPage() {
-        return "login";
+        return "common/login";
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam String username, @RequestParam String password, Model model) {
-        User user = userService.login(username, password);
+    public String login(@RequestParam String email, @RequestParam String password, Model model) {
+        User user = userService.login(email, password);
         if (user != null) {
             model.addAttribute("user", user);
             switch (user.getRole().getRoleName()) {
                 case "MANAGER":
-                    return "redirect:/manager/dashboard";
+                    return "redirect:/home";
                 case "SALESTAFF":
-                    return "redirect:/salestaff/dashboard";
+                    return "redirect:/home";
                 case "INVENTORYSTAFF":
-                    return "redirect:/inventorystaff/dashboard";
+                    return "redirect:/home";
                 case "CUSTOMER":
-                    return "redirect:/customer/dashboard";
+                    return "redirect:/home";
                 default:
-                    return "redirect:/dashboard";
+                    return "redirect:/home";
             }
         } else {
-            model.addAttribute("error", "Invalid username or password");
-            return "login";
+            model.addAttribute("error", "Invalid email or password");
+            return "redirect:/home";
         }
     }
+
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
@@ -65,5 +66,10 @@ public class UserController {
             model.addAttribute("errorMessage", "There was an error during registration. Please try again.");
         }
         return "common/register";
+    }
+
+    @GetMapping("/home")
+    public String showHomePage(Model model) {
+        return "common/home";
     }
 }
