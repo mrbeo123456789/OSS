@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
 @Getter
@@ -17,8 +18,8 @@ public class Product {
 
     private String productName;
     private String description;
-    private Double price;
-    private Integer stockQuantity;
+    private BigDecimal price;
+    private int stockQuantity;
     private Date createdDate;
     private Date updatedDate;
     private String image;
