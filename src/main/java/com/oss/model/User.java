@@ -53,6 +53,10 @@ public class User {
         this.fullName = fullName;
     }
 
+    public User() {
+
+    }
+
     // Getters and setters
 
     public Long getId() {
