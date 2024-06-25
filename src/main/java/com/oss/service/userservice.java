@@ -18,24 +18,19 @@ public class userservice {
     private BCryptPasswordEncoder passwordEncoder;
 
 
-    public User registerNewUser(UserRegistrationDto userDto) {
-        if (userRepository.findByEmail(userDto.getEmail()) != null) {
+    public User registerNewUser(User user) {
+        if (userRepository.findByEmail(user.getEmail()) != null) {
             throw new RuntimeException("Email đã được đăng ký");
         }
 
-        String hashedPassword = passwordEncoder.encode(userDto.getPassword());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        User savedUser = userRepository.save(user);
 
-        User newUser = new User(
-                userDto.getFullName(),
-                userDto.getUsername(),
-                userDto.getEmail(),
-                userDto.getMobile(),
-                hashedPassword
-        );
+        // Log thông tin người dùng sau khi lưu
+        System.out.println("User registered successfully: " + savedUser);
 
-        return userRepository.save(newUser);
+        return savedUser;
     }
-
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }

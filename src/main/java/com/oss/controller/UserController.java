@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import com.oss.model.User;
 @Controller
 public class UserController {
     @Autowired
@@ -22,15 +22,15 @@ public class UserController {
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
-        model.addAttribute("user", new UserRegistrationDto());
+        model.addAttribute("user", new User());
         return "common/register";
     }
 
     @PostMapping("/register")
-    public String registerUserAccount(@ModelAttribute("user") UserRegistrationDto userDto, Model model) {
+    public String registerUserAccount(@ModelAttribute("user") User user, Model model) {
         try {
-            userService.registerNewUser(userDto);
-            model.addAttribute("successMessage", "Registration successful! A confirmation email has been sent.");
+            userService.registerNewUser(user);
+            model.addAttribute("successMessage", "Registration successful!");
         } catch (Exception e) {
             model.addAttribute("errorMessage", "There was an error during registration. Please try again.");
         }
