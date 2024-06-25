@@ -1,7 +1,5 @@
-
 <!DOCTYPE html>
-<html lang="en">
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8" />
     <title>Product List</title>
@@ -13,23 +11,23 @@
     <meta name="website" content="/index.html" />
     <meta name="Version" content="v1.2.0" />
     <!-- favicon -->
-    <link rel="shortcut icon" href="">
+<!--    <link rel="shortcut icon" th:href="@{}">-->
     <!-- Bootstrap -->
-    <link href="/static/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link th:href="@{/static/assets/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
     <!-- simplebar -->
-    <link href="/static/assets/css/simplebar.css" rel="stylesheet" type="text/css" />
+    <link th:href="@{/static/assets/css/simplebar.css}" rel="stylesheet" type="text/css" />
     <!-- Select2 -->
-    <link href="/static/assets/css/select2.min.css" rel="stylesheet" />
+    <link th:href="@{/static/assets/css/select2.min.css}" rel="stylesheet" />
     <!-- Date picker -->
-    <link rel="stylesheet" href="/assets/css/flatpickr.min.css">
-    <link href="/static/assets/css/jquery.timepicker.min.css" rel="stylesheet" type="text/css" />
+    <link th:href="@{/assets/css/flatpickr.min.css}" rel="stylesheet">
+    <link th:href="@{/static/assets/css/jquery.timepicker.min.css}" rel="stylesheet" type="text/css" />
     <!-- Icons -->
-    <link href="/static/assets/css/materialdesignicons.min.css" rel="stylesheet" type="text/css" />
-    <link href="/static/assets/css/remixicon.css" rel="stylesheet" type="text/css" />
-    <link href="https://unicons.iconscout.com/release/v3.0.6/css/line.css"  rel="stylesheet">
+    <link th:href="@{/static/assets/css/materialdesignicons.min.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/static/assets/css/remixicon.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{https://unicons.iconscout.com/release/v3.0.6/css/line.css}" rel="stylesheet">
     <!-- Css -->
-    <link href="/static/assets/css/style.min.css" rel="stylesheet" type="text/css" id="theme-opt" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link th:href="@{/static/assets/css/style.min.css}" rel="stylesheet" type="text/css" id="theme-opt" />
+    <link th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css}" rel="stylesheet">
     <style>
         .table td, .table th {
             vertical-align: middle;
@@ -66,15 +64,15 @@
     <nav id="sidebar" class="sidebar-wrapper">
         <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
             <div class="sidebar-brand">
-                <a href="../common/login.html">
-                    <img src="#" height="24" class="logo-light-mode" alt="">
-                    <img src="#" height="24" class="logo-dark-mode" alt="">
+                <a th:href="@{/common/login.html}">
+                    <img th:src="@{/static/assets/images/logo-light-mode.png}" height="24" class="logo-light-mode" alt="">
+                    <img th:src="@{/static/assets/images/logo-dark-mode.png}" height="24" class="logo-dark-mode" alt="">
                 </a>
             </div>
 
             <ul class="sidebar-menu pt-3">
-                <li><a href="../common/login.html">Dashboard</a></li>
-                <li><a href="../inventory/productlist.html">Product</a></li>
+                <li><a th:href="@{/common/login.html}">Dashboard</a></li>
+                <li><a th:href="@{/inventory/productlist.html}">Product</a></li>
                 <li class="sidebar-dropdown">
                     <a href="javascript:void(0)">Category</a>
                     <div class="sidebar-submenu">
@@ -96,12 +94,12 @@
         <div class="top-header">
             <div class="header-bar d-flex justify-content-between border-bottom">
                 <div class="d-flex align-items-center">
-                    <a href="#" class="logo-icon">
-                        <img src="/static/assets/images/logo-icon.png" height="30" class="small" alt="">
+<!--                    <a th:href="@{}" class="logo-icon">-->
+                        <img th:src="@{/static/assets/images/logo-icon.png}" height="30" class="small" alt="">
                         <span class="big">
-                                    <img src="/static/assets/images/logo-dark.png" height="24" class="logo-light-mode" alt="">
-                                    <img src="/static/assets/images/logo-light.png" height="24" class="logo-dark-mode" alt="">
-                                </span>
+                            <img th:src="@{/static/assets/images/logo-dark.png}" height="24" class="logo-light-mode" alt="">
+                            <img th:src="@{/static/assets/images/logo-light.png}" height="24" class="logo-dark-mode" alt="">
+                        </span>
                     </a>
                     <a id="close-sidebar" class="btn btn-icon btn-pills btn-soft-primary ms-2" href="#">
                         <i class="uil uil-bars"></i>
@@ -110,7 +108,7 @@
                         <div id="search" class="menu-search mb-0">
                             <form role="search" method="get" id="searchform" class="searchform">
                                 <div>
-                                    <input type="text" class="form-control border rounded-pill" name="s" id="s" placeholder="Search Keywords/static.">
+                                    <input type="text" class="form-control border rounded-pill" name="s" id="s" placeholder="Search Keywords">
                                     <input type="submit" id="searchsubmit" value="Search">
                                 </div>
                             </form>
@@ -127,8 +125,8 @@
                             <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow rounded border-0 mt-3 px-2 py-2" data-simplebar style="height: 320px; width: 300px;">
                                 <a href="#" class="d-flex align-items-center justify-content-between py-2 border-top">
                                     <div class="d-inline-flex position-relative overflow-hidden">
-                                        <img src="/static/assets/images/client/dribbble.svg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                        <small class="text-dark mb-0 d-block text-truncat ms-3">You received a new email from <b>Dribbble</b> <small class="text-muted fw-normal d-inline-block">24 hour ago</small></small>
+                                        <img th:src="@{/static/assets/images/client/dribbble.svg}" class="avatar avatar-md-sm rounded-circle shadow" alt="">
+                                        <small class="text-dark mb-0 d-block text-truncate ms-3">You received a new email from <b>Dribbble</b> <small class="text-muted fw-normal d-inline-block">24 hour ago</small></small>
                                     </div>
                                 </a>
                             </div>
@@ -137,19 +135,19 @@
 
                     <li class="list-inline-item mb-0 ms-1">
                         <div class="dropdown dropdown-primary">
-                            <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="#" class="avatar avatar-ex-small rounded-circle" alt=""></button>
+<!--                            <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img th:src="@{}" class="avatar avatar-ex-small rounded-circle" alt=""></button>-->
                             <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow border-0 mt-3 py-3" style="min-width: 200px;">
-                                <a class="dropdown-item d-flex align-items-center text-dark" href="../common/userprofile.html">
-                                    <img src="#" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
+                                <a class="dropdown-item d-flex align-items-center text-dark" th:href="@{/common/userprofile.html}">
+<!--                                    <img th:src="@{}" class="avatar avatar-md-sm rounded-circle border shadow" alt="">-->
                                     <div class="flex-1 ms-2">
                                         <span class="d-block mb-1">Name</span>
                                         <small class="text-muted">Role</small>
                                     </div>
                                 </a>
-                                <a class="dropdown-item text-dark" href="../common/login.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-dashboard align-middle h6"></i></span> Dashboard</a>
-                                <a class="dropdown-item text-dark" href="../common/userprofile.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
+                                <a class="dropdown-item text-dark" th:href="@{/common/login.html}"><span class="mb-0 d-inline-block me-1"><i class="uil uil-dashboard align-middle h6"></i></span> Dashboard</a>
+                                <a class="dropdown-item text-dark" th:href="@{/common/userprofile.html}"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
                                 <div class="dropdown-divider border-top"></div>
-                                <a class="dropdown-item text-dark" href="#"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
+<!--                                <a class="dropdown-item text-dark" th:href="@{}"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>-->
                             </div>
                         </div>
                     </li>
@@ -160,173 +158,64 @@
         <div class="container-fluid">
             <div class="layout-specing">
                 <div class="row">
-                    <div class="col-xl-9 col-md-6">
-                        <h5 class="mb-0">Product List</h5>
-                    </div><!--end col-->
-
-                    <div class="col-xl-3 col-md-6 mt-4 mt-md-0 text-md-end">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newProductModal">
-                            New Product
-                        </button>
-                        <!-- Modal -->
-                        <div class="modal fade" id="newProductModal" tabindex="-1" aria-labelledby="newProductModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="newProductModalLabel">New Product</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form th:action="@{/addProduct}"th:object="${product}"method="post" >
-                                            <div class="form-group">
-                                                <label for="productImage">Image</label>
-                                                <input type="file"th:field="*{image}" class="form-control" id="productImage" accept="image/*">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="productName">Name</label>
-                                                <input type="text"th:field="*{productName}" class="form-control" id="productName" placeholder="Product name">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="productCategory">Category</label>
-                                                <select class="form-control" id="productCategory">
-                                                    <option>Product category</option>
-                                                    <!-- Add other categories as options here -->
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="productAmount">Amount</label>
-                                                <input type="number"th:field="*{stockQuantity}" class="form-control" id="productAmount" placeholder="Enter amount">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="productDescription">Description</label>
-                                                <textarea th:field="*{description}" class="form-control" id="productDescription" rows="3" placeholder="Product description"></textarea>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="productOriginalPrice">Price</label>
-                                                <input type="number"th:field="*{price}" class="form-control" id="productOriginalPrice" placeholder="Original price" step="0.01">
-                                            </div>
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary">Save changes</button>
-                                        </form>
-                                    </div>
-
-                                </div>
-                            </div>
+                    <div class="col-lg-12">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="mb-0">Product List</h5>
+                            <a th:href="@{/inventory/addnewproduct.html}" class="btn btn-primary">Add New Product</a>
                         </div>
-                    </div><!--end col-->
-                </div><!--end row-->
 
-                <div class="row row-cols-md-2 row-cols-lg-5">
-                    <table class="table table-bordered">
-                        <thead>
-                        <tr>
-                            <th>No.</th>
-                            <th>Product name</th>
-                            <th>Category</th>
-                            <th>Price</th>
-                            <th>Stock</th>
-                            <th>Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="product : ${productlist}">
-                            <td th:text="${product.productId}"></td>
-                            <td th:text="${product.productName}"></td>
-                            <td th:text="${product.category.categoryName}"></td>
-                            <td th:text="${product.price}"></td>
-                            <td th:text="${product.stockQuantity}"></td>
-                            <td>
-                                <button class="action-button edit-button">
-                                    <a th:href="@{/productdetail/{id}(id=${product.productId})}"><i class="fas fa-edit"></i></a>
-                                </button>
-                                <button class="action-button delete-button"><i class="fas fa-trash-alt"></i></button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                        <div class="table-responsive shadow rounded">
+                            <table class="table table-center bg-white mb-0">
+                                <thead>
+                                <tr>
+                                    <th class="border-bottom p-3" style="min-width: 50px;">#</th>
+                                    <th class="border-bottom p-3" style="min-width: 180px;">Product Name</th>
+                                    <th class="border-bottom p-3" style="min-width: 150px;">Category</th>
+                                    <th class="border-bottom p-3" style="min-width: 150px;">Price</th>
+                                    <th class="border-bottom p-3">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="product, iterStat : ${productList}">
+                                    <th class="p-3" th:text="${iterStat.count}"></th>
+                                    <td class="p-3">
+                                        <a th:href="@{/inventory/productdetails/{id}(id=${product.id})}" class="text-primary">
+                                            <div class="d-flex align-items-center">
+                                                <img th:src="${product.image}" class="avatar avatar-ex-small rounded shadow" alt="">
+                                                <span class="ms-2" th:text="${product.name}"></span>
+                                            </div>
+                                        </a>
+                                    </td>
+                                    <td class="p-3" th:text="${product.category.name}"></td>
+                                    <td class="p-3" th:text="${product.price}"></td>
+                                    <td class="p-3">
+                                        <a th:href="@{/inventory/editproduct/{id}(id=${product.id})}" class="btn btn-icon btn-pills btn-soft-primary"><i class="fas fa-edit"></i></a>
+                                        <form th:action="@{/inventory/deleteproduct/{id}(id=${product.id})}" method="post" style="display: inline;">
+                                            <button type="submit" class="btn btn-icon btn-pills btn-soft-danger"><i class="fas fa-trash-alt"></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div><!--end row-->
             </div>
         </div><!--end container-->
+    </main><!--end page-content-->
+    <!-- End Page Content -->
+</div><!--end page-wrapper-->
 
-        <!-- Footer Start -->
-        <footer class="bg-white shadow py-3">
-            <div class="container-fluid">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <div class="text-sm-start text-center">
-                            <p class="mb-0 text-muted"><script>document.write(new Date().getFullYear())</script> © Online shop. Design with <i class="mdi mdi-heart text-danger"></i> by <a href="#" target="_blank" class="text-reset">Shreethemes</a>.</p>
-                        </div>
-                    </div><!--end col-->
-                </div><!--end row-->
-            </div><!--end container-->
-        </footer><!--end footer-->
-        <!-- End -->
-    </main>
-    <!--End page-content" -->
-</div>
-<!-- page-wrapper -->
-
-<!-- Offcanvas Start -->
-<div class="offcanvas offcanvas-end bg-white shadow" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-    <div class="offcanvas-header p-4 border-bottom">
-        <h5 id="offcanvasRightLabel" class="mb-0">
-            <img src="/static/assets/images/logo-dark.png" height="24" class="light-version" alt="">
-            <img src="/static/assets/images/logo-light.png" height="24" class="dark-version" alt="">
-        </h5>
-        <button type="button" class="btn-close d-flex align-items-center text-dark" data-bs-dismiss="offcanvas" aria-label="Close"><i class="uil uil-times fs-4"></i></button>
-    </div>
-    <div class="offcanvas-body p-4 px-md-5">
-        <div class="row">
-            <div class="col-12">
-                <!-- Style switcher -->
-                <div id="style-switcher">
-                    <div>
-                        <ul class="text-center list-unstyled mb-0">
-                            <li class="d-grid"><a href="javascript:void(0)" class="rtl-version t-rtl-light" onclick="setTheme('style-rtl')"><img src="/static/assets/images/layouts/light-dash-rtl.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">RTL Version</span></a></li>
-                            <li class="d-grid"><a href="javascript:void(0)" class="ltr-version t-ltr-light" onclick="setTheme('style')"><img src="/static/assets/images/layouts/light-dash.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">LTR Version</span></a></li>
-                            <li class="d-grid"><a href="javascript:void(0)" class="dark-rtl-version t-rtl-dark" onclick="setTheme('style-dark-rtl')"><img src="/static/assets/images/layouts/dark-dash-rtl.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">RTL Version</span></a></li>
-                            <li class="d-grid"><a href="javascript:void(0)" class="dark-ltr-version t-ltr-dark" onclick="setTheme('style-dark')"><img src="/static/assets/images/layouts/dark-dash.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">LTR Version</span></a></li>
-                            <li class="d-grid"><a href="javascript:void(0)" class="dark-version t-dark mt-4" onclick="setTheme('style-dark')"><img src="/static/assets/images/layouts/dark-dash.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Dark Version</span></a></li>
-                            <li class="d-grid"><a href="javascript:void(0)" class="light-version t-light mt-4" onclick="setTheme('style')"><img src="/static/assets/images/layouts/light-dash.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Light Version</span></a></li>
-                            <li class="d-grid"><a href="/static/landing/index.html" target="_blank" class="mt-4"><img src="/static/assets/images/layouts/landing-light.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Landing Demos</span></a></li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- end Style switcher -->
-            </div><!--end col-->
-        </div><!--end row-->
-    </div>
-
-    <div class="offcanvas-footer p-4 border-top text-center">
-        <ul class="list-unstyled social-icon mb-0">
-            <li class="list-inline-item mb-0"><a href="https://1.envato.market/doctris-template" target="_blank" class="rounded"><i class="uil uil-shopping-cart align-middle" title="Buy Now"></i></a></li>
-            <li class="list-inline-item mb-0"><a href="https://dribbble.com/shreethemes" target="_blank" class="rounded"><i class="uil uil-dribbble align-middle" title="dribbble"></i></a></li>
-            <li class="list-inline-item mb-0"><a href="https://www.facebook.com/shreethemes" target="_blank" class="rounded"><i class="uil uil-facebook-f align-middle" title="facebook"></i></a></li>
-            <li class="list-inline-item mb-0"><a href="https://www.instagram.com/shreethemes/" target="_blank" class="rounded"><i class="uil uil-instagram align-middle" title="instagram"></i></a></li>
-            <li class="list-inline-item mb-0"><a href="https://twitter.com/shreethemes" target="_blank" class="rounded"><i class="uil uil-twitter align-middle" title="twitter"></i></a></li>
-            <li class="list-inline-item mb-0"><a href="mailto:support@shreethemes.in" class="rounded"><i class="uil uil-envelope align-middle" title="email"></i></a></li>
-            <li class="list-inline-item mb-0"><a href="/../../../index.html" target="_blank" class="rounded"><i class="uil uil-globe align-middle" title="website"></i></a></li>
-        </ul><!--end icon-->
-    </div>
-</div>
-<!-- Offcanvas End -->
-
-<!-- javascript -->
-<script src="/static/assets/js/bootstrap.bundle.min.js"></script>
-<!-- simplebar -->
-<script src="/static/assets/js/simplebar.min.js"></script>
-<!-- Icons -->
-<script src="/static/assets/js/feather.min.js"></script>
-<!-- Main Js -->
-<script src="/static/assets/js/app.js"></script>
-
-<!-- Bootstrap JS and dependencies -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+<!-- Javascript -->
+<script th:src="@{/static/assets/js/jquery.min.js}"></script>
+<script th:src="@{/static/assets/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/static/assets/js/simplebar.min.js}"></script>
+<script th:src="@{/static/assets/js/select2.min.js}"></script>
+<script th:src="@{/static/assets/js/flatpickr.min.js}"></script>
+<script th:src="@{/static/assets/js/jquery.timepicker.js}"></script>
+<script th:src="@{/static/assets/js/feather.min.js}"></script>
+<script th:src="@{/static/assets/js/switcher.js}"></script>
+<script th:src="@{/static/assets/js/app.js}"></script>
+<script th:src="@{/static/assets/js/switcher.js}"></script>
 </body>
-
 </html>

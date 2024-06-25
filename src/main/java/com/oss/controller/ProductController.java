@@ -23,18 +23,5 @@ public class ProductController {
         return "inventory/productlist";
     }
 
-//    @GetMapping("/products")
-//    public String addProduct(Model model) {
-//        model.addAttribute("product", new Product());
-//        return "inventory/productlist";
-//    }
-
-
-//    @PostMapping("/products")
-//    public String addProduct(@ModelAttribute Product product) {
-//        return Optional.ofNullable(productservice.addProduct(product))
-//                .map(t -> "success")
-//                .orElse("failed");
-//         }
 
 }
