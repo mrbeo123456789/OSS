@@ -1,10 +1,221 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8" />
+    <title>Doctris - Doctor Appointment Booking System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Premium Bootstrap 4 Landing Page Template" />
+    <meta name="keywords" content="Appointment, Booking, System, Dashboard, Health" />
+    <meta name="author" content="Shreethemes" />
+    <meta name="email" content="support@shreethemes.in" />
+    <meta name="website" content="../../../index.html" />
+    <meta name="Version" content="v1.2.0" />
+    <!-- favicon -->
+    <link rel="shortcut icon" th:href="@{/assets/images/favicon.ico.png}">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+    <!-- simplebar -->
+    <link rel="stylesheet" th:href="@{/assets/css/simplebar.css}">
+    <!-- Icons -->
+    <link rel="stylesheet" th:href="@{/assets/css/materialdesignicons.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/remixicon.css}">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v3.0.6/css/line.css">
+    <!-- Css -->
+    <link rel="stylesheet" th:href="@{/assets/css/style.min.css}" id="theme-opt">
 </head>
 <body>
+<!-- Loader -->
+<div id="preloader">
+    <div id="status">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+</div>
+<!-- Loader -->
+
+<div class="page-wrapper doctris-theme toggled">
+    <nav id="sidebar" class="sidebar-wrapper">
+        <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
+
+            <ul class="sidebar-menu pt-3">
+                <li><a href="index.html"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a></li>
+
+                <li class="sidebar-dropdown">
+                    <a href="javascript:void(0)"><i class="uil uil-user me-2 d-inline-block"></i>Mangage</a>
+                    <div class="sidebar-submenu">
+                        <ul>
+
+                            <li><a href="/user/list">Accounts</a></li>
+                            <li><a href="/user/add">Add new accounts</a></li>
+                        </ul>
+                    </div>
+                </li>
+
+
+
+            </ul>
+            <!-- sidebar-menu  -->
+        </div>
+        <!-- sidebar-content  -->
+        <ul class="sidebar-footer list-unstyled mb-0">
+            <li class="list-inline-item mb-0 ms-1">
+                <a href="#" class="btn btn-icon btn-pills btn-soft-primary">
+                    <i class="uil uil-comment icons"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <!-- sidebar-wrapper  -->
+
+    <!-- Start Page Content -->
+    <main class="page-content bg-light">
+        <div class="top-header">
+            <div class="header-bar d-flex justify-content-between border-bottom">
+                <div class="d-flex align-items-center">
+                    <a href="#" class="logo-icon">
+                        <img src="/static/assets/images/logo-icon.png" height="30" class="small" alt="">
+                        <span class="big">
+                                    <img src="/static/assets/images/logo-dark.png" height="24" class="logo-light-mode" alt="">
+                                    <img src="/static/assets/images/logo-light.png" height="24" class="logo-dark-mode" alt="">
+                                </span>
+                    </a>
+                    <a id="close-sidebar" class="btn btn-icon btn-pills btn-soft-primary ms-2" href="#">
+                        <i class="uil uil-bars"></i>
+                    </a>
+                    <div class="search-bar p-0 d-none d-lg-block ms-2">
+                        <div id="search" class="menu-search mb-0">
+                            <form role="search" method="get" id="searchform" class="searchform">
+                                <div>
+                                    <input type="text" class="form-control border rounded-pill" name="s" id="s" placeholder="Search Keywords...">
+                                    <input type="submit" id="searchsubmit" value="Search">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <ul class="list-unstyled mb-0">
+
+
+
+                    <li class="list-inline-item mb-0 ms-1">
+                        <div class="dropdown dropdown-primary">
+                            <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="/static/assets/images/doctors/01.jpg" class="avatar avatar-ex-small rounded-circle" alt=""></button>
+                            <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow border-0 mt-3 py-3" style="min-width: 200px;">
+                                <a class="dropdown-item d-flex align-items-center text-dark" href="https://shreethemes.in/doctris/layouts/admin/profile.html">
+                                    <img src="/static/assets/images/doctors/01.jpg" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
+                                    <div class="flex-1 ms-2">
+                                        <span class="d-block mb-1">Calvin Carlo</span>
+                                        <small class="text-muted">Orthopedic</small>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item text-dark" href="index.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-dashboard align-middle h6"></i></span> Dashboard</a>
+                                <a class="dropdown-item text-dark" href="dr-profile.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
+                                <div class="dropdown-divider border-top"></div>
+                                <a class="dropdown-item text-dark" href="lock-screen.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="layout-specing">
+                <div class="d-md-flex justify-content-between">
+                    <h5 class="mb-0">Add New Account</h5>
+
+                    <nav aria-label="breadcrumb" class="d-inline-block mt-4 mt-sm-0">
+                        <ul class="breadcrumb bg-transparent rounded mb-0 p-0">
+                            <li class="breadcrumb-item"><a href="index.html">Doctris</a></li>
+                            <li class="breadcrumb-item"><a href="patients.html">Patients</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Add Patient</li>
+                        </ul>
+                    </nav>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12 mt-4">
+                        <div class="card border-0 p-4 rounded shadow">
+                            <div class="row align-items-center">
+                                <div class="col-lg-2 col-md-4">
+                                    <img src="../../static/assets/images/client/01.jpg" class="avatar avatar-md-md rounded-pill shadow mx-auto d-block" alt="">
+                                </div><!--end col-->
+
+                                <div class="col-lg-5 col-md-8 text-center text-md-start mt-4 mt-sm-0">
+                                    <h5 class="">Upload your picture</h5>
+                                    <p class="text-muted mb-0">For best results, use an image at least 600px by 600px in either .jpg or .png format</p>
+                                </div><!--end col-->
+
+                                <div class="col-lg-5 col-md-12 text-lg-end text-center mt-4 mt-lg-0">
+                                    <a href="#" class="btn btn-primary">Upload</a>
+                                    <a href="#" class="btn btn-soft-primary ms-2">Remove</a>
+                                </div><!--end col-->
+                            </div><!--end row-->
+
+                            <form class="mt-4" action="/user/add" method="post">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">First Name</label>
+                                            <input name="username" id="name" type="text" class="form-control" placeholder="User Name :">
+                                        </div>
+                                    </div><!--end col-->
+
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Full Name</label>
+                                            <input name="fullname" id="name2" type="text" class="form-control" placeholder="Full Name :">
+                                        </div>
+                                    </div><!--end col-->
+
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Your Email</label>
+                                            <input name="email" id="email" type="email" class="form-control" placeholder="Your email :">
+                                        </div>
+                                    </div><!--end col-->
+
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Phone no.</label>
+                                            <input name="number" id="number" type="text" class="form-control" placeholder="Phone no. :">
+                                        </div>
+                                    </div><!--end col-->
+
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Departments</label>
+                                            <select name="department" class="form-control department-name select2input">
+                                                <option th:each="role : ${roles}" th:value="${role.roleId}" th:text="${role.roleName}"></option>
+                                            </select>
+                                        </div>
+                                    </div><!--end col-->
+
+                                </div><!--end row-->
+
+                                <button type="submit" class="btn btn-primary">Add Account</button>
+                            </form>
+
+                        </div>
+                    </div><!--end col-->
+
+
+                </div>
+            </div><!--end container-->
+                </div>
+                <!-- Modal end -->
+
+                <!-- javascript -->
+
+
+                <script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
+                <script th:src="@{/assets/js/simplebar.min.js}"></script>
+                <script th:src="@{/assets/js/feather.min.js}"></script>
+                <script th:src="@{/assets/js/app.js}"></script>
 
 </body>
+
 </html>

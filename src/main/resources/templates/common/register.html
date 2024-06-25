@@ -50,37 +50,37 @@
                 <div class="card login-page bg-white shadow mt-4 rounded border-0">
                     <div class="card-body">
                         <h4 class="text-center">Sign Up</h4>
-                        <form action="#" class="login-form mt-4">
+                        <form th:action="@{/register}" th:object="${user}" method="post" class="login-form mt-4">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="mb-3">
-                                        <label class="form-label">First name <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" placeholder="First Name" name="s" required="">
+                                        <label class="form-label">Full Name <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" th:field="*{fullName}" placeholder="Full Name" required>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="mb-3">
-                                        <label class="form-label">Last name <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" placeholder="Last Name" name="s" required="">
+                                        <label class="form-label">Username <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" th:field="*{username}" placeholder="Username" required>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <label class="form-label">Your Email <span class="text-danger">*</span></label>
-                                        <input type="email" class="form-control" placeholder="Email" name="email" required="">
+                                        <input type="email" class="form-control" th:field="*{email}" placeholder="Email" required>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <label class="form-label">Your Number <span class="text-danger">*</span></label>
-                                        <input type="tel" class="form-control" placeholder="Phone number" name="phone" required="">
+                                        <input type="tel" class="form-control" th:field="*{mobile}" placeholder="Phone number" required>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <label class="form-label">Password <span class="text-danger">*</span></label>
-                                        <input type="password" class="form-control" placeholder="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}"
-                                                required="" title="Must contain at least one number, one uppercase and lowercase letter, one special character, and at least 8 or more characters">
+                                        <input type="password" class="form-control" th:field="*{password}" placeholder="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}"
+                                               required title="Must contain at least one number, one uppercase and lowercase letter, one special character, and at least 8 or more characters">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -93,7 +93,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="d-grid">
-                                        <button class="btn btn-primary">Register</button>
+                                        <button class="btn btn-primary" type="submit">Register</button>
                                     </div>
                                 </div>
 
@@ -132,7 +132,6 @@
 <script src="../../static/assets/js/feather.min.js"></script>
 <!-- Main Js -->
 <script src="../../static/assets/js/app.js"></script>
-
 
 </body>
 
