@@ -13,115 +13,190 @@
     <meta name="Version" content="v1.2.0" />
     <!-- favicon -->
     <link rel="shortcut icon" href="#">
-    <!-- Bootstrap -->
-    <link href="../../static/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <!-- Icons -->
-    <link href="../../static/assets/css/materialdesignicons.min.css" rel="stylesheet" type="text/css" />
-    <link href="../../static/assets/css/remixicon.css" rel="stylesheet" type="text/css" />
-    <link href="https://unicons.iconscout.com/release/v3.0.6/css/line.css"  rel="stylesheet">
-    <!-- Css -->
-    <link href="../../static/assets/css/style.min.css" rel="stylesheet" type="text/css" id="theme-opt" />
+    <link href="https://unicons.iconscout.com/release/v3.0.6/css/line.css" rel="stylesheet">
+    <style>
+        /* Thêm các quy tắc CSS tùy chỉnh ở đây */
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
 
+        .login-page {
+            background: #ffffff;
+            border: 1px solid #d3d3d3;
+            padding: 30px;
+            border-radius: 8px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-form .form-control {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 20px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            background: #f9f9f9;
+        }
+
+        .btn-primary {
+            background-color: #6c757d;
+            border: none;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background-color: #5a6268;
+        }
+
+        .btn-soft-primary {
+            background-color: #d6d8db;
+            border: none;
+            color: #495057;
+            padding: 14px 20px;
+            margin: 8px 0;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .btn-soft-primary:hover {
+            background-color: #c2c4c7;
+            color: #343a40;
+        }
+
+        .text-dark {
+            color: #343a40 !important;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .login-header h4 {
+            margin-bottom: 10px;
+        }
+
+        .social-login-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .social-login-buttons .btn {
+            flex: 1;
+        }
+
+        .social-login-buttons .btn + .btn {
+            margin-left: 10px;
+        }
+
+        .form-check-label {
+            margin-left: 5px;
+        }
+
+        .form-check-input {
+            margin-top: 0;
+            margin-right: 5px;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+            background-color: transparent;
+        }
+
+        a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+
+        .d-grid {
+            display: grid;
+        }
+
+        .mb-3 {
+            margin-bottom: 1rem;
+        }
+
+        .mt-4 {
+            margin-top: 1.5rem;
+        }
+
+        .text-muted {
+            color: #6c757d !important;
+        }
+
+        .fw-bold {
+            font-weight: bold;
+        }
+
+        .h6 {
+            font-size: 1rem;
+            font-weight: 500;
+        }
+    </style>
 </head>
 
 <body>
-<!-- Loader -->
-<div id="preloader">
-    <div id="status">
-        <div class="spinner">
-            <div class="double-bounce1"></div>
-            <div class="double-bounce2"></div>
-        </div>
+<div class="login-page">
+    <div class="login-header">
+        <h4>Sign In</h4>
+        <p>Please enter your login details</p>
     </div>
+    <form action="/login" method="post" class="login-form mt-4">
+        <div class="mb-3">
+            <label class="form-label">Your Email <span class="text-danger">*</span></label>
+            <input type="email" class="form-control" placeholder="Email" name="email" required="">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Password <span class="text-danger">*</span></label>
+            <input type="password" class="form-control" placeholder="Password" name="password" required="">
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="form-check">
+                <input class="form-check-input align-middle" type="checkbox" value="" id="remember-check">
+                <label class="form-check-label" for="remember-check">Remember me</label>
+            </div>
+            <a href="forgot-password.html" class="text-dark h6 mb-0">Forgot password?</a>
+        </div>
+
+        <div class="d-grid mb-3">
+            <button type="submit" class="btn btn-primary">Sign in</button>
+        </div>
+
+        <div class="text-center mb-3">
+            <h6 class="text-muted">Or</h6>
+        </div>
+
+        <div class="social-login-buttons mb-3">
+            <a href="#" class="btn btn-soft-primary"><i class="uil uil-facebook"></i> Facebook</a>
+            <a href="#" class="btn btn-soft-primary"><i class="uil uil-google"></i> Google</a>
+        </div>
+
+        <div class="text-center">
+            <p class="mb-0"><small class="text-dark">Don't have an account?</small> <a href="register.html" class="text-dark fw-bold">Sign Up</a></p>
+        </div>
+
+        <div class="text-center mt-3">
+            <p id="error" class="text-danger"></p>
+        </div>
+    </form>
 </div>
-<!-- Loader -->
-
-<div class="back-to-home rounded d-none d-sm-block">
-    <a href="home.html" class="btn btn-icon btn-primary"><i data-feather="home" class="icons"></i></a>
-</div>
-
-<!-- Hero Start -->
-<section class="bg-home d-flex bg-light align-items-center" style="background: url('../../static/assets/images/bg/bg-lines-one.png') center;">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-5 col-md-8">
-                <img src="#" height="24" class="mx-auto d-block" alt="">
-                <div class="card login-page bg-white shadow mt-4 rounded border-0">
-                    <div class="card-body">
-                        <h4 class="text-center">Sign In</h4>
-                        <form th:action="@{/login}" method="post" class="login-form mt-4">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="mb-3">
-                                        <label class="form-label">Your Email <span class="text-danger">*</span></label>
-                                        <input type="email" class="form-control" placeholder="Email" name="email" required="">
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="mb-3">
-                                        <label class="form-label">Password <span class="text-danger">*</span></label>
-                                        <input type="password" class="form-control" placeholder="Password" name="password" required="">
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="d-flex justify-content-between">
-                                        <div class="mb-3">
-                                            <div class="form-check">
-                                                <input class="form-check-input align-middle" type="checkbox" value="" id="remember-check">
-                                                <label class="form-check-label" for="remember-check">Remember me</label>
-                                            </div>
-                                        </div>
-                                        <a href="forgot-password.html" class="text-dark h6 mb-0">Forgot password ?</a>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 mb-0">
-                                    <div class="d-grid">
-                                        <button type="submit" class="btn btn-primary">Sign in</button>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12 mt-3 text-center">
-                                    <h6 class="text-muted">Or</h6>
-                                </div><!--end col-->
-
-                                <div class="col-6 mt-3">
-                                    <div class="d-grid">
-                                        <a href="#" class="btn btn-soft-primary"><i class="uil uil-facebook"></i> Facebook</a>
-                                    </div>
-                                </div><!--end col-->
-
-                                <div class="col-6 mt-3">
-                                    <div class="d-grid">
-                                        <a href="#" class="btn btn-soft-primary"><i class="uil uil-google"></i> Google</a>
-                                    </div>
-                                </div><!--end col-->
-
-                                <div class="col-12 text-center">
-                                    <p class="mb-0 mt-3"><small class="text-dark me-2">Don't have an account ?</small> <a href="register.html" class="text-dark fw-bold">Sign Up</a></p>
-                                </div>
-
-                                <div class="col-12 text-center mt-3">
-                                    <p th:if="${error}" th:text="${error}" class="text-danger"></p>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div><!---->
-            </div> <!--end col-->
-        </div><!--end row-->
-    </div> <!--end container-->
-</section><!--end section-->
-<!-- Hero End -->
-
-<!-- javascript -->
-<script src="../../static/assets/js/bootstrap.bundle.min.js"></script>
-<!-- Icons -->
-<script src="../../static/assets/js/feather.min.js"></script>
-<!-- Main Js -->
-<script src="../../static/assets/js/app.js"></script>
-
 </body>
 
 </html>
