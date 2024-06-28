@@ -46,7 +46,7 @@ public class UserController {
             }
         } else {
             model.addAttribute("error", "Invalid email or password");
-            return "login";
+            return "redirect:/home";
         }
     }
 
