@@ -1,6 +1,5 @@
 package com.oss.controller;
 
-import com.oss.dto.UserRegistrationDto;
 import com.oss.model.Role;
 import com.oss.model.User;
 import com.oss.service.roleservice;

@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8" />
@@ -13,16 +13,17 @@
     <meta name="website" content="https://shreethemes.in" />
     <meta name="Version" content="v1.2.0" />
     <!-- favicon -->
-    <link rel="shortcut icon" href="">
+    <link rel="shortcut icon" th:href="@{/assets/images/favicon.ico.png}">
     <!-- Bootstrap -->
-    <link href="../../static/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+    <!-- simplebar -->
+    <link rel="stylesheet" th:href="@{/assets/css/simplebar.css}">
     <!-- Icons -->
-    <link href="../../static/assets/css/materialdesignicons.min.css" rel="stylesheet" type="text/css" />
-    <link href="../../static/assets/css/remixicon.css" rel="stylesheet" type="text/css" />
-    <link href="https://unicons.iconscout.com/release/v3.0.6/css/line.css"  rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/assets/css/materialdesignicons.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/remixicon.css}">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v3.0.6/css/line.css">
     <!-- Css -->
-    <link href="../../static/assets/css/style.min.css" rel="stylesheet" type="text/css" id="theme-opt" />
-
+    <link rel="stylesheet" th:href="@{/assets/css/style.min.css}" id="theme-opt">
 </head>
 
 <body>
@@ -42,7 +43,7 @@
 </div>
 
 <!-- Hero Start -->
-<section class="bg-half-150 d-table w-100 bg-light" style="background: url('../../static/assets/images/bg/bg-lines-one.png') center;">
+<section class="bg-half-150 d-table w-100 bg-light" style="background: url('static/assets/images/favicon.ico.png') center;">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-5 col-md-8">
@@ -51,6 +52,12 @@
                     <div class="card-body">
                         <h4 class="text-center">Sign Up</h4>
                         <form th:action="@{/register}" th:object="${user}" method="post" class="login-form mt-4">
+                            <div th:if="${successMessage}" class="alert alert-success" role="alert">
+                                <span th:text="${successMessage}"></span>
+                            </div>
+                            <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+                                <span th:text="${errorMessage}"></span>
+                            </div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="mb-3">
@@ -102,9 +109,7 @@
                                 </div><!--end col-->
 
                                 <div class="col-6 mt-3">
-                                    <div class="d-grid">
-                                        <a href="javascript:void(0)" class="btn btn-soft-primary"><i class="uil uil-facebook"></i> Facebook</a>
-                                    </div>
+
                                 </div><!--end col-->
 
                                 <div class="col-6 mt-3">
@@ -127,11 +132,9 @@
 <!-- Hero End -->
 
 <!-- javascript -->
-<script src="../../static/assets/js/bootstrap.bundle.min.js"></script>
-<!-- Icons -->
-<script src="../../static/assets/js/feather.min.js"></script>
-<!-- Main Js -->
-<script src="../../static/assets/js/app.js"></script>
+<script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/assets/js/feather.min.js}"></script>
+<script th:src="@{/assets/js/app.js}"></script>
 
 </body>
 

@@ -1,6 +1,5 @@
 package com.oss.service;
 
-import com.oss.dto.UserRegistrationDto;
 import com.oss.model.User;
 import com.oss.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
