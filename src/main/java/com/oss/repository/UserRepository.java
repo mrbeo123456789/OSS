@@ -9,14 +9,10 @@ import java.util.List;
 
 @Repository
 public interface UserRepository  extends JpaRepository<User, Long> {
+
     @Query("SELECT u FROM User u JOIN FETCH u.role")
     List<User> findAllWithRoles();
 
         User findByEmail(String email);
-
-
-
-
-
 
 }
