@@ -7,6 +7,8 @@ import com.oss.repository.CategoryRepository;
 import com.oss.repository.ProductImageRepository;
 import com.oss.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,5 +41,9 @@ public class ProductService {
 
     public List<ProductImage> getProductImagesByProductId(Product product){
         return productImageRepository.findByProduct(product);
+    }
+    public List<Product> getTop10NewestProducts() {
+        Pageable topTen = PageRequest.of(0, 10);
+        return productRepository.findTop10Products(topTen);
     }
 }

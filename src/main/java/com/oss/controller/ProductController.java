@@ -29,8 +29,6 @@ import java.util.UUID;
 
 @Controller
 public class ProductController {
-
-
     @Autowired
     private ProductService productService;
     @Autowired
@@ -148,7 +146,12 @@ public class ProductController {
     }
 
 
-
+@GetMapping("/shop")
+public String getShop(Model model) {
+   List<Product> productList = productService.getTop10NewestProducts();
+   model.addAttribute("products", productList);
+        return "customer/shop";
+}
 
 
 
