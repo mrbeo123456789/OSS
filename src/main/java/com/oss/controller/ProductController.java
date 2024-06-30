@@ -69,11 +69,11 @@ public class ProductController {
                              @RequestParam("psale") Double sale,
                              @RequestParam("pcategory") Long categoryId,
                              @RequestParam("pdescription") String description,
-                             @RequestParam("pimage")MultipartFile image,
+                             @RequestParam("pimage") MultipartFile image,
                              Model model){
 
         Product product = new Product();
-        //set information for product
+        // Set information for product
         product.setProductCode(code);
         product.setProductName(name);
         product.setCategory(categoryService.getCategoryById(categoryId));
@@ -83,12 +83,13 @@ public class ProductController {
         product.setAddedDate(new Date());
         product.setQuantity(0);
         Long productId = productService.saveProduct(product).getProductId();
-        //upload file
+
+        // Upload file
         if (image.isEmpty()) {
             model.addAttribute("addmessage", "Image is required");
             return "redirect:/addproduct";
         } else {
-            String uploadFolder = "src/main/resources/static/assets/images/product";
+            String uploadFolder = "src/main/resources/static/assets/images/product/";
             try {
                 // Generate a unique filename for the image
                 String filename = UUID.randomUUID().toString() + "_" + image.getOriginalFilename();
@@ -117,6 +118,7 @@ public class ProductController {
             }
         }
     }
+
 
 
 

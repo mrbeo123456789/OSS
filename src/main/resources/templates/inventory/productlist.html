@@ -232,7 +232,9 @@
                 </div><!--end row-->
             </div>
         </div><!--end container-->
+
         <!-- Add New Product Form -->
+
         <div id="addProductForm" class="container-fluid d-none">
             <div class="layout-specing">
                 <div class="row">
@@ -310,10 +312,12 @@
                                 <div class="mb-3 row">
                                     <div class="col-md-3">
                                         Image
-                                        <img th:each="image : ${imagelist}"
-                                             th:src="@{/assets/images/product/${image.imageUrl}}"
-                                             alt="Product Image" id="previewImage" class="mt-3 img-fluid">
-
+                                        <div th:each="image : ${imagelist}">
+                                            <img th:src="@{/assets/images/product/{imageUrl}(imageUrl=${image.imageUrl})}"
+                                                 alt="Product Image"
+                                                 id="previewImage"
+                                                 class="mt-3 img-fluid">
+                                        </div>
                                     </div>
                                 </div>
                                 <form th:action="@{/editproduct}" method="post">
@@ -406,10 +410,10 @@
             });
         }
     });
-
+</script>
 
     <!-- Javascript -->
-    <script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/jquery.min.js}"></script>
 <script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
 <script th:src="@{/assets/js/simplebar.min.js}"></script>
 <script th:src="@{/assets/js/select2.min.js}"></script>
