@@ -23,7 +23,7 @@
 			<dependency>
 				<groupId>org.springframework.security</groupId>
 				<artifactId>spring-security-bom</artifactId>
-				<version>5.8.2</version> <!-- Sử dụng phiên bản phù hợp -->
+				<version>5.8.2</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -74,7 +74,7 @@
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-crypto</artifactId>
-			<version>6.3.0</version> <!-- Thử sử dụng phiên bản phù hợp -->
+			<version>6.3.0</version>
 		</dependency>
 		<!-- Spring Boot Starter Mail -->
 

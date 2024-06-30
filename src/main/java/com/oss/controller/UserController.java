@@ -1,5 +1,6 @@
 package com.oss.controller;
 
+
 import com.oss.model.Role;
 import com.oss.model.User;
 import com.oss.service.roleservice;
@@ -12,8 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.util.List;
+
 
 @Controller
 public class UserController {
@@ -27,6 +28,36 @@ public class UserController {
         model.addAttribute("users", users);
         return "manager/userlist";
     }
+
+
+    @GetMapping("/login")
+    public String showLoginPage() {
+        return "common/login";
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestParam String email, @RequestParam String password, Model model) {
+        User user = userService.login(email, password);
+        if (user != null) {
+            model.addAttribute("user", user);
+            switch (user.getRole().getRoleName()) {
+                case "MANAGER":
+                    return "redirect:/home";
+                case "SALESTAFF":
+                    return "redirect:/home";
+                case "INVENTORYSTAFF":
+                    return "redirect:/home";
+                case "CUSTOMER":
+                    return "redirect:/home";
+                default:
+                    return "redirect:/home";
+            }
+        } else {
+            model.addAttribute("error", "Invalid email or password");
+            return "redirect:/home";
+        }
+    }
+
 
     @GetMapping("/user/add")
     public String showAddUserForm(Model model) {
@@ -56,6 +87,7 @@ public class UserController {
         return "redirect:/user/list";
     }
 
+
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
         model.addAttribute("user", new User());
@@ -73,5 +105,10 @@ public class UserController {
             model.addAttribute("errorMessage", "There was an error during registration. Please try again.");
         }
         return "common/register";
+    }
+
+    @GetMapping("/home")
+    public String showHomePage(Model model) {
+        return "common/home";
     }
 }

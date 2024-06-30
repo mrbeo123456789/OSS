@@ -1,6 +1,6 @@
 package com.oss.repository;
 
-import com.oss.model.Product;
+import com.oss.model.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -8,7 +8,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Long> {
-    @Query("SELECT p FROM Product p")
-    List<Product> findAllProduct();
+public interface CategoryRepository extends JpaRepository<Category, Long> {
+    @Query("SELECT c FROM Category c")
+    List<Category> findAllCategory();
+
 }
