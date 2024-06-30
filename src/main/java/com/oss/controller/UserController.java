@@ -42,15 +42,16 @@ public class UserController {
         User user = userService.login(email, password);
         if (user != null) {
             model.addAttribute("user", user);
-            switch (user.getRole().getRoleName()) {
-                case "MANAGER":
-                    return "redirect:/templates/manager/dashboard.html";
-                case "SALESTAFF":
+            Long userRoleId = user.getRole().getRoleId();
+            switch (Integer.parseInt(userRoleId.toString())) {
+                case 1:
                     return "redirect:/home";
-                case "INVENTORYSTAFF":
-                    return "redirect:/templates/inventory/dashboard.html";
-                case "CUSTOMER":
+                case 2:
                     return "redirect:/home";
+                case 3:
+                    return "redirect:/products";
+                case 4:
+                    return "redirect:/user/list";
                 default:
                     return "redirect:/home";
             }

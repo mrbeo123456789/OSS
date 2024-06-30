@@ -202,7 +202,4 @@ public String getShop(Model model) {
         return "customer/shop";
 }
 
-
-
-
 }

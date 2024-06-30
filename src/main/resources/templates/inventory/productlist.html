@@ -72,30 +72,22 @@
         <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
             <div class="sidebar-brand">
                 <a th:href="@{/common/login.html}">
-                    <img th:src="@{/assets/images/logo.png}" height="50" width="100" class="logo-light-mode" alt="Logo">
+                    <img src="#" height="24" class="logo-light-mode" alt="">
+                    <img src="#" height="24" class="logo-dark-mode" alt="">
                 </a>
             </div>
 
             <ul class="sidebar-menu pt-3">
-                <li><a th:href="@{/common/login.html}">Dashboard</a></li>
+                <li><a th:href="@{/login}">Dashboard</a></li>
                 <li><a th:href="@{/products}">Product</a></li>
-                <!-- Category Section in the Sidebar -->
                 <li class="sidebar-dropdown">
                     <a href="javascript:void(0)">Category</a>
                     <div class="sidebar-submenu">
                         <ul>
-                            <li th:each="category : ${categorylist}"><a href="#" th:text="${category.getCategoryName()}"></a></li>
-                            <li><a id="addCategoryButton">Add New Category</a></li>
-                            <li id="newCategoryInput" class="d-none">
-                                <form th:action="@{/addcategory}" method="post">
-                                    <input type="text" class="form-control" id="newCategoryName" name="categoryname"
-                                           placeholder="Enter Category Name" required>
-                                    <button type="submit">Save</button>
-                                </form>
-                            </li>
+                            <li><a href="#">Category 1</a></li>
+                            <li><a href="#">Category 2</a></li>
+                            <li><a href="#">Add new category</a></li>
                         </ul>
-                        <!-- Input field for new category -->
-
                     </div>
                 </li>
                 <li><a href="#">Order</a></li>
@@ -303,9 +295,8 @@
                                                   placeholder="Description" required></textarea>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="image" class="form-label">Add Image</label>
                                         <input type="file" class="form-control" id="image" name="pimage"
-                                               accept="image/*">
+                                               accept="image/*" >
                                     </div>
                                     <button type="submit" class="btn btn-primary">Add Product</button>
                                     <button type="button" id="cancelbutton" class="btn btn-secondary">Cancel</button>
