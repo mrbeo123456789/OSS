@@ -51,10 +51,9 @@ public class ProductController {
             return getProduct(model);
         }
         Product product = productService.getProductById(id);
-        List<ProductImage> productImage = productService.getProductImagesByProductId(id);
+        List<ProductImage> productImage = productService.getProductImagesByProductId(product);
         model.addAttribute("productdetail", product);
         model.addAttribute("imagelist", productImage);
-
         return getProduct(model);
     }
 

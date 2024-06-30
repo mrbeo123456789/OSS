@@ -37,7 +37,7 @@ public class ProductService {
         return productImageRepository.save(productImage);
     }
 
-    public List<ProductImage> getProductImagesByProductId(Long id){
-        return productImageRepository.findByProductId(id);
+    public List<ProductImage> getProductImagesByProductId(Product product){
+        return productImageRepository.findByProduct(product);
     }
 }
