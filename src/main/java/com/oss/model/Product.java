@@ -16,13 +16,13 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
 
+    private String productCode;
     private String productName;
     private String description;
-    private BigDecimal price;
-    private int stockQuantity;
-    private Date createdDate;
-    private Date updatedDate;
-    private String image;
+    private double price;
+    private double sales;
+    private Date addedDate;
+    private int quantity;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
