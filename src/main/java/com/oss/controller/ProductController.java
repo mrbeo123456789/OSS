@@ -47,7 +47,7 @@ public class ProductController {
 
     @PostMapping("/productdetail")
     public String getProductDetail(@RequestParam("id") Long id, Model model) {
-        if (id == null) {
+        if(id == null) {
             return getProduct(model);
         }
         Product product = productService.getProductById(id);
@@ -66,7 +66,7 @@ public class ProductController {
                              @RequestParam("pcategory") Long categoryId,
                              @RequestParam("pdescription") String description,
                              @RequestParam("pimage") MultipartFile image,
-                             Model model) {
+                             Model model){
 
         Product product = new Product();
         // Set information for product
@@ -193,6 +193,15 @@ public class ProductController {
         }
         return"redirect:/products";
 }
+
+
+@GetMapping("/shop")
+public String getShop(Model model) {
+   List<Product> productList = productService.getTop10NewestProducts();
+   model.addAttribute("products", productList);
+        return "customer/shop";
+}
+
 
 
 

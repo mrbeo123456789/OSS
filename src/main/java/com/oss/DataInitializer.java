@@ -22,7 +22,7 @@ public class DataInitializer {
 //            Role userRole = new Role();
 //            userRole.setRoleName("ROLE_USER");
 //
-//         //  roleRepository.saveAll(List.of(adminRole, userRole));
+//          roleRepository.saveAll(List.of(adminRole, userRole));
 //
 //            // Create some users
 //            User user1 = new User();

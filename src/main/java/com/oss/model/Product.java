@@ -3,8 +3,6 @@ package com.oss.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
 @Getter
@@ -34,5 +32,6 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private Set<OrderItem> orderItems;
 
-    // Getters and setters
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ProductImage> images;
 }

@@ -127,13 +127,6 @@
                 <div class="d-md-flex justify-content-between">
                     <h5 class="mb-0">Add New Account</h5>
 
-                    <nav aria-label="breadcrumb" class="d-inline-block mt-4 mt-sm-0">
-                        <ul class="breadcrumb bg-transparent rounded mb-0 p-0">
-                            <li class="breadcrumb-item"><a href="index.html">Doctris</a></li>
-                            <li class="breadcrumb-item"><a href="patients.html">Patients</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Add Patient</li>
-                        </ul>
-                    </nav>
                 </div>
 
                 <div class="row">
@@ -141,21 +134,22 @@
                         <div class="card border-0 p-4 rounded shadow">
                             <div class="row align-items-center">
                                 <div class="col-lg-2 col-md-4">
-                                    <img src="../../static/assets/images/client/01.jpg" class="avatar avatar-md-md rounded-pill shadow mx-auto d-block" alt="">
+                                    <img id="currentImage" src="/assets/images/client/01.jpg" class="avatar avatar-md-md rounded-pill shadow mx-auto d-block" alt="Current Image">
                                 </div><!--end col-->
 
                                 <div class="col-lg-5 col-md-8 text-center text-md-start mt-4 mt-sm-0">
-                                    <h5 class="">Upload your picture</h5>
+                                    <h5>Upload your picture</h5>
                                     <p class="text-muted mb-0">For best results, use an image at least 600px by 600px in either .jpg or .png format</p>
                                 </div><!--end col-->
 
                                 <div class="col-lg-5 col-md-12 text-lg-end text-center mt-4 mt-lg-0">
-                                    <a href="#" class="btn btn-primary">Upload</a>
-                                    <a href="#" class="btn btn-soft-primary ms-2">Remove</a>
+                                    <input type="file" id="imageUpload" accept=".jpg, .png" style="display:none;">
+                                    <button type="button" class="btn btn-primary" onclick="document.getElementById('imageUpload').click();">Upload</button>
+                                    <a href="#" class="btn btn-soft-primary ms-2" id="removeImage">Remove</a>
                                 </div><!--end col-->
                             </div><!--end row-->
 
-                            <form class="mt-4" action="/user/add" method="post">
+                            <form class="mt-4" th:action="@{/user/add}" method="post">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="mb-3">
@@ -187,34 +181,52 @@
 
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label class="form-label">Departments</label>
+                                            <label class="form-label">Roles</label>
                                             <select name="department" class="form-control department-name select2input">
                                                 <option th:each="role : ${roles}" th:value="${role.roleId}" th:text="${role.roleName}"></option>
                                             </select>
                                         </div>
                                     </div><!--end col-->
 
+                                    <input type="hidden" name="imageData" id="imageData">
                                 </div><!--end row-->
 
                                 <button type="submit" class="btn btn-primary">Add Account</button>
                             </form>
-
                         </div>
                     </div><!--end col-->
+                </div><!--end row-->
 
-
-                </div>
-            </div><!--end container-->
-                </div>
                 <!-- Modal end -->
 
                 <!-- javascript -->
-
-
                 <script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
                 <script th:src="@{/assets/js/simplebar.min.js}"></script>
                 <script th:src="@{/assets/js/feather.min.js}"></script>
                 <script th:src="@{/assets/js/app.js}"></script>
+                <script>
+                    document.getElementById('imageUpload').onchange = function (event) {
+                        const reader = new FileReader();
+                        reader.onload = function () {
+                            const currentImage = document.getElementById('currentImage');
+                            currentImage.src = reader.result;
+                            // Include the base64 data prefix (e.g., 'data:image/jpeg;base64,')
+                            document.getElementById('imageData').value = reader.result;
+                        }
+                        reader.readAsDataURL(event.target.files[0]);
+                    }
+
+                    document.getElementById('removeImage').onclick = function (event) {
+                        event.preventDefault();
+                        const currentImage = document.getElementById('currentImage');
+                        currentImage.src = '/assets/images/client/default.jpg';
+                        document.getElementById('imageUpload').value = null;
+                        document.getElementById('imageData').value = '';
+                    }
+                </script>
+
+
+
 
 </body>
 
