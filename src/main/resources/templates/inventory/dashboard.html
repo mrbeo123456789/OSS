@@ -1,10 +1,110 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+    <meta charset="utf-8"/>
+    <title>Product List</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Premium Bootstrap 4 Landing Page Template"/>
+    <meta name="keywords" content="Appointment, Booking, System, Dashboard, Health"/>
+    <meta name="author" content="Shreethemes"/>
+    <meta name="email" content="support@shreethemes.in"/>
+    <meta name="website" content="/index.html"/>
+    <meta name="Version" content="v1.2.0"/>
+    <!-- favicon -->
+    <!--    <link rel="shortcut icon" th:href="@{}">-->
+    <!-- Bootstrap -->
+    <link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
+    <!-- simplebar -->
+    <link th:href="@{/assets/css/simplebar.css}" rel="stylesheet" type="text/css"/>
+    <!-- Select2 -->
+    <link th:href="@{/assets/css/select2.min.css}" rel="stylesheet"/>
+    <!-- Date picker -->
+    <link th:href="@{/assets/css/flatpickr.min.css}" rel="stylesheet">
+    <link th:href="@{/assets/css/jquery.timepicker.min.css}" rel="stylesheet" type="text/css"/>
+    <!-- Icons -->
+    <link th:href="@{/assets/css/materialdesignicons.min.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/assets/css/remixicon.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{https://unicons.iconscout.com/release/v3.0.6/css/line.css}" rel="stylesheet">
+    <!-- Css -->
+    <link th:href="@{/assets/css/style.min.css}" rel="stylesheet" type="text/css" id="theme-opt"/>
+    <link th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css}" rel="stylesheet">
+    <style>
+        .table td, .table th {
+            vertical-align: middle;
+        }
 
+        .action-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 5px;
+        }
+
+        .edit-button {
+            color: #4CAF50; /* Green for edit */
+        }
+
+        .delete-button {
+            color: #F44336; /* Red for delete */
+        }
+
+        #sidebar {
+            background-color: #ffffff; /* Change this to your desired color */
+        }
+    </style>
+</head>
+
+<body>
+<!-- Loader -->
+<div id="preloader">
+    <div id="status">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+</div>
+<!-- Loader -->
+
+<div class="page-wrapper doctris-theme toggled">
+    <nav id="sidebar" class="sidebar-wrapper">
+        <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
+            <div class="sidebar-brand">
+                <a th:href="@{/common/login.html}">
+                    <img th:src="@{/assets/images/logo.png}" height="50" width="100" class="logo-light-mode" alt="Logo">
+                </a>
+            </div>
+
+            <ul class="sidebar-menu pt-3">
+                <li><a th:href="@{/common/login.html}">Dashboard</a></li>
+                <li><a th:href="@{/products}">Product</a></li>
+                <li class="sidebar-dropdown">
+                    <a href="javascript:void(0)">Category</a>
+                    <div class="sidebar-submenu">
+                        <ul th:each="category : ${categorylist}">
+                            <li><a href="#" th:text="${category.getCategoryName()}"></a></li>
+
+                        </ul>
+                    </div>
+                </li>
+                <li><a href="#">Order</a></li>
+            </ul>
+        </div>
+    </nav>
+    <!-- sidebar-wrapper  -->
+
+
+<!-- Javascript -->
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/assets/js/simplebar.min.js}"></script>
+<script th:src="@{/assets/js/select2.min.js}"></script>
+<script th:src="@{/assets/js/flatpickr.min.js}"></script>
+<script th:src="@{/assets/js/jquery.timepicker.js}"></script>
+<script th:src="@{/assets/js/feather.min.js}"></script>
+<script th:src="@{/assets/js/switcher.js}"></script>
+<script th:src="@{/assets/js/app.js}"></script>
+<script th:src="@{/assets/js/switcher.js}"></script>
 </body>
 </html>

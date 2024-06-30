@@ -22,6 +22,12 @@ public class UserController {
     private userservice userService;
     @Autowired
     private roleservice roleService;
+
+    @GetMapping("/")
+    public String home() {
+        return "common/home";
+    }
+
     @GetMapping("/user/list")
     public String getUsers(Model model) {
         List<User> users = userService.getAllUsers();
@@ -42,11 +48,11 @@ public class UserController {
             model.addAttribute("user", user);
             switch (user.getRole().getRoleName()) {
                 case "MANAGER":
-                    return "redirect:/home";
+                    return "redirect:/templates/manager/dashboard.html";
                 case "SALESTAFF":
                     return "redirect:/home";
                 case "INVENTORYSTAFF":
-                    return "redirect:/home";
+                    return "redirect:/templates/inventory/dashboard.html";
                 case "CUSTOMER":
                     return "redirect:/home";
                 default:

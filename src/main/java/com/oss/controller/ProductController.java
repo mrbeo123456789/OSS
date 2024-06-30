@@ -4,14 +4,12 @@ import com.oss.model.Category;
 import com.oss.model.Product;
 import com.oss.model.ProductImage;
 import com.oss.service.CategoryService;
+import com.oss.service.ProductImageService;
 import com.oss.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -35,6 +33,8 @@ public class ProductController {
     private ProductService productService;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private ProductImageService productImageService;
 
     @GetMapping("/products")
     public String getProduct(Model model) {
@@ -47,7 +47,7 @@ public class ProductController {
 
     @PostMapping("/productdetail")
     public String getProductDetail(@RequestParam("id") Long id, Model model) {
-        if(id == null) {
+        if (id == null) {
             return getProduct(model);
         }
         Product product = productService.getProductById(id);
@@ -66,7 +66,7 @@ public class ProductController {
                              @RequestParam("pcategory") Long categoryId,
                              @RequestParam("pdescription") String description,
                              @RequestParam("pimage") MultipartFile image,
-                             Model model){
+                             Model model) {
 
         Product product = new Product();
         // Set information for product
@@ -147,8 +147,52 @@ public class ProductController {
         return "redirect:/products";
     }
 
+    @PostMapping("/addcategory")
+    public String addCategory(@RequestParam("categoryname") String categoryName) {
+        if (categoryName != null) {
+            Category category = new Category();
+            category.setCategoryName(categoryName);
+            categoryService.saveCategory(category);
+        }
+        return "redirect:/products";
+    }
 
+    @PostMapping("addproductimage")
+    public String addProductImage(@RequestParam("productId") Long id,
+                                  @RequestParam("pimage") MultipartFile image,
+                                  Model model) {
+        if (id != null && image != null) {
+            // Upload file
+            String uploadFolder = "src/main/resources/static/assets/images/product/";
+            try {
+                // Generate a unique filename for the image
+                String filename = UUID.randomUUID().toString() + "_" + image.getOriginalFilename();
+                Path path = Paths.get(uploadFolder + filename);
 
+                // Ensure the directory exists
+                Files.createDirectories(path.getParent());
+
+                // Save image file to the system
+                byte[] bytes = image.getBytes();
+                Files.write(path, bytes);
+
+                // Set image path for product
+                ProductImage productImage = new ProductImage();
+                productImage.setProduct(productService.getProductById(id));
+                productImage.setImageUrl(filename);
+                productService.saveProductImage(productImage);
+
+                model.addAttribute("addmessage", "Product added successfully");
+                return "redirect:/products";
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                model.addAttribute("addmessage", "Failed to upload file");
+                return "redirect:/addproduct";
+            }
+        }
+        return"redirect:/products";
+}
 
 
 
