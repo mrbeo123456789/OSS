@@ -1,6 +1,5 @@
 package com.oss.controller;
 
-import com.oss.dto.UserRegistrationDto;
 
 import com.oss.model.Role;
 import com.oss.model.User;
@@ -91,17 +90,17 @@ public class UserController {
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
-        model.addAttribute("user", new UserRegistrationDto());
+        model.addAttribute("user", new User());
         return "common/register";
     }
 
 
 
     @PostMapping("/register")
-    public String registerUserAccount(@ModelAttribute("user") UserRegistrationDto userDto, Model model) {
+    public String registerUserAccount(@ModelAttribute("user") User user, Model model) {
         try {
-            userService.registerNewUser(userDto);
-            model.addAttribute("successMessage", "Registration successful! A confirmation email has been sent.");
+            userService.registerNewUser(user);
+            model.addAttribute("successMessage", "Registration successful!");
         } catch (Exception e) {
             model.addAttribute("errorMessage", "There was an error during registration. Please try again.");
         }

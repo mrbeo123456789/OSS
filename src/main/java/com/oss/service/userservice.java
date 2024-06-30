@@ -1,6 +1,5 @@
 package com.oss.service;
 
-import com.oss.dto.UserRegistrationDto;
 import com.oss.model.User;
 import com.oss.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,23 +18,20 @@ public class userservice {
     private BCryptPasswordEncoder passwordEncoder;
 
 
-    public User registerNewUser(UserRegistrationDto userDto) {
-        if (userRepository.findByEmail(userDto.getEmail()) != null) {
+    public User registerNewUser(User user) {
+        if (userRepository.findByEmail(user.getEmail()) != null) {
             throw new RuntimeException("Email đã được đăng ký");
         }
 
-        String hashedPassword = passwordEncoder.encode(userDto.getPassword());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        User savedUser = userRepository.save(user);
 
-        User newUser = new User(
-                userDto.getFullName(),
-                userDto.getUsername(),
-                userDto.getEmail(),
-                userDto.getMobile(),
-                hashedPassword
-        );
+        // Log thông tin người dùng sau khi lưu
+        System.out.println("User registered successfully: " + savedUser);
 
-        return userRepository.save(newUser);
+        return savedUser;
     }
+
     public User login(String email, String password) {
         User user = userRepository.findByEmail(email);
         if (user != null && passwordEncoder.matches(password, user.getPassword())) {
@@ -43,7 +39,6 @@ public class userservice {
         }
         return null;
     }
-
     public List<User> getAllUsers() {
         return userRepository.findAllWithRoles();
     }
