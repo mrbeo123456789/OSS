@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
 @Getter
@@ -15,13 +16,13 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
 
+    private String productCode;
     private String productName;
     private String description;
-    private Double price;
-    private Integer stockQuantity;
-    private Date createdDate;
-    private Date updatedDate;
-    private String image;
+    private double price;
+    private double sales;
+    private Date addedDate;
+    private int quantity;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
