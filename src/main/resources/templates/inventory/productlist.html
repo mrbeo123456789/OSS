@@ -217,12 +217,6 @@
                                             <button type="submit" class="btn btn-icon btn-pills btn-soft-primary"><i
                                                     class="fas fa-edit"></i></button>
                                         </form>
-                                        <form th:action="@{/inventory/deleteproduct/{id}(id=${product.productId})}"
-                                              method="post" style="display: inline;">
-                                            <button type="submit" class="btn btn-icon btn-pills btn-soft-danger"><i
-                                                    class="fas fa-trash-alt"></i></button>
-                                        </form>
-
                                     </td>
                                 </tr>
                                 </tbody>
@@ -321,6 +315,7 @@
                                     </div>
                                 </div>
                                 <form th:action="@{/editproduct}" method="post">
+                                    <input type="hidden" name="productId" th:value="${productdetail.getProductId()}">
                                     <div class="row">
                                         <!-- Product Details -->
                                         <div class="mb-3 row">
@@ -337,18 +332,22 @@
                                         </div>
 
                                         <div class="mb-3 row">
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <label for="productPrice" class="form-label">Price</label>
                                                 <input type="number" class="form-control" name="pprice"
                                                        th:value="${productdetail.getPrice()}" min="0">
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <label for="productSale" class="form-label">Sale</label>
                                                 <input type="number" class="form-control" name="psale"
-                                                       th:value="${productdetail.getSales()}" min="0" max="100"
-                                                >
+                                                       th:value="${productdetail.getSales()}" min="0" max="100">
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
+                                                <label for="productSale" class="form-label">Quantity</label>
+                                                <input type="number" class="form-control" name="pquantity"
+                                                       th:value="${productdetail.getQuantity()}" min="0">
+                                            </div>
+                                            <div class="col-md-3">
                                                 <label for="category" class="form-label">Category</label>
                                                 <select class="form-select" name="pcategory" required>
                                                     <option th:value="${productdetail.getCategory().getCategoryId()}"
@@ -360,22 +359,23 @@
                                                             th:text="${category.getCategoryName()}"></option>
                                                 </select>
                                             </div>
+                                        </div>
 
-                                            <div class="mb-3">
-                                                <label for="pdescription" class="form-label">Description</label>
-                                                <textarea class="form-control" name="pdescription"
-                                                          th:placeholder="${productdetail.getDescription()}"
-                                                ></textarea>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <div class="col-md-6">
-                                                    <button type="submit" class="btn btn-primary">Save</button>
-                                                    <a th:href="@{/products}" id="cancelButton-edit" class="btn btn-secondary">Cancel</a>
-                                                </div>
+                                        <div class="mb-3">
+                                            <label for="pdescription" class="form-label">Description</label>
+                                            <textarea class="form-control" name="pdescription"
+                                                      th:placeholder="${productdetail.getDescription()}"></textarea>
+                                        </div>
+
+                                        <div class="mb-3 row">
+                                            <div class="col-md-6">
+                                                <button type="submit" class="btn btn-primary">Save</button>
+                                                <a th:href="@{/products}" id="cancelButton-edit" class="btn btn-secondary">Cancel</a>
                                             </div>
                                         </div>
                                     </div>
                                 </form>
+
                             </div>
                         </div>
                     </div>
@@ -412,7 +412,7 @@
     });
 </script>
 
-    <!-- Javascript -->
+<!-- Javascript -->
 <script th:src="@{/assets/js/jquery.min.js}"></script>
 <script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
 <script th:src="@{/assets/js/simplebar.min.js}"></script>

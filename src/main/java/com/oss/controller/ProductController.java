@@ -57,10 +57,6 @@ public class ProductController {
         return getProduct(model);
     }
 
-    @PostMapping("/editproduct")
-    public String editProductDetail(){
-        return "inventory/product";
-    };
 
     @PostMapping("/addproduct")
     public String addProduct(@RequestParam("pname") String name,
@@ -117,6 +113,38 @@ public class ProductController {
                 return "redirect:/addproduct";
             }
         }
+    }
+
+    @PostMapping("/editproduct")
+    public String editProduct(@RequestParam("productId") Long productId,
+                              @RequestParam("pname") String name,
+                              @RequestParam("pcode") String code,
+                              @RequestParam("pprice") Double price,
+                              @RequestParam("psale") Double sale,
+                              @RequestParam("pquantity") int quantity,
+                              @RequestParam("pcategory") Long categoryId,
+                              @RequestParam("pdescription") String description,
+                              Model model) {
+
+        Product product = productService.getProductById(productId);
+        if (product != null) {
+            // Update product information
+            product.setProductName(name);
+            product.setProductCode(code);
+            product.setPrice(price);
+            product.setSales(sale);
+            product.setQuantity(quantity);
+            product.setCategory(categoryService.getCategoryById(categoryId));
+            product.setDescription(description);
+
+            productService.saveProduct(product);
+
+            model.addAttribute("editmessage", "Product updated successfully");
+        } else {
+            model.addAttribute("editmessage", "Product not found");
+        }
+
+        return "redirect:/products";
     }
 
 
