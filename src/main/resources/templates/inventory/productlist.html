@@ -1,37 +1,38 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <title>Product List</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Premium Bootstrap 4 Landing Page Template" />
-    <meta name="keywords" content="Appointment, Booking, System, Dashboard, Health" />
-    <meta name="author" content="Shreethemes" />
-    <meta name="email" content="support@shreethemes.in" />
-    <meta name="website" content="/index.html" />
-    <meta name="Version" content="v1.2.0" />
+    <meta name="description" content="Premium Bootstrap 4 Landing Page Template"/>
+    <meta name="keywords" content="Appointment, Booking, System, Dashboard, Health"/>
+    <meta name="author" content="Shreethemes"/>
+    <meta name="email" content="support@shreethemes.in"/>
+    <meta name="website" content="/index.html"/>
+    <meta name="Version" content="v1.2.0"/>
     <!-- favicon -->
     <!--    <link rel="shortcut icon" th:href="@{}">-->
     <!-- Bootstrap -->
-    <link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
     <!-- simplebar -->
-    <link th:href="@{/assets/css/simplebar.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/assets/css/simplebar.css}" rel="stylesheet" type="text/css"/>
     <!-- Select2 -->
-    <link th:href="@{/assets/css/select2.min.css}" rel="stylesheet" />
+    <link th:href="@{/assets/css/select2.min.css}" rel="stylesheet"/>
     <!-- Date picker -->
     <link th:href="@{/assets/css/flatpickr.min.css}" rel="stylesheet">
-    <link th:href="@{/assets/css/jquery.timepicker.min.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/assets/css/jquery.timepicker.min.css}" rel="stylesheet" type="text/css"/>
     <!-- Icons -->
-    <link th:href="@{/assets/css/materialdesignicons.min.css}" rel="stylesheet" type="text/css" />
-    <link th:href="@{/assets/css/remixicon.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/assets/css/materialdesignicons.min.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/assets/css/remixicon.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{https://unicons.iconscout.com/release/v3.0.6/css/line.css}" rel="stylesheet">
     <!-- Css -->
-    <link th:href="@{/assets/css/style.min.css}" rel="stylesheet" type="text/css" id="theme-opt" />
+    <link th:href="@{/assets/css/style.min.css}" rel="stylesheet" type="text/css" id="theme-opt"/>
     <link th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css}" rel="stylesheet">
     <style>
         .table td, .table th {
             vertical-align: middle;
         }
+
         .action-button {
             background: none;
             border: none;
@@ -39,12 +40,15 @@
             font-size: 18px;
             padding: 5px;
         }
+
         .edit-button {
             color: #4CAF50; /* Green for edit */
         }
+
         .delete-button {
             color: #F44336; /* Red for delete */
         }
+
         #sidebar {
             background-color: #ffffff; /* Change this to your desired color */
         }
@@ -109,7 +113,8 @@
                         <div id="search" class="menu-search mb-0">
                             <form role="search" method="get" id="searchform" class="searchform">
                                 <div>
-                                    <input type="text" class="form-control border rounded-pill" name="s" id="s" placeholder="Search Keywords">
+                                    <input type="text" class="form-control border rounded-pill" name="s" id="s"
+                                           placeholder="Search Keywords">
                                     <input type="submit" id="searchsubmit" value="Search">
                                 </div>
                             </form>
@@ -120,14 +125,22 @@
                 <ul class="list-unstyled mb-0">
                     <li class="list-inline-item mb-0 ms-1">
                         <div class="dropdown dropdown-primary">
-                            <button type="button" class="btn btn-icon btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="mail" class="fea icon-sm"></i></button>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">! <span class="visually-hidden">unread mail</span></span>
+                            <button type="button" class="btn btn-icon btn-pills btn-soft-primary dropdown-toggle p-0"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+                                    data-feather="mail" class="fea icon-sm"></i></button>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">! <span
+                                    class="visually-hidden">unread mail</span></span>
 
-                            <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow rounded border-0 mt-3 px-2 py-2" data-simplebar style="height: 320px; width: 300px;">
+                            <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow rounded border-0 mt-3 px-2 py-2"
+                                 data-simplebar style="height: 320px; width: 300px;">
                                 <a href="#" class="d-flex align-items-center justify-content-between py-2 border-top">
                                     <div class="d-inline-flex position-relative overflow-hidden">
-                                        <img th:src="@{/assets/images/client/dribbble.svg}" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                        <small class="text-dark mb-0 d-block text-truncate ms-3">You received a new email from <b>Dribbble</b> <small class="text-muted fw-normal d-inline-block">24 hour ago</small></small>
+                                        <img th:src="@{/assets/images/client/dribbble.svg}"
+                                             class="avatar avatar-md-sm rounded-circle shadow" alt="">
+                                        <small class="text-dark mb-0 d-block text-truncate ms-3">You received a new
+                                            email from <b>Dribbble</b> <small
+                                                    class="text-muted fw-normal d-inline-block">24 hour
+                                                ago</small></small>
                                     </div>
                                 </a>
                             </div>
@@ -136,19 +149,29 @@
 
                     <li class="list-inline-item mb-0 ms-1">
                         <div class="dropdown dropdown-primary">
-                            <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img th:src="@{#}" class="avatar avatar-ex-small rounded-circle" alt=""></button>
-                            <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow border-0 mt-3 py-3" style="min-width: 200px;">
-                                <a class="dropdown-item d-flex align-items-center text-dark" th:href="@{/common/userprofile.html}">
+                            <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
+                                    th:src="@{#}" class="avatar avatar-ex-small rounded-circle" alt=""></button>
+                            <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow border-0 mt-3 py-3"
+                                 style="min-width: 200px;">
+                                <a class="dropdown-item d-flex align-items-center text-dark"
+                                   th:href="@{/common/userprofile.html}">
                                     <img th:src="@{#}" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
                                     <div class="flex-1 ms-2">
                                         <span class="d-block mb-1">Name</span>
                                         <small class="text-muted">Role</small>
                                     </div>
                                 </a>
-                                <a class="dropdown-item text-dark" th:href="@{/common/login.html}"><span class="mb-0 d-inline-block me-1"><i class="uil uil-dashboard align-middle h6"></i></span> Dashboard</a>
-                                <a class="dropdown-item text-dark" th:href="@{/common/userprofile.html}"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
+                                <a class="dropdown-item text-dark" th:href="@{/common/login.html}"><span
+                                        class="mb-0 d-inline-block me-1"><i
+                                        class="uil uil-dashboard align-middle h6"></i></span> Dashboard</a>
+                                <a class="dropdown-item text-dark" th:href="@{/common/userprofile.html}"><span
+                                        class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span>
+                                    Profile Settings</a>
                                 <div class="dropdown-divider border-top"></div>
-                                <a class="dropdown-item text-dark" th:href="@{#}"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
+                                <a class="dropdown-item text-dark" th:href="@{#}"><span
+                                        class="mb-0 d-inline-block me-1"><i
+                                        class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
                             </div>
                         </div>
                     </li>
@@ -161,8 +184,10 @@
                     <div class="col-lg-12">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h5 class="mb-0">Product List</h5>
-<!--                            <a th:href="@{/inventory/addnewproduct.html}" class="btn btn-primary">New Product</a>-->
-                            <label for="productName" class="form-label"><button id="newproduct" class="btn btn-primary">New Product</button></label>
+                            <!--                            <a th:href="@{/inventory/addnewproduct.html}" class="btn btn-primary">New Product</a>-->
+                            <label for="productName" class="form-label">
+                                <button id="newproduct" class="btn btn-primary">New Product</button>
+                            </label>
                         </div>
 
                         <div class="table-responsive shadow rounded">
@@ -189,12 +214,9 @@
                                     <td class="p-3">
                                         <form th:action="@{/productdetail}" method="post" style="display: inline;">
                                             <input type="hidden" name="id" th:value="${product.productId}">
-                                            <button type="submit" class="btn btn-icon btn-pills btn-soft-primary"><i class="fas fa-edit"></i></button>
+                                            <button type="submit" class="btn btn-icon btn-pills btn-soft-primary"><i
+                                                    class="fas fa-edit"></i></button>
                                         </form>
-                                        <form th:action="@{/inventory/deleteproduct/{id}(id=${product.productId})}" method="post" style="display: inline;">
-                                            <button type="submit" class="btn btn-icon btn-pills btn-soft-danger"><i class="fas fa-trash-alt"></i></button>
-                                        </form>
-
                                     </td>
                                 </tr>
                                 </tbody>
@@ -204,7 +226,9 @@
                 </div><!--end row-->
             </div>
         </div><!--end container-->
+
         <!-- Add New Product Form -->
+
         <div id="addProductForm" class="container-fluid d-none">
             <div class="layout-specing">
                 <div class="row">
@@ -213,32 +237,37 @@
                             <div class="card-body">
                                 <h5 class="mb-4">Add New Product</h5>
                                 <form th:action="@{/addproduct}" method="post" enctype="multipart/form-data">
-
                                     <div class="mb-3 row">
                                         <div class="col-md-6">
                                             <label for="productName" class="form-label">Product Name</label>
-                                            <input type="text" class="form-control" id="productName" name="pname" placeholder="Enter Product Name" required>
+                                            <input type="text" class="form-control" id="productName" name="pname"
+                                                   placeholder="Enter Product Name" required>
                                         </div>
                                         <div class="col-md-6">
                                             <label for="productCode" class="form-label">Product Code</label>
-                                            <input type="text" class="form-control" id="productCode" name="pcode" placeholder="Enter Product Code" required>
+                                            <input type="text" class="form-control" id="productCode" name="pcode"
+                                                   placeholder="Enter Product Code" required>
                                         </div>
                                     </div>
 
                                     <div class="mb-3 row">
                                         <div class="col-md-4">
                                             <label for="productPrice" class="form-label">Price</label>
-                                            <input type="number" class="form-control" id="productPrice" name="pprice" placeholder="Price" min="0" required>
+                                            <input type="number" class="form-control" id="productPrice" name="pprice"
+                                                   placeholder="Price" min="0" required>
                                         </div>
-                                         <div class="col-md-4">
+                                        <div class="col-md-4">
                                             <label for="productSale" class="form-label">Sale</label>
-                                            <input type="number" class="form-control" id="productSale" name="psale" placeholder="Sale" min="0" max="100" required>
+                                            <input type="number" class="form-control" id="productSale" name="psale"
+                                                   placeholder="Sale" min="0" max="100" required>
                                         </div>
                                         <div class="col-md-4">
                                             <label for="category" class="form-label">Category</label>
                                             <select id="category" class="form-select" name="pcategory" required>
                                                 <option value="" disabled selected>Select Category</option>
-                                                <option th:each="category : ${categorylist}" th:value="${category.getCategoryId()}" th:text="${category.getCategoryName()}"></option>
+                                                <option th:each="category : ${categorylist}"
+                                                        th:value="${category.getCategoryId()}"
+                                                        th:text="${category.getCategoryName()}"></option>
                                             </select>
 
                                         </div>
@@ -246,11 +275,13 @@
 
                                     <div class="mb-3">
                                         <label for="pdescription" class="form-label">Description</label>
-                                        <textarea class="form-control" id="pdescription" name="pdescription" placeholder="Description" required></textarea>
+                                        <textarea class="form-control" id="pdescription" name="pdescription"
+                                                  placeholder="Description" required></textarea>
                                     </div>
                                     <div class="mb-3">
                                         <label for="image" class="form-label">Add Image</label>
-                                        <input type="file" class="form-control" id="image" name="pimage" accept="image/*">
+                                        <input type="file" class="form-control" id="image" name="pimage"
+                                               accept="image/*">
                                     </div>
                                     <button type="submit" class="btn btn-primary">Add Product</button>
                                     <button type="button" id="cancelbutton" class="btn btn-secondary">Cancel</button>
@@ -270,62 +301,81 @@
                     <div class="col-lg-12">
                         <div class="card shadow rounded">
                             <div class="card-body">
-                                <h5 class="mb-4">Edit Product</h5>
+                                <h5 class="mb-4">Detail</h5>
+                                <!-- Product Image -->
+                                <div class="mb-3 row">
+                                    <div class="col-md-3">
+                                        Image
+                                        <div th:each="image : ${imagelist}">
+                                            <img th:src="@{/assets/images/product/{imageUrl}(imageUrl=${image.imageUrl})}"
+                                                 alt="Product Image"
+                                                 id="previewImage"
+                                                 class="mt-3 img-fluid">
+                                        </div>
+                                    </div>
+                                </div>
                                 <form th:action="@{/editproduct}" method="post">
+                                    <input type="hidden" name="productId" th:value="${productdetail.getProductId()}">
                                     <div class="row">
-                                            <!-- Product Image -->
-                                            <div class="col-md-3">
-                                                <img th:src="${productdetail.getImage()}" alt="Product Image" id="previewImage" class="mt-3 img-fluid">
-                                                <input type="image" name="pimage" alt="Change">
+                                        <!-- Product Details -->
+                                        <div class="mb-3 row">
+                                            <div class="col-md-6">
+                                                <label for="productName" class="form-label">Product Name</label>
+                                                <input type="text" class="form-control" name="pname"
+                                                       th:value="${productdetail.getProductName()}">
                                             </div>
-                                            <!-- Product Details -->
-                                            <div class="col-md-9">
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <!-- Product Name -->
-                                                        <div class="form-group">
-                                                            <label for="productName">Name</label>
-                                                            <input type="text" class="form-control" id="pname" th:placeholder="${productdetail.productName}">
-                                                        </div>
-                                                        <!-- Original Price -->
-                                                        <div class="form-group">
-                                                            <label for="pprice">Price</label>
-                                                            <input type="number" class="form-control" id="pprice" th:placeholder="${productdetail.getPrice()}" step="0.01" >
-                                                        </div>
-
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <!-- Last Updated -->
-                                                        <div class="form-group">
-                                                            <label for="lastUpdated">Last updated</label>
-                                                            <input type="text" class="form-control" id="lastUpdated" th:placeholder="${productdetail.getUpdatedDate()}" readonly>
-                                                        </div>
-                                                        <!-- Amount -->
-                                                        <div class="form-group">
-                                                            <label for="amount">Stock</label>
-                                                            <input type="number" class="form-control" id="amount" th:value="${productdetail.stockQuantity}" disabled>
-                                                        </div>
-                                                        <!-- Category -->
-                                                        <div class="form-group">
-                                                            <label for="category">Category</label>
-                                                            <select class="form-select" name="" required>
-                                                                <option value="" disabled selected>Select Category</option>
-                                                                <!-- Replace the below options with Thymeleaf to load categories dynamically -->
-                                                                <option th:each="category : ${categorylist}" th:value="${category.getCategoryId()}" th:text="${category.getCategoryName()}"></option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="description">Description</label>
-                                                    <textarea th:field="${productdetail.description}" name="pdescription" class="form-control" id="description" rows="4"></textarea>
-                                                </div>
+                                            <div class="col-md-6">
+                                                <label for="productCode" class="form-label">Product Code</label>
+                                                <input type="text" class="form-control" name="pcode"
+                                                       th:value="${productdetail.getProductCode()}">
                                             </div>
                                         </div>
-                                    <button type="submit" class="btn btn-primary">Save</button>
-                                    <!-- Use a form with a GET request for the cancel button to redirect to the product list -->
-                                    <a th:href="@{/products}" id="cancelButton-edit" class="btn btn-secondary">Cancel</a>
+
+                                        <div class="mb-3 row">
+                                            <div class="col-md-3">
+                                                <label for="productPrice" class="form-label">Price</label>
+                                                <input type="number" class="form-control" name="pprice"
+                                                       th:value="${productdetail.getPrice()}" min="0">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="productSale" class="form-label">Sale</label>
+                                                <input type="number" class="form-control" name="psale"
+                                                       th:value="${productdetail.getSales()}" min="0" max="100">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="productSale" class="form-label">Quantity</label>
+                                                <input type="number" class="form-control" name="pquantity"
+                                                       th:value="${productdetail.getQuantity()}" min="0">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="category" class="form-label">Category</label>
+                                                <select class="form-select" name="pcategory" required>
+                                                    <option th:value="${productdetail.getCategory().getCategoryId()}"
+                                                            th:text="${productdetail.getCategory().getCategoryName()}"
+                                                            selected></option>
+                                                    <option th:each="category : ${categorylist}"
+                                                            th:if="${category.getCategoryId()} != ${productdetail.getCategory().getCategoryId()}"
+                                                            th:value="${category.getCategoryId()}"
+                                                            th:text="${category.getCategoryName()}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="pdescription" class="form-label">Description</label>
+                                            <textarea class="form-control" name="pdescription"
+                                                      th:placeholder="${productdetail.getDescription()}"></textarea>
+                                        </div>
+
+                                        <div class="mb-3 row">
+                                            <div class="col-md-6">
+                                                <button type="submit" class="btn btn-primary">Save</button>
+                                                <a th:href="@{/products}" id="cancelButton-edit" class="btn btn-secondary">Cancel</a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </form>
+
                             </div>
                         </div>
                     </div>
@@ -339,14 +389,14 @@
 </div><!--end page-wrapper-->
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         //add new product button
         var addProductButton = document.querySelector('#newproduct');
         var addProductForm = document.getElementById('addProductForm');
         var cancelButton = document.getElementById('cancelbutton');
 
         if (addProductButton) {
-            addProductButton.addEventListener('click', function(event) {
+            addProductButton.addEventListener('click', function (event) {
                 event.preventDefault();
                 addProductForm.classList.remove('d-none');
                 addProductForm.classList.add('d-block');
@@ -354,14 +404,13 @@
         }
 
         if (cancelButton) {
-            cancelButton.addEventListener('click', function() {
+            cancelButton.addEventListener('click', function () {
                 addProductForm.classList.remove('d-block');
                 addProductForm.classList.add('d-none');
             });
         }
     });
 </script>
-
 
 <!-- Javascript -->
 <script th:src="@{/assets/js/jquery.min.js}"></script>

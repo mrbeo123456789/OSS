@@ -51,17 +51,12 @@ public class ProductController {
             return getProduct(model);
         }
         Product product = productService.getProductById(id);
-        List<ProductImage> productImage = productService.getProductImagesByProductId(id);
+        List<ProductImage> productImage = productService.getProductImagesByProductId(product);
         model.addAttribute("productdetail", product);
         model.addAttribute("imagelist", productImage);
-
         return getProduct(model);
     }
 
-    @PostMapping("/editproduct")
-    public String editProductDetail(){
-        return "inventory/product";
-    };
 
     @PostMapping("/addproduct")
     public String addProduct(@RequestParam("pname") String name,
@@ -70,11 +65,11 @@ public class ProductController {
                              @RequestParam("psale") Double sale,
                              @RequestParam("pcategory") Long categoryId,
                              @RequestParam("pdescription") String description,
-                             @RequestParam("pimage")MultipartFile image,
+                             @RequestParam("pimage") MultipartFile image,
                              Model model){
 
         Product product = new Product();
-        //set information for product
+        // Set information for product
         product.setProductCode(code);
         product.setProductName(name);
         product.setCategory(categoryService.getCategoryById(categoryId));
@@ -84,12 +79,13 @@ public class ProductController {
         product.setAddedDate(new Date());
         product.setQuantity(0);
         Long productId = productService.saveProduct(product).getProductId();
-        //upload file
+
+        // Upload file
         if (image.isEmpty()) {
             model.addAttribute("addmessage", "Image is required");
             return "redirect:/addproduct";
         } else {
-            String uploadFolder = "src/main/resources/static/assets/images/product";
+            String uploadFolder = "src/main/resources/static/assets/images/product/";
             try {
                 // Generate a unique filename for the image
                 String filename = UUID.randomUUID().toString() + "_" + image.getOriginalFilename();
@@ -118,6 +114,39 @@ public class ProductController {
             }
         }
     }
+
+    @PostMapping("/editproduct")
+    public String editProduct(@RequestParam("productId") Long productId,
+                              @RequestParam("pname") String name,
+                              @RequestParam("pcode") String code,
+                              @RequestParam("pprice") Double price,
+                              @RequestParam("psale") Double sale,
+                              @RequestParam("pquantity") int quantity,
+                              @RequestParam("pcategory") Long categoryId,
+                              @RequestParam("pdescription") String description,
+                              Model model) {
+
+        Product product = productService.getProductById(productId);
+        if (product != null) {
+            // Update product information
+            product.setProductName(name);
+            product.setProductCode(code);
+            product.setPrice(price);
+            product.setSales(sale);
+            product.setQuantity(quantity);
+            product.setCategory(categoryService.getCategoryById(categoryId));
+            product.setDescription(description);
+
+            productService.saveProduct(product);
+
+            model.addAttribute("editmessage", "Product updated successfully");
+        } else {
+            model.addAttribute("editmessage", "Product not found");
+        }
+
+        return "redirect:/products";
+    }
+
 
 
 
