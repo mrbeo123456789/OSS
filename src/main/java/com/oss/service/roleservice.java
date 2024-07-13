@@ -16,7 +16,7 @@ public class roleservice {
                 .orElseThrow(() -> new RuntimeException("Role not found"));
     }
     public List<Role> getListRole() {
-        return roleRepository.findByRoleNameNot("admin");
+        return roleRepository.findAll();
     }
 
 }

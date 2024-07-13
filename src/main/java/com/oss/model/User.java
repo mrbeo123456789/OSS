@@ -23,7 +23,8 @@ public class User {
     private Date registeredDate;
     private Date lastLogin;
     private String avatar;
-
+     private String verificationCode;
+    private boolean verified;
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;

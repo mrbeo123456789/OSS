@@ -29,7 +29,7 @@ public class DataInitializer {
             warehouseStaffRole.setRoleName("warehousestaff");
 
             Role salesStaffRole = new Role();
-            salesStaffRole.setRoleName("salesstaff");
+            salesStaffRole.setRoleName("salestaff");
 
             // Save roles to the database
             roleRepository.save(adminRole);

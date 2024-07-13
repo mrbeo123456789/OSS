@@ -4,12 +4,15 @@ import com.oss.model.Role;
 import com.oss.model.User;
 import com.oss.service.roleservice;
 import com.oss.service.userservice;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import java.util.List;
 
 
 @Controller
@@ -18,6 +21,8 @@ public class UserController {
     private userservice userService;
     @Autowired
     private roleservice roleService;
+    @Autowired
+    private HttpSession httpSession;
 
     @GetMapping("/")
     public String home() {
@@ -25,9 +30,24 @@ public class UserController {
     }
 
     @GetMapping("/user/list")
-    public String getUsers(Model model) {
-        List<User> users = userService.getAllUsers();
-        model.addAttribute("users", users);
+    public String getUsers(Model model,
+                           @RequestParam(defaultValue = "0") int page,
+                           @RequestParam(defaultValue = "5") int size,
+                           @RequestParam(required = false) String keyword,
+                           @RequestParam(required = false) String role) {
+        if ("All".equals(role)) {
+            role = null; // Handle the "All" value by setting role to null
+        }
+        Pageable pageable = PageRequest.of(page, size);
+        Page<User> userPage = userService.findUsers(keyword, role, pageable);
+        model.addAttribute("users", userPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", userPage.getTotalPages());
+        model.addAttribute("totalElements", userPage.getTotalElements());
+        model.addAttribute("size", size);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("role", role);
+
         return "manager/userlist";
     }
 
@@ -40,6 +60,7 @@ public class UserController {
     @PostMapping("/login")
     public String login(@RequestParam String email, @RequestParam String password, Model model) {
         User user = userService.login(email, password);
+        httpSession.setAttribute("user", user);
         if (user != null) {
             model.addAttribute("user", user);
             Long userRoleId = user.getRole().getRoleId();
@@ -75,8 +96,14 @@ public class UserController {
                           @RequestParam("number") String mobile,
                           @RequestParam("department") Long roleId,
                           @RequestParam("imageData") String avatarFile,
-                          RedirectAttributes redirectAttributes) {
+                          RedirectAttributes redirectAttributes,
+                          Model model) {
         Role role = roleService.getRoleById(roleId);
+        if (role == null) {
+            redirectAttributes.addFlashAttribute("error", "Invalid role ID");
+            return "redirect:/user/list";
+        }
+
         User user = new User();
         user.setUsername(username);
         user.setFullName(fullName);
@@ -84,24 +111,65 @@ public class UserController {
         user.setMobile(mobile);
         user.setRole(role);
         user.setAvatar(avatarFile);
+
         try {
-            userService.saveUser(user);
-        } catch (Exception e){
+            boolean check = userService.saveUser(user);
+            System.out.println(check);
+            if (!check) {
+
+                model.addAttribute("error", "Username already exists");
+                model.addAttribute("roles", roleService.getListRole()); // Assuming you have a method to fetch all roles
+                return "manager/addnewuser";
+            } else {
+                redirectAttributes.addFlashAttribute("userAdded", true);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
+            redirectAttributes.addFlashAttribute("error", "Failed to add user");
         }
-try{
-    userService.saveUser(user);
-}catch (Exception E)
-{
-    E.printStackTrace();
-}
-
-
-        redirectAttributes.addFlashAttribute("userAdded", true);
 
         return "redirect:/user/list";
     }
 
+    @GetMapping("/user/delete")
+    public String deleteUser(@RequestParam("userid") String userid){
+      userService.deleteUserById(Long.parseLong(userid));
+        return "redirect:/user/list";
+    }
+    @GetMapping("/user/update")
+    public String updateUser(@RequestParam("userid") String userid,Model  model){
+        model.addAttribute("roles", roleService.getListRole());
+        model.addAttribute("user",userService.getUserByUserid(userid));
+        return "manager/edituser";
+    }
+    @PostMapping("/user/edit")
+    public String updateUser(@ModelAttribute("user") User user,Model model, @RequestParam("imageData") String avatarFile) {
+
+        try {
+          user.setAvatar(avatarFile);
+            System.out.println(user.getAvatar());
+           userService.updateUser(user);
+                model.addAttribute("roles", roleService.getListRole()); // Assuming you have a method to fetch all roles
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+
+        return "redirect:/user/list";
+    }
+    @GetMapping("/verify")
+    public String verifyUser(@RequestParam("email") String email, @RequestParam("code") String verificationCode, Model model) {
+        boolean isVerified = userService.verifyUser(email, verificationCode);
+
+        if (isVerified) {
+            model.addAttribute("message", "Verification successful! Your account is now active.");
+        } else {
+            model.addAttribute("message", "Invalid verification code or the code has expired.");
+        }
+
+        return "common/thankyou";
+    }
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
@@ -114,8 +182,10 @@ try{
     @PostMapping("/register")
     public String registerUserAccount(@ModelAttribute("user") User user, Model model) {
         try {
+
+            user.setRole(roleService.getRoleById(2L));
             userService.registerNewUser(user);
-            model.addAttribute("successMessage", "Registration successful!");
+            model.addAttribute("successMessage", "A mail has to sent to your mail!");
         } catch (Exception e) {
             model.addAttribute("errorMessage", "There was an error during registration. Please try again.");
         }
