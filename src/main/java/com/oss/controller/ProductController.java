@@ -12,14 +12,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -42,11 +40,11 @@ public class ProductController {
         List<Category> categoryList = categoryService.getAllCategories();
         model.addAttribute("productlist", productList);
         model.addAttribute("categorylist", categoryList);
-        return "inventory/productlist";
+        return "inventory/product";
     }
 
     @PostMapping("/products")
-    public String getProduct(Model model, @RequestParam("productid") Long id) {
+    public String getProduct(Model model, @RequestParam("id") Long id) {
         if(id!=null){
             Product product = productService.getProductById(id);
             List<ProductImage> productImage = productService.getProductImagesByProductId(product);
@@ -57,7 +55,7 @@ public class ProductController {
         List<Category> categoryList = categoryService.getAllCategories();
         model.addAttribute("productlist", productList);
         model.addAttribute("categorylist", categoryList);
-        return "inventory/productlist";
+        return "inventory/product";
     }
 
 //    @PostMapping("/productdetail")
@@ -100,7 +98,7 @@ public class ProductController {
             model.addAttribute("addmessage", "Image is required");
             return "redirect:/addproduct";
         } else {
-            String uploadFolder = "product/";
+            String uploadFolder = "image/product/";
             try {
                 // Generate a unique filename for the image
                 String filename = UUID.randomUUID().toString() + "_" + image.getOriginalFilename();
@@ -116,7 +114,7 @@ public class ProductController {
                 // Set image path for product
                 ProductImage productImage = new ProductImage();
                 productImage.setProduct(product);
-                productImage.setImageUrl(filename);
+                productImage.setImageUrl("/image/product/"+filename);
                 productService.saveProductImage(productImage);
 
                 model.addAttribute("addmessage", "Product added successfully");
@@ -178,7 +176,7 @@ public class ProductController {
                                   Model model) {
         if (id != null && image != null) {
             // Upload file
-            String uploadFolder = "Images/";
+            String uploadFolder = "image/product/";
             try {
                 // Generate a unique filename for the image
                 String filename = UUID.randomUUID().toString() + "_" + image.getOriginalFilename();
@@ -194,7 +192,7 @@ public class ProductController {
                 // Set image path for product
                 ProductImage productImage = new ProductImage();
                 productImage.setProduct(productService.getProductById(id));
-                productImage.setImageUrl(filename);
+                productImage.setImageUrl("/image/product/" +filename);
                 productService.saveProductImage(productImage);
 
                 model.addAttribute("addmessage", "Product added successfully");

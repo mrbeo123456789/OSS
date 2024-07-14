@@ -84,7 +84,9 @@
                     <a href="javascript:void(0)">Category</a>
                     <div class="sidebar-submenu">
                         <ul>
-                            <li th:each="category : ${categorylist}"><a href="#" th:text="${category.getCategoryName()}"></a></li>
+                            <li th:each="category : ${categorylist}"><a href="#"
+                                                                        th:text="${category.getCategoryName()}"></a>
+                            </li>
                             <li><a id="addCategoryButton">Add New Category</a></li>
                             <li id="newCategoryInput" class="d-none">
                                 <form th:action="@{/addcategory}" method="post">
@@ -192,9 +194,8 @@
                     <div class="col-lg-12">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h5 class="mb-0">Product List</h5>
-                            <!--                            <a th:href="@{/inventory/addnewproduct.html}" class="btn btn-primary">New Product</a>-->
-                            <label for="productName" class="form-label">
-                                <button id="newproduct" class="btn btn-primary">New Product</button>
+                            <label for="addProductForm" class="form-label">
+                                <button id="newProductButton" class="btn btn-primary">New Product</button>
                             </label>
                         </div>
 
@@ -222,7 +223,7 @@
                                         <td class="p-3" th:text="${product.price}"></td>
                                         <td class="p-3">
                                             <form th:action="@{/products}" method="post" style="display: inline;">
-                                                <input type="hidden" name="productid" th:value="${product.productId}">
+                                                <input type="hidden" name="id" th:value="${product.productId}">
                                                 <button type="submit" class="btn btn-icon btn-pills btn-soft-primary"><i
                                                         class="fas fa-edit"></i></button>
                                             </form>
@@ -236,7 +237,8 @@
                             <div class="pagination-container d-flex justify-content-center mt-3">
                                 <nav>
                                     <ul class="pagination">
-                                        <li class="page-item" id="previousPage"><a class="page-link" href="#">Previous</a></li>
+                                        <li class="page-item" id="previousPage"><a class="page-link"
+                                                                                   href="#">Previous</a></li>
                                         <li class="page-item active"><a class="page-link" href="#" id="page1">1</a></li>
                                         <li class="page-item" id="nextPage"><a class="page-link" href="#">Next</a></li>
                                     </ul>
@@ -250,7 +252,6 @@
         </div><!--end container-->
 
         <!-- Add New Product Form -->
-
         <div id="addProductForm" class="container-fluid d-none">
             <div class="layout-specing">
                 <div class="row">
@@ -302,10 +303,10 @@
                                     </div>
                                     <div class="mb-3">
                                         <input type="file" class="form-control" id="image" name="pimage"
-                                               accept="image/*" >
+                                               accept="image/*" required>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Add Product</button>
-                                    <button type="button" id="cancelbutton" class="btn btn-secondary">Cancel</button>
+                                    <button type="button" id="cancelButton" class="btn btn-secondary">Cancel</button>
                                 </form>
                             </div>
                         </div>
@@ -314,6 +315,17 @@
             </div>
             <!--end row-->
         </div><!--end addProductForm-->
+
+        <script>
+            document.getElementById('newProductButton').addEventListener('click', function () {
+                document.getElementById('addProductForm').classList.remove('d-none');
+                document.getElementById('addProductForm').scrollIntoView({behavior: 'smooth'});
+            });
+
+            document.getElementById('cancelButton').addEventListener('click', function () {
+                document.getElementById('addProductForm').classList.add('d-none');
+            });
+        </script>
 
         <!-- Product detail-->
         <div th:if="${productdetail != null}" id="editProductForm" class="container-fluid">
@@ -328,12 +340,13 @@
                                     <div class="col-md-3">
                                         Image
                                         <div th:each="image : ${imagelist}">
-                                            <img th:src="@{/product/{imageUrl}(imageUrl=${image.imageUrl})}"
+                                            <img th:src="@{${image.imageUrl}}"
                                                  alt="Product Image"
                                                  id="previewImage"
                                                  class="mt-3 img-fluid">
                                         </div>
-                                        <form th:action="@{/addproductimage}" method="post" enctype="multipart/form-data">
+                                        <form th:action="@{/addproductimage}" method="post"
+                                              enctype="multipart/form-data">
                                             <input type="hidden" name="productId" th:value="${productdetail.productId}">
                                             <input type="file" class="form-control" name="pimage"
                                                    accept="image/*" required>
@@ -397,7 +410,8 @@
                                         <div class="mb-3 row">
                                             <div class="col-md-6">
                                                 <button type="submit" class="btn btn-primary">Save</button>
-                                                <a th:href="@{/products}" id="cancelButton-edit" class="btn btn-secondary">Cancel</a>
+                                                <a th:href="@{/products}" id="cancelButton-edit"
+                                                   class="btn btn-secondary">Cancel</a>
                                             </div>
                                         </div>
                                     </div>
