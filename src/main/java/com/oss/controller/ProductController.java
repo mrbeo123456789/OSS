@@ -192,14 +192,14 @@ public class ProductController {
             }
         }
         return"redirect:/products";
-}
+    }
 
 
-@GetMapping("/shop")
-public String getShop(Model model) {
-   List<Product> productList = productService.getTop10NewestProducts();
-   model.addAttribute("products", productList);
+    @GetMapping("/shop")
+    public String getShop(Model model) {
+        List<Product> productList = productService.getTop10NewestProducts();
+        model.addAttribute("products", productList);
         return "customer/shop";
-}
+    }
 
 }

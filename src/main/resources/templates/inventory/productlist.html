@@ -84,9 +84,15 @@
                     <a href="javascript:void(0)">Category</a>
                     <div class="sidebar-submenu">
                         <ul>
-                            <li><a href="#">Category 1</a></li>
-                            <li><a href="#">Category 2</a></li>
-                            <li><a href="#">Add new category</a></li>
+                            <li th:each="category : ${categorylist}"><a href="#" th:text="${category.getCategoryName()}"></a></li>
+                            <li><a id="addCategoryButton">Add New Category</a></li>
+                            <li id="newCategoryInput" class="d-none">
+                                <form th:action="@{/addcategory}" method="post">
+                                    <input type="text" class="form-control" id="newCategoryName" name="categoryname"
+                                           placeholder="Enter Category Name" required>
+                                    <button type="submit">Save</button>
+                                </form>
+                            </li>
                         </ul>
                     </div>
                 </li>
