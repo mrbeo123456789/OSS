@@ -46,4 +46,8 @@ public class ProductService {
         Pageable topTen = PageRequest.of(0, 10);
         return productRepository.findTop10Products(topTen);
     }
+
+    public List<Product> getBestSellerProducts() {
+        return productRepository.findTop10BestSellingProducts();
+    }
 }

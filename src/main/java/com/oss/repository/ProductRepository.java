@@ -14,5 +14,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findAllProduct();
     @Query("SELECT p FROM Product p ORDER BY p.addedDate DESC")
     List<Product> findTop10Products(Pageable pageable);
+    @Query("SELECT p FROM Product p ORDER BY p.sales DESC")
+    List<Product> findTop10BestSellingProducts();
 }
 
