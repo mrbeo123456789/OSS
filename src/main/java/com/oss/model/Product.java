@@ -16,7 +16,11 @@ public class Product {
 
     private String productCode;
     private String productName;
+
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String description;
+
     private double price;
     private double sales;
     private Date addedDate;
