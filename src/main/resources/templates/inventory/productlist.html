@@ -84,9 +84,15 @@
                     <a href="javascript:void(0)">Category</a>
                     <div class="sidebar-submenu">
                         <ul>
-                            <li><a href="#">Category 1</a></li>
-                            <li><a href="#">Category 2</a></li>
-                            <li><a href="#">Add new category</a></li>
+                            <li th:each="category : ${categorylist}"><a href="#" th:text="${category.getCategoryName()}"></a></li>
+                            <li><a id="addCategoryButton">Add New Category</a></li>
+                            <li id="newCategoryInput" class="d-none">
+                                <form th:action="@{/addcategory}" method="post">
+                                    <input type="text" class="form-control" id="newCategoryName" name="categoryname"
+                                           placeholder="Enter Category Name" required>
+                                    <button type="submit">Save</button>
+                                </form>
+                            </li>
                         </ul>
                     </div>
                 </li>
@@ -215,8 +221,8 @@
                                         <td class="p-3" th:text="${product.category.getCategoryName()}"></td>
                                         <td class="p-3" th:text="${product.price}"></td>
                                         <td class="p-3">
-                                            <form th:action="@{/productdetail}" method="post" style="display: inline;">
-                                                <input type="hidden" name="id" th:value="${product.productId}">
+                                            <form th:action="@{/products}" method="post" style="display: inline;">
+                                                <input type="hidden" name="productid" th:value="${product.productId}">
                                                 <button type="submit" class="btn btn-icon btn-pills btn-soft-primary"><i
                                                         class="fas fa-edit"></i></button>
                                             </form>
@@ -322,7 +328,7 @@
                                     <div class="col-md-3">
                                         Image
                                         <div th:each="image : ${imagelist}">
-                                            <img th:src="@{/assets/images/product/{imageUrl}(imageUrl=${image.imageUrl})}"
+                                            <img th:src="@{/product/{imageUrl}(imageUrl=${image.imageUrl})}"
                                                  alt="Product Image"
                                                  id="previewImage"
                                                  class="mt-3 img-fluid">
@@ -330,7 +336,7 @@
                                         <form th:action="@{/addproductimage}" method="post" enctype="multipart/form-data">
                                             <input type="hidden" name="productId" th:value="${productdetail.productId}">
                                             <input type="file" class="form-control" name="pimage"
-                                                   accept="image/*">
+                                                   accept="image/*" required>
                                             <button type="submit">Add</button>
                                         </form>
                                     </div>

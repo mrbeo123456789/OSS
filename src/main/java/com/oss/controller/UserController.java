@@ -24,10 +24,7 @@ public class UserController {
     @Autowired
     private HttpSession httpSession;
 
-    @GetMapping("/")
-    public String home() {
-        return "common/home";
-    }
+
 
     @GetMapping("/user/list")
     public String getUsers(Model model,

@@ -37,7 +37,7 @@ public class ProductController {
     private ProductImageService productImageService;
 
     @GetMapping("/products")
-    public String getProduct(Model model) {
+    public String getProducts(Model model) {
         List<Product> productList = productService.getAllProducts();
         List<Category> categoryList = categoryService.getAllCategories();
         model.addAttribute("productlist", productList);
@@ -45,17 +45,32 @@ public class ProductController {
         return "inventory/productlist";
     }
 
-    @PostMapping("/productdetail")
-    public String getProductDetail(@RequestParam("id") Long id, Model model) {
-        if(id == null) {
-            return getProduct(model);
+    @PostMapping("/products")
+    public String getProduct(Model model, @RequestParam("productid") Long id) {
+        if(id!=null){
+            Product product = productService.getProductById(id);
+            List<ProductImage> productImage = productService.getProductImagesByProductId(product);
+            model.addAttribute("productdetail", product);
+            model.addAttribute("imagelist", productImage);
         }
-        Product product = productService.getProductById(id);
-        List<ProductImage> productImage = productService.getProductImagesByProductId(product);
-        model.addAttribute("productdetail", product);
-        model.addAttribute("imagelist", productImage);
-        return getProduct(model);
+        List<Product> productList = productService.getAllProducts();
+        List<Category> categoryList = categoryService.getAllCategories();
+        model.addAttribute("productlist", productList);
+        model.addAttribute("categorylist", categoryList);
+        return "inventory/productlist";
     }
+
+//    @PostMapping("/productdetail")
+//    public String getProductDetail(@RequestParam("id") Long id, Model model) {
+//        if(id == null) {
+//            return getProduct(model);
+//        }
+//        Product product = productService.getProductById(id);
+//        List<ProductImage> productImage = productService.getProductImagesByProductId(product);
+//        model.addAttribute("productdetail", product);
+//        model.addAttribute("imagelist", productImage);
+//        return getProduct(model);
+//    }
 
 
     @PostMapping("/addproduct")
@@ -85,7 +100,7 @@ public class ProductController {
             model.addAttribute("addmessage", "Image is required");
             return "redirect:/addproduct";
         } else {
-            String uploadFolder = "src/main/resources/static/assets/images/product/";
+            String uploadFolder = "product/";
             try {
                 // Generate a unique filename for the image
                 String filename = UUID.randomUUID().toString() + "_" + image.getOriginalFilename();
@@ -163,7 +178,7 @@ public class ProductController {
                                   Model model) {
         if (id != null && image != null) {
             // Upload file
-            String uploadFolder = "src/main/resources/static/assets/images/product/";
+            String uploadFolder = "Images/";
             try {
                 // Generate a unique filename for the image
                 String filename = UUID.randomUUID().toString() + "_" + image.getOriginalFilename();
@@ -192,14 +207,14 @@ public class ProductController {
             }
         }
         return"redirect:/products";
-}
+    }
 
 
-@GetMapping("/shop")
-public String getShop(Model model) {
-   List<Product> productList = productService.getTop10NewestProducts();
-   model.addAttribute("products", productList);
+    @GetMapping("/shop")
+    public String getShop(Model model) {
+        List<Product> productList = productService.getTop10NewestProducts();
+        model.addAttribute("products", productList);
         return "customer/shop";
-}
+    }
 
 }
