@@ -340,11 +340,13 @@
                                     <div class="col-md-3">
                                         Image
                                         <div th:each="image : ${imagelist}">
-                                            <img th:src="@{${image.imageUrl}}"
+                                            <img th:src="@{${image.imageUrl.substring(1)}}"
                                                  alt="Product Image"
                                                  id="previewImage"
                                                  class="mt-3 img-fluid">
                                         </div>
+
+
                                         <form th:action="@{/addproductimage}" method="post"
                                               enctype="multipart/form-data">
                                             <input type="hidden" name="productId" th:value="${productdetail.productId}">

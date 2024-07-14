@@ -118,10 +118,10 @@ public class userservice {
         // Save the updated user
         userRepository.save(existingUser);
     }
-    private final String imageUploadDir = "./Avt";
 
     private void saveAvatarImage(User user) throws IOException {
         // Create the directory if it doesn't exist
+        String imageUploadDir = "./Avt";
         File directory = new File(imageUploadDir);
         if (!directory.exists()) {
             if (!directory.mkdirs()) {
