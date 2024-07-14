@@ -35,7 +35,7 @@
     </div>
     <!-- Loader -->
 
-    <div class="page-wrapper doctris-theme toggled">
+    <main class="page-wrapper doctris-theme toggled">
         <nav id="sidebar" class="sidebar-wrapper">
             <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
 
@@ -84,16 +84,7 @@
                         <a id="close-sidebar" class="btn btn-icon btn-pills btn-soft-primary ms-2" href="#">
                             <i class="uil uil-bars"></i>
                         </a>
-                        <div class="search-bar p-0 d-none d-lg-block ms-2">
-                            <div id="search" class="menu-search mb-0">
-                                <form role="search" method="get" id="searchform" class="searchform">
-                                    <div>
-                                        <input type="text" class="form-control border rounded-pill" name="s" id="s" placeholder="Search Keywords...">
-                                        <input type="submit" id="searchsubmit" value="Search">
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+
                     </div>
 
                     <ul class="list-unstyled mb-0">
@@ -130,8 +121,35 @@
 
                     </div>
 
-                    <div class="row">
-                        <div class="col-12 mt-3">
+                    <div class="row" style="margin-bottom: 10px">
+                        <div class="col-3">
+                            <div class="search-bar p-0 d-none d-lg-block ms-2">
+                                <div id="search" class="menu-search mb-0">
+                                    <form role="search" method="get" action="#" id="searchform" class="searchform">
+                                        <div>
+                                            <input type="text" class="form-control border" name="keyword" id="s" placeholder="Enter name..." th:value="${keyword}">
+                                            <input type="submit" id="searchsubmit" value="Search">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-1">
+                            <form method="get" action="#">
+                                <select class="form-select form-select-sm" id="inputGroupSelect01" name="role" onchange="this.form.submit()">
+                                    <option th:selected="${role == null}" value="All">All</option>
+                                    <option th:selected="${role == 'Admin'}" value="Admin">Admin</option>
+                                    <option th:selected="${role == 'Customer'}" value="Customer">Customer</option>
+                                    <option th:selected="${role == 'salestaff'}" value="salestaff">Sale Staffs</option>
+                                    <option th:selected="${role == 'warehousestaff'}" value="warehousestaff">Warehouses Staffs</option>
+                                </select>
+                            </form>
+                        </div>
+                    </div>
+
                             <div class="table-responsive shadow rounded">
                                 <table class="table table-center bg-white mb-0">
                                     <thead>
@@ -152,7 +170,6 @@
                                                 <div class="d-flex align-items-center">
                                                     <img th:if="${not #strings.isEmpty(user.avatar)}" th:src="@{${user.avatar}}" class="avatar avatar-md-sm rounded-circle shadow" alt="User Avatar">
                                                     <img th:unless="${not #strings.isEmpty(user.avatar)}" th:src="@{/assets/images/client/01.jpg}" class="avatar avatar-md-sm rounded-circle shadow" alt="Default Avatar">
-
                                                     <span class="ms-2" th:text="${user.fullName}"></span>
                                                 </div>
                                             </a>
@@ -164,56 +181,45 @@
                                             <a href="#" class="btn btn-icon btn-pills btn-soft-primary" data-bs-toggle="modal" th:data-bs-target="'#viewprofile-' + ${user.id}">
                                                 <i class="uil uil-eye"></i>
                                             </a>
-                                            <a href="#" class="btn btn-icon btn-pills btn-soft-success" data-bs-toggle="modal" th:data-bs-target="'#editprofile-' + ${user.id}">
+                                            <a th:href="@{/user/update(userid=${user.id})}" class="btn btn-icon btn-pills btn-soft-success" >
                                                 <i class="uil uil-pen"></i>
                                             </a>
-                                            <a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i class="uil uil-trash"></i></a>
+
+                                            <a  class="btn btn-icon btn-pills btn-soft-danger" th:onclick="'createAndShowModal(' + ${user.id} + ')'">
+                                                <i class="uil uil-trash"></i>
+                                            </a>
+
                                         </td>
                                     </tr>
                                     </tbody>
                                 </table>
                             </div>
+
+                    <div class="col-12 mt-4">
+                        <div class="d-md-flex align-items-center text-center justify-content-between">
+                            <span class="text-muted me-3" th:text="'Showing ' + (${currentPage} * ${size} + 1) + ' - ' + (${currentPage} * ${size} + ${users.size()}) + ' out of ' + ${totalElements}"></span>
+                            <ul class="pagination justify-content-center mb-0 mt-3 mt-sm-0">
+                                <li class="page-item" th:classappend="${currentPage == 0} ? ' disabled' : ''">
+                                    <a class="page-link" th:href="@{/user/list(page=${currentPage - 1}, size=${size})}" aria-label="Previous">Prev</a>
+                                </li>
+                                <li class="page-item" th:each="page : ${#numbers.sequence(0, totalPages - 1)}" th:classappend="${currentPage == page} ? ' active' : ''">
+                                    <a class="page-link" th:href="@{/user/list(page=${page}, size=${size})}" th:text="${page + 1}"></a>
+                                </li>
+                                <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? ' disabled' : ''">
+                                    <a class="page-link" th:href="@{/user/list(page=${currentPage + 1}, size=${size})}" aria-label="Next">Next</a>
+                                </li>
+                            </ul>
                         </div>
+                    </div>
+
+
+                    <!-- PAGINATION END -->
                     </div><!--end row-->
-
-                 <!--   <!__div class="row text-center">
-                        &lt;!&ndash; PAGINATION START &ndash;&gt;
-                        <div class="col-12 mt-4">
-                            <div class="d-md-flex align-items-center text-center justify-content-between">
-                                <span class="text-muted me-3">Showing 1 - 10 out of 50</span>
-                                <ul class="pagination justify-content-center mb-0 mt-3 mt-sm-0">
-                                    <li class="page-item"><a class="page-link" href="javascript:void(0)" aria-label="Previous">Prev</a></li>
-                                    <li class="page-item active"><a class="page-link" href="javascript:void(0)">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="javascript:void(0)">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>
-                                    <li class="page-item"><a class="page-link" href="javascript:void(0)" aria-label="Next">Next</a></li>
-                                </ul>
-                            </div>
-                        </div>&lt;!&ndash;end col&ndash;&gt;
-                        &lt;!&ndash; PAGINATION END &ndash;&gt;
-                    </div>&lt;!&ndash;end row&ndash;&gt;
                 </div>
-            </div>&lt;!&ndash;end container&ndash;&gt;->>
+        </div>
 
-            <!=-- Footer Start -->
-<!--            <footer class="bg-white shadow py-3">-->
-<!--                <div class="container-fluid">-->
-<!--                    <div class="row align-items-center">-->
-<!--                        <div class="col">-->
-<!--                            <div class="text-sm-start text-center">-->
-<!--                                <p class="mb-0 text-muted"><script>document.write(new Date().getFullYear())</script> © OSS. <i class="mdi mdi-heart text-danger"></i> </p>-->
-<!--                            </div>-->
-<!--                        </div>&lt;!&ndash;end col&ndash;&gt;-->
-<!--                    </div>&lt;!&ndash;end row&ndash;&gt;-->
-<!--                </div>&lt;!&ndash;end container&ndash;&gt;-->
-<!--            </footer>&lt;!&ndash;end footer&ndash;&gt;-->
-            <!-- End -->
-<!--        </main>-->
-        <!--End page-content" -->
-<!--    </div>-->
-    <!-- page-wrapper -->
 
-    <!-- Offcanvas Start -->
+
     <div class="offcanvas offcanvas-end bg-white shadow" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
         <div class="offcanvas-header p-4 border-bottom">
             <h5 id="offcanvasRightLabel" class="mb-0">
@@ -319,13 +325,45 @@
                             </div>
                         </div>
                     </div>
+    <!-- Delete Modal -->
+            <div id="modalPlaceholder"></div>
 
-                    <!-- Modal end -->
+            <script>
+                function createAndShowModal(userId) {
+                    // Create the modal HTML
+                    const modalHTML = `
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header border-bottom p-3">
+                                <h5 class="modal-title" id="exampleModalLabel">Warning</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Are you sure you want to delete this account?</p>
 
-    <!-- javascript -->
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <a href="/user/delete?userid=${userId}" class="btn btn-warning">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+                    // Insert the modal HTML into the placeholder
+                    document.getElementById('modalPlaceholder').innerHTML = modalHTML;
+
+                    // Show the modal
+                    var modal = new bootstrap.Modal(document.getElementById('exampleModal'));
+                    modal.show();
+                }
+            </script>
 
 
-                    <script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
+
+    <script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
                     <script th:src="@{/assets/js/simplebar.min.js}"></script>
                     <script th:src="@{/assets/js/feather.min.js}"></script>
                     <script th:src="@{/assets/js/app.js}"></script>

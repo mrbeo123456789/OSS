@@ -125,16 +125,17 @@
         <div class="container-fluid">
             <div class="layout-specing">
                 <div class="d-md-flex justify-content-between">
-                    <h5 class="mb-0">Add New Account</h5>
+                    <h5 class="mb-0">Edit Account</h5>
 
                 </div>
 
                 <div class="row">
                     <div class="col-lg-12 mt-4">
-                        <div class="card border-0 p-4 rounded shadow">
+                        <div class="card border-0 p-4 rounded shadow" >
                             <div class="row align-items-center">
                                 <div class="col-lg-2 col-md-4">
-                                    <img id="currentImage" src="/assets/images/client/01.jpg" class="avatar avatar-md-md rounded-pill shadow mx-auto d-block" alt="Current Image">
+                                    <!-- Display current image -->
+                                    <img id="currentImage" th:if="${user.avatar}" th:src="@{${user.avatar}}" class="avatar avatar-md-md rounded-pill shadow mx-auto d-block" alt="Current Image">
                                 </div><!--end col-->
 
                                 <div class="col-lg-5 col-md-8 text-center text-md-start mt-4 mt-sm-0">
@@ -143,61 +144,67 @@
                                 </div><!--end col-->
 
                                 <div class="col-lg-5 col-md-12 text-lg-end text-center mt-4 mt-lg-0">
-                                    <input type="file" id="imageUpload" accept=".jpg, .png" style="display:none;">
+                                    <!-- Hidden file input for image upload -->
+                                    <input type="file" id="imageUpload" accept=".jpg, .png" style="display:none;" >
                                     <button type="button" class="btn btn-primary" onclick="document.getElementById('imageUpload').click();">Upload</button>
                                     <a href="#" class="btn btn-soft-primary ms-2" id="removeImage">Remove</a>
                                 </div><!--end col-->
                             </div><!--end row-->
 
-                            <form class="mt-4" th:action="@{/user/add}" method="post">
+                            <form class="mt-4" th:action="@{/user/edit}" method="post" th:object="${user}">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label class="form-label">User Name</label>
-                                            <input name="username" id="name" type="text" class="form-control" placeholder="User Name :">
-
+                                            <input name="username" id="name" type="text" class="form-control" th:field="*{username}" placeholder="User Name">
                                         </div>
+                                        <input type="hidden" th:field="*{id}">
+
                                         <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
                                     </div><!--end col-->
 
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label class="form-label">Full Name</label>
-                                            <input name="fullname" id="name2" type="text" class="form-control" placeholder="Full Name :">
+                                            <input name="fullname" id="name2" type="text" class="form-control" th:field="*{fullName}" placeholder="Full Name">
                                         </div>
                                     </div><!--end col-->
 
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label class="form-label">Your Email</label>
-                                            <input name="email" id="email" type="email" class="form-control" placeholder="Your email :">
+                                            <label class="form-label">Email</label>
+                                            <input name="email" id="email" type="email" class="form-control" th:field="*{email}" placeholder="Your Email">
                                         </div>
                                     </div><!--end col-->
 
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label class="form-label">Phone no.</label>
-                                            <input name="number" id="number" type="text" class="form-control" placeholder="Phone no. :">
+                                            <input name="number" id="number" type="text" class="form-control" th:field="*{mobile}" placeholder="Phone Number">
                                         </div>
                                     </div><!--end col-->
 
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label class="form-label">Roles</label>
-                                            <select name="department" class="form-control department-name select2input">
+                                            <select name="department" class="form-control department-name select2input" th:field="*{role.roleId}">
                                                 <option th:each="role : ${roles}" th:value="${role.roleId}" th:text="${role.roleName}"></option>
                                             </select>
                                         </div>
                                     </div><!--end col-->
 
+                                    <!-- Hidden input for storing image data if needed -->
                                     <input type="hidden" name="imageData" id="imageData">
                                 </div><!--end row-->
 
-                                <button type="submit" class="btn btn-primary">Add Account</button>
+                                <!-- Submit button -->
+                                <button type="submit" class="btn btn-primary">Update Account</button>
                             </form>
+
                         </div>
                     </div><!--end col-->
                 </div><!--end row-->
+
 
                 <!-- Modal end -->
 
