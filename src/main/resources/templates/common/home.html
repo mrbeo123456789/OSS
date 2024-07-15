@@ -17,6 +17,71 @@
           type="text/css"/>
     <!-- Main Css -->
     <link href="styles.css" rel="stylesheet" type="text/css"/>
+    <!-- Swiper -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <style>
+        /* styles.css */
+        /* Adjust the size of the product in Swiper */
+        .swiper-container-bestseller, .swiper-container-newproduct {
+            background: orangered;
+            margin-top: 20px;
+            width: 100%;
+            padding: 20px 0; /* Padding for navigation buttons */
+        }
+
+        .swiper-slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            width: 100%; /* Ensure card occupies full space of the slide */
+            max-width: 200px; /* Adjust max width of card */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-img-top {
+            height: 150px; /* Adjust product image height */
+            object-fit: cover; /* Ensure image is not distorted */
+        }
+
+        .btn-primary {
+            font-size: 14px; /* Adjust button font size */
+            padding: 5px 10px; /* Adjust button padding */
+        }
+
+        /* Điều chỉnh cho các nút Swiper */
+        .swiper-button-next-bestseller,
+        .swiper-button-prev-bestseller {
+            color: #000; /* Màu sắc của các nút điều hướng */
+        }
+
+        /* Pagination style */
+        .swiper-pagination-bestseller {
+            bottom: 10px; /* Đặt vị trí của phân trang */
+            text-align: center;
+        }
+
+        /* Điều chỉnh cho các nút Swiper */
+        .swiper-button-next-newproduct,
+        .swiper-button-prev-newproduct {
+            color: #000; /* Màu sắc của các nút điều hướng */
+        }
+
+        /* Pagination style */
+        .swiper-pagination-newproduct {
+            bottom: 10px; /* Đặt vị trí của phân trang */
+            text-align: center;
+        }
+
+        h5{
+            display: flex;
+            justify-content: center;
+            color: orange;
+        }
+    </style>
 </head>
 
 <body>
@@ -100,88 +165,59 @@
 </div>
 <!--End slider-->
 
-<!-- Best seller -->
-<h5 style="padding-top: 10px; padding-bottom: 5px;">Best Seller</h5>
-<!-- Swiper -->
-<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
-<div class="swiper-container-bestseller">
-    <div class="swiper-wrapper">
-        <!-- Iterate over products and create slides -->
-        <div class="swiper-slide" th:each="product : ${bestSellerProducts}">
-            <div class="card">
-                <img th:src="@{/assets/images/product/{imageUrl}(imageUrl=${product.images[0]})}" class="card-img-top" alt="Product Image">
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${product.productName}"></h5>
-                    <p>Price: <del th:text="${product.price}"></del> - <span th:text="${product.price - product.price / 100 * product.sales}"></span></p>
-                    <p>Sale : <span th:text="${product.sales}"></span>%</p>
-                    <a th:href="@{/product/{id}(id=${product.productId})}" class="btn btn-primary">View Product</a>
+<!-- New product -->
+<!-- Iterate over products and create slides -->
+<div class="container mt-4 new-product">
+    <h5>New Product</h5>
+    <div class="swiper-container-newproduct">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide" th:each="product : ${newProducts}">
+                <div class="card mb-3 h-100">
+                    <img th:src="@{${product.getImages()[0].getImageUrl()}}" class="card-img-top img-fluid" alt="Product Image">
+                    <div class="card-body d-flex flex-column">
+                        <a th:href="@{/viewproduct/{id}(id=${product.productId})}" class="card-title" th:text="${product.productName}"></a>
+                        <p>Price: <del th:text="${product.price}"></del>đ - <span th:text="${product.price - product.price / 100 * product.sales}"></span>đ</p>
+                    </div>
                 </div>
             </div>
         </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination-newproduct"></div>
+        <!-- Add Navigation -->
+        <div class="swiper-button-next-newproduct"></div>
+        <div class="swiper-button-prev-newproduct"></div>
     </div>
-    <!-- Add Pagination -->
-    <div class="swiper-pagination-bestseller"></div>
-    <!-- Add Navigation -->
-    <div class="swiper-button-next-bestseller"></div>
-    <div class="swiper-button-prev-bestseller"></div>
 </div>
 
-<!-- New Products -->
-<h5 style="padding-top: 10px; padding-bottom: 5px;">New Products</h5>
-<!-- Swiper -->
-<div class="swiper-container-newproducts">
-    <div class="swiper-wrapper">
-        <!-- Iterate over products and create slides -->
-        <div class="swiper-slide" th:each="product : ${newProducts}">
-            <div class="card">
-                <img th:src="@{/assets/images/product/{imageUrl}(imageUrl=${product.images[0]})}" class="card-img-top" alt="Product Image">
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${product.productName}"></h5>
-                    <p>Price: <del th:text="${product.price}"></del> - <span th:text="${product.price - product.price / 100 * product.sales}"></span></p>
-                    <a th:href="@{/product/{id}(id=${product.productId})}" class="btn btn-primary">View Product</a>
+
+<!-- Sale off -->
+<!-- Iterate over products and create slides -->
+<div class="container mt-4 bestseller-product">
+    <h5>Sale Off</h5>
+    <div class="swiper-container-bestseller">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide" th:each="product : ${bestSellerProducts}">
+                <div class="card mb-3 h-100">
+                    <img th:src="@{${product.getImages()[0].getImageUrl()}}" class="card-img-top img-fluid" alt="Product Image">
+                    <div class="card-body d-flex flex-column">
+                        <a th:href="@{/viewproduct/{id}(id=${product.productId})}" class="card-title" th:text="${product.productName}"></a>
+                        <p>Price: <del th:text="${product.price}"></del>đ - <span th:text="${product.price - product.price / 100 * product.sales}"></span>đ</p>
+                        <p>Sale: <span th:text="${product.sales}"></span>%</p>
+                    </div>
                 </div>
             </div>
         </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination-bestseller"></div>
+        <!-- Add Navigation -->
+        <div class="swiper-button-next-bestseller"></div>
+        <div class="swiper-button-prev-bestseller"></div>
     </div>
-    <!-- Add Pagination -->
-    <div class="swiper-pagination-newproducts"></div>
-    <!-- Add Navigation -->
-    <div class="swiper-button-next-newproducts"></div>
-    <div class="swiper-button-prev-newproducts"></div>
 </div>
 
-<!-- Swiper JS -->
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-<script>
-    var swiperBestseller = new Swiper('.swiper-container-bestseller', {
-        slidesPerView: 3,  // Number of products to show per slide
-        spaceBetween: 10, // Space between slides
-        navigation: {
-            nextEl: '.swiper-button-next-bestseller',
-            prevEl: '.swiper-button-prev-bestseller',
-        },
-        pagination: {
-            el: '.swiper-pagination-bestseller',
-            clickable: true,
-        },
-    });
-
-    var swiperNewProducts = new Swiper('.swiper-container-newproducts', {
-        slidesPerView: 3,  // Number of products to show per slide
-        spaceBetween: 10, // Space between slides
-        navigation: {
-            nextEl: '.swiper-button-next-newproducts',
-            prevEl: '.swiper-button-prev-newproducts',
-        },
-        pagination: {
-            el: '.swiper-pagination-newproducts',
-            clickable: true,
-        },
-    });
-</script>
 
 <!-- Footer -->
-<footer class="footer bg-light">
+<footer class="footer bg-light mt-4">
     <div class="container">
         <div class="row">
             <div class="col-md-6">
@@ -213,10 +249,66 @@
     </div>
 </footer>
 
-
 <!-- JavaScript -->
+<!-- Swiper JS -->
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    var swiperBestseller = new Swiper('.swiper-container-bestseller', {
+        slidesPerView: 4,  // Number of products to show per slide
+        spaceBetween: 15, // Space between slides
+        navigation: {
+            nextEl: '.swiper-button-next-bestseller',
+            prevEl: '.swiper-button-prev-bestseller',
+        },
+        pagination: {
+            el: '.swiper-pagination-bestseller',
+            clickable: true,
+        },
+        breakpoints: {
+            320: {
+                slidesPerView: 2,
+                spaceBetween: 5,
+            },
+            768: {
+                slidesPerView: 3,
+                spaceBetween: 10,
+            },
+            1024: {
+                slidesPerView: 4,
+                spaceBetween: 15,
+            },
+        },
+    });
+
+    var swiperNewProduct = new Swiper('.swiper-container-newproduct', {
+        slidesPerView: 4,  // Number of products to show per slide
+        spaceBetween: 15, // Space between slides
+        navigation: {
+            nextEl: '.swiper-button-next-newproduct',
+            prevEl: '.swiper-button-prev-newproduct',
+        },
+        pagination: {
+            el: '.swiper-pagination-newproduct',
+            clickable: true,
+        },
+        breakpoints: {
+            320: {
+                slidesPerView: 2,
+                spaceBetween: 5,
+            },
+            768: {
+                slidesPerView: 3,
+                spaceBetween: 10,
+            },
+            1024: {
+                slidesPerView: 4,
+                spaceBetween: 15,
+            },
+        },
+    });
+</script>
 </body>
 </html>
