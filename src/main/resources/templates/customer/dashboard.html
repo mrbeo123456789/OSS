@@ -29,23 +29,29 @@
     <link th:href="@{/assets/css/style.min.css}" rel="stylesheet" type="text/css" id="theme-opt"/>
     <link th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css}" rel="stylesheet">
     <style>
-        .sidebar-wrapper {
-            background-color: #f8f9fa;
-        }
-        .sidebar-menu li a {
+        .sidebar-menu ul li a {
             display: flex;
             align-items: center;
         }
-        .sidebar-menu li a i {
+
+        .sidebar-menu ul li a i {
             margin-right: 10px;
-        }
-        .sidebar-menu li a.active {
-            color: #007bff;
         }
     </style>
 </head>
 
 <body>
+<!-- Loader -->
+<div id="preloader">
+    <div id="status">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+</div>
+<!-- Loader -->
+
 <div class="page-wrapper doctris-theme toggled">
     <nav id="sidebar" class="sidebar-wrapper">
         <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
@@ -57,21 +63,36 @@
             </div>
 
             <ul class="sidebar-menu pt-3">
-                <li><a href="orders.html"><i class="uil uil-shopping-cart me-2 d-inline-block"></i>Orders</a></li>
-                <li><a href="products.html"><i class="uil uil-box me-2 d-inline-block"></i>Products</a></li>
                 <li class="sidebar-dropdown">
-                    <a href="javascript:void(0)"><i class="uil uil-layer-group me-2 d-inline-block"></i>Category</a>
+                    <a href="javascript:void(0)"><i class="uil uil-shopping-cart me-2 d-inline-block"></i>Shop</a>
                     <div class="sidebar-submenu">
                         <ul>
-                            <li th:each="category : ${categorylist}"><a href="#"
-                                                                        th:text="${category.getCategoryName()}"></a>
-                            </li>
+                            <li><a href="">New Products</a></li>
+                            <li><a href="">Best Seller</a></li>
+                            <li><a href="">Sale Off</a></li>
                         </ul>
                     </div>
                 </li>
-                <li><a href="analytics.html"><i class="uil uil-chart-line me-2 d-inline-block"></i>Analytics</a></li>
-                <li><a href="marketing.html"><i class="uil uil-megaphone me-2 d-inline-block"></i>Marketing</a></li>
-                <li><a href="discounts.html"><i class="uil uil-percentage me-2 d-inline-block"></i>Discounts</a></li>
+                <li class="sidebar-dropdown">
+                    <a href="javascript:void(0)"><i class="uil uil-apps me-2 d-inline-block"></i>Category</a>
+                    <div class="sidebar-submenu">
+                        <ul>
+                            <li th:each="category : ${categorylist}"><a href="#" th:text="${category.getCategoryName()}"></a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="sidebar-dropdown">
+                    <a href="javascript:void(0)"><i class="uil uil-shopping-cart me-2 d-inline-block"></i>My Orders</a>
+                    <div class="sidebar-submenu">
+                        <ul>
+                            <li><a href="to-pay.html">New Orders</a></li>
+                            <li><a href="to-ship.html">Shipping</a></li>
+                            <li><a href="to-rate.html">To Rate</a></li>
+                            <li><a href="cancelled.html">Cancelled</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li><a href="support.html"><i class="uil uil-info-circle me-2 d-inline-block"></i>Support</a></li>
             </ul>
             <!-- sidebar-menu  -->
         </div>
@@ -92,10 +113,10 @@
             <div class="header-bar d-flex justify-content-between border-bottom">
                 <div class="d-flex align-items-center">
                     <a href="#" class="logo-icon">
-                        <img src="../../static/assets/images/logo-icon.png" height="30" class="small" alt="">
+                        <img src="../assets/images/logo-icon.png" height="30" class="small" alt="">
                         <span class="big">
-                                <img src="../../static/assets/images/logo-dark.png" height="24" class="logo-light-mode" alt="">
-                                <img src="../../static/assets/images/logo-light.png" height="24" class="logo-dark-mode" alt="">
+                                <img src="../assets/images/logo-dark.png" height="24" class="logo-light-mode" alt="">
+                                <img src="../assets/images/logo-light.png" height="24" class="logo-dark-mode" alt="">
                             </span>
                     </a>
                     <a id="close-sidebar" class="btn btn-icon btn-pills btn-soft-primary ms-2" href="#">
@@ -114,70 +135,24 @@
                 </div>
 
                 <ul class="list-unstyled mb-0">
-
                     <li class="list-inline-item mb-0 ms-1">
-                        <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                            <div class="btn btn-icon btn-pills btn-soft-primary"><i data-feather="settings" class="fea icon-sm"></i></div>
+                        <a href="/cart" class="btn btn-icon btn-pills btn-soft-primary position-relative">
+                            <i data-feather="shopping-cart" class="fea icon-sm"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">4<span class="visually-hidden">items in cart</span></span>
                         </a>
                     </li>
-
                     <li class="list-inline-item mb-0 ms-1">
                         <div class="dropdown dropdown-primary">
-                            <button type="button" class="btn btn-icon btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="mail" class="fea icon-sm"></i></button>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">4 <span class="visually-hidden">unread mail</span></span>
-
-                            <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow rounded border-0 mt-3 px-2 py-2" data-simplebar style="height: 320px; width: 300px;">
-                                <a href="#" class="d-flex align-items-center justify-content-between py-2">
-                                    <div class="d-inline-flex position-relative overflow-hidden">
-                                        <img src="../../static/assets/images/client/02.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                        <small class="text-dark mb-0 d-block text-truncat ms-3">You received a new email from <b>Janalia</b> <small class="text-muted fw-normal d-inline-block">1 hour ago</small></small>
-                                    </div>
-                                </a>
-
-                                <a href="#" class="d-flex align-items-center justify-content-between py-2 border-top">
-                                    <div class="d-inline-flex position-relative overflow-hidden">
-                                        <img src="../../static/assets/images/client/Codepen.svg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                        <small class="text-dark mb-0 d-block text-truncat ms-3">You received a new email from <b>codepen</b>  <small class="text-muted fw-normal d-inline-block">4 hour ago</small></small>
-                                    </div>
-                                </a>
-
-                                <a href="#" class="d-flex align-items-center justify-content-between py-2 border-top">
-                                    <div class="d-inline-flex position-relative overflow-hidden">
-                                        <img src="../../static/assets/images/client/03.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                        <small class="text-dark mb-0 d-block text-truncat ms-3">You received a new email from <b>Cristina</b> <small class="text-muted fw-normal d-inline-block">5 hour ago</small></small>
-                                    </div>
-                                </a>
-
-                                <a href="#" class="d-flex align-items-center justify-content-between py-2 border-top">
-                                    <div class="d-inline-flex position-relative overflow-hidden">
-                                        <img src="../../static/assets/images/client/dribbble.svg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                        <small class="text-dark mb-0 d-block text-truncat ms-3">You received a new email from <b>Dribbble</b> <small class="text-muted fw-normal d-inline-block">24 hour ago</small></small>
-                                    </div>
-                                </a>
-
-                                <a href="#" class="d-flex align-items-center justify-content-between py-2 border-top">
-                                    <div class="d-inline-flex position-relative overflow-hidden">
-                                        <img src="../../static/assets/images/client/06.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                        <small class="text-dark mb-0 d-block text-truncat ms-3">You received a new email from <b>Donald Aghori</b> <small class="text-muted fw-normal d-inline-block">1 day ago</small></small>
-                                    </div>
-                                </a>
-
-                                <a href="#" class="d-flex align-items-center justify-content-between py-2 border-top">
-                                    <div class="d-inline-flex position-relative overflow-hidden">
-                                        <img src="../../static/assets/images/client/07.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                        <small class="text-dark mb-0 d-block text-truncat ms-3">You received a new email from <b>Calvin</b> <small class="text-muted fw-normal d-inline-block">2 day ago</small></small>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </li>
-
-                    <li class="list-inline-item mb-0 ms-1">
-                        <div class="dropdown dropdown-primary">
-                            <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../../static/assets/images/doctors/01.jpg" class="avatar avatar-ex-small rounded-circle" alt=""></button>
+                            <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img src="../assets/images/doctors/01.jpg" class="avatar avatar-ex-small rounded-circle" alt="">
+                            </button>
                             <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow border-0 mt-3 py-3" style="min-width: 200px;">
                                 <a class="dropdown-item d-flex align-items-center text-dark" href="https://shreethemes.in/doctris/layouts/admin/profile.html">
-                                    <img src="../../static/assets/images/doctors/01.jpg" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
+                                    <img src="../assets/images/doctors/01.jpg" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
+                                    <div class="flex-1 ms-2">
+                                        <span class="d-block mb-1">Calvin Carlo</span>
+                                        <small class="text-muted">Orthopedic</small>
+                                    </div>
                                 </a>
                                 <a class="dropdown-item text-dark" href="index.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-dashboard align-middle h6"></i></span> Dashboard</a>
                                 <a class="dropdown-item text-dark" href="dr-profile.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
@@ -193,13 +168,40 @@
         <div class="container-fluid">
             <div class="layout-specing">
                 <div class="d-md-flex justify-content-between">
-                    <h5 class="mb-0">Sales Channel</h5>
-
+                    <div>
+                        <h5 class="mb-0">Shop</h5>
+                    </div>
                 </div>
 
-                <div class="card border-0 rounded shadow p-4 mt-4">
-                    <!-- Your content here -->
-                </div>
+
+                <div class="row row-cols-md-2 row-cols-lg-5" th:each="product : ${products}">
+                    <div class="col mt-4">
+                        <div class="card shop-list border-0 overflow-hidden rounded shadow">
+                            <div class="shop-image position-relative overflow-hidden">
+                                <a th:href="@{/product-detail(id=${product.productId})}">
+                                    <div th:if="${product.images.size() > 0}">
+                                        <img th:src="@{'/product/' + ${product.images.iterator().next().imageUrl}}" class="img-fluid" th:alt="${product.productName}">
+                                    </div>
+                                </a>
+                            </div>
+                            <ul class="list-unstyled shop-icons">
+                                <li class="mt-2">
+                                    <a href="#" class="btn btn-icon btn-pills btn-soft-warning add-to-cart-btn" th:attr="data-product-id=${product.productId}">
+                                        <i data-feather="shopping-cart" class="icons"></i>
+                                    </a>
+                                </li>
+                            </ul>
+
+                            <div class="card-body content p-4 border-top">
+                                <a th:href="@{/product-detail(id=${product.productId})}" class="text-dark product-name h6" th:text="${product.productName}">Product Name</a>
+                                <div class="d-flex justify-content-between mt-1">
+                                    <h6 class="text-muted small font-italic mb-0 mt-1" th:text="${product.price}"></h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--end col-->
+                </div><!--end row-->
+
             </div>
         </div><!--end container-->
     </main>
@@ -211,10 +213,31 @@
 <div class="offcanvas offcanvas-end bg-white shadow" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
     <div class="offcanvas-header p-4 border-bottom">
         <h5 id="offcanvasRightLabel" class="mb-0">
-            <img src="../../static/assets/images/logo-dark.png" height="24" class="light-version" alt="">
-            <img src="../../static/assets/images/logo-light.png" height="24" class="dark-version" alt="">
+            <img src="../assets/images/logo-dark.png" height="24" class="light-version" alt="">
+            <img src="../assets/images/logo-light.png" height="24" class="dark-version" alt="">
         </h5>
         <button type="button" class="btn-close d-flex align-items-center text-dark" data-bs-dismiss="offcanvas" aria-label="Close"><i class="uil uil-times fs-4"></i></button>
+    </div>
+    <div class="offcanvas-body p-4 px-md-5">
+        <div class="row">
+            <div class="col-12">
+                <!-- Style switcher -->
+                <div id="style-switcher">
+                    <div>
+                        <ul class="text-center list-unstyled mb-0">
+                            <li class="d-grid"><a href="javascript:void(0)" class="rtl-version t-rtl-light" onclick="setTheme('style-rtl')"><img src="../assets/images/layouts/light-dash-rtl.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">RTL Version</span></a></li>
+                            <li class="d-grid"><a href="javascript:void(0)" class="ltr-version t-ltr-light" onclick="setTheme('style')"><img src="../assets/images/layouts/light-dash.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">LTR Version</span></a></li>
+                            <li class="d-grid"><a href="javascript:void(0)" class="dark-rtl-version t-rtl-dark" onclick="setTheme('style-dark-rtl')"><img src="../assets/images/layouts/dark-dash-rtl.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">RTL Version</span></a></li>
+                            <li class="d-grid"><a href="javascript:void(0)" class="dark-ltr-version t-ltr-dark" onclick="setTheme('style-dark')"><img src="../assets/images/layouts/dark-dash.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">LTR Version</span></a></li>
+                            <li class="d-grid"><a href="javascript:void(0)" class="dark-version t-dark mt-4" onclick="setTheme('style-dark')"><img src="../assets/images/layouts/dark-dash.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Dark Version</span></a></li>
+                            <li class="d-grid"><a href="javascript:void(0)" class="light-version t-light mt-4" onclick="setTheme('style')"><img src="../assets/images/layouts/light-dash.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Light Version</span></a></li>
+                            <li class="d-grid"><a href="../landing/index.html" target="_blank" class="mt-4"><img src="../assets/images/layouts/landing-light.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Landing Demos</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- end Style switcher -->
+            </div><!--end col-->
+        </div><!--end row-->
     </div>
 
     <div class="offcanvas-footer p-4 border-top text-center">
@@ -225,7 +248,7 @@
             <li class="list-inline-item mb-0"><a href="https://www.instagram.com/shreethemes/" target="_blank" class="rounded"><i class="uil uil-instagram align-middle" title="instagram"></i></a></li>
             <li class="list-inline-item mb-0"><a href="https://twitter.com/shreethemes" target="_blank" class="rounded"><i class="uil uil-twitter align-middle" title="twitter"></i></a></li>
             <li class="list-inline-item mb-0"><a href="mailto:support@shreethemes.in" class="rounded"><i class="uil uil-envelope align-middle" title="email"></i></a></li>
-            <li class="list-inline-item mb-0"><a href="index.html" target="_blank" class="rounded"><i class="uil uil-globe align-middle" title="website"></i></a></li>
+            <li class="list-inline-item mb-0"><a href="../../../index.html" target="_blank" class="rounded"><i class="uil uil-globe align-middle" title="website"></i></a></li>
         </ul><!--end icon-->
     </div>
 </div>
