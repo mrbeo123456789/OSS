@@ -339,11 +339,15 @@
                                 <div class="mb-3 row">
                                     <div class="col-md-3">
                                         Image
-                                        <div th:each="image : ${imagelist}">
-                                            <img th:src="@{${image.imageUrl}}"
-                                                 alt="Product Image"
-                                                 id="previewImage"
-                                                 class="mt-3 img-fluid">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div th:each="image : ${imagelist}">
+                                                    <img th:src="@{${image.imageUrl}}"
+                                                         alt="Product Image"
+                                                         id="previewImage"
+                                                         class="mt-3 img-fluid">
+                                                </div>
+                                            </div>
                                         </div>
                                         <form th:action="@{/addproductimage}" method="post"
                                               enctype="multipart/form-data">
@@ -398,6 +402,13 @@
                                                             th:value="${category.getCategoryId()}"
                                                             th:text="${category.getCategoryName()}"></option>
                                                 </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3 row">
+                                            <div class="col-md-3">
+                                                <label for="productPrice" class="form-label">Added Date</label>
+                                                <p th:text="${#dates.format(productdetail.addedDate, 'dd-MMM-yyyy')}"></p>
                                             </div>
                                         </div>
 
