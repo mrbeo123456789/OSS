@@ -202,7 +202,7 @@ public class UserController {
     }
     @GetMapping("/customer")
     public String CustomerDashBoard(Model model) {
-        return "customer/dashboard";
+        return "customer/shop";
     }
     @GetMapping("/home")
     public String showHomePage(Model model) {
