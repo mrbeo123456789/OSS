@@ -1,10 +1,345 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+    <meta charset="utf-8"/>
+    <title th:text="${product.getProductName()}"></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Welcome to our online shop!"/>
+    <meta name="keywords" content="online shop, ecommerce, products, shopping"/>
+    <meta name="author" content="Your Name"/>
+    <!-- favicon -->
+    <link rel="shortcut icon" href="path/to/your/favicon.ico">
+    <!-- Bootstrap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <!-- Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet" type="text/css"/>
+    <!-- Main Css -->
+    <link href="styles.css" rel="stylesheet" type="text/css"/>
+    <!-- Swiper -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <style>
+        /* Adjust the size of the product in Swiper */
+        .swiper-container {
+            height: 100%;
+            width: 100%;
+        }
 
+        .swiper-slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* Hide non-active images */
+        }
+
+        .swiper-slide img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: #000; /* Navigation buttons color */
+        }
+
+        .swiper-pagination {
+            bottom: 10px; /* Pagination position */
+            text-align: center;
+        }
+
+        /* Styles for product view */
+        .product-view {
+            padding: 20px 0;
+        }
+
+        .product-images {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .product-details {
+            padding: 20px;
+        }
+
+        .product-details h2 {
+            margin-bottom: 20px;
+        }
+
+        .product-details .price {
+            font-size: 24px;
+            color: #d9534f;
+            margin-bottom: 20px;
+        }
+
+        .product-details .description {
+            margin-bottom: 20px;
+        }
+
+        .product-details .btn {
+            width: 100%;
+        }
+
+        /* Styles for comment section */
+        .comment-section {
+            margin-top: 30px;
+        }
+
+        .comment-section h5 {
+            margin-bottom: 20px;
+        }
+
+        .comment-list {
+            margin-bottom: 20px;
+        }
+
+        .comment-item {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+
+        .comment-item:last-child {
+            border-bottom: none;
+        }
+
+        .comment-item .comment-author {
+            font-weight: bold;
+        }
+
+        .comment-item .comment-date {
+            color: #888;
+        }
+        /* Hide non-active images in product images Swiper */
+        .swiper-container.product-images-swiper .swiper-slide img {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Show active images in product images Swiper */
+        .swiper-container.product-images-swiper .swiper-slide-active img {
+            opacity: 1;
+        }
+
+        /* Ensure proper visibility of Swiper container */
+        .swiper-container {
+            overflow: hidden;
+        }
+
+    </style>
+</head>
+
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" th:href="@{/home}">G5 Shop</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/home}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/shop}">Shop</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">About Us</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Contact</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0 mr-3">
+            <input class="form-control mr-sm-2 custom-search-input" type="search" placeholder="Search"
+                   aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/login}">Login</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="container product-view">
+    <div class="row">
+        <div class="col-md-6 product-images">
+            <!-- Swiper Container for Product Images -->
+            <div class="swiper-container product-images-swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" th:each="image : ${product.getImages()}">
+                        <img th:src="@{${image.getImageUrl()}}" alt="Product Image">
+                    </div>
+                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+                <!-- Add Navigation -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+        <div class="col-md-6 product-details">
+            <h2 th:text="${product.getProductName()}"></h2>
+            <div class="price">Price: <del th:text="${product.getPrice()}"></del>đ - <span th:text="${product.getPrice()-(product.getPrice()/100*product.getSales())}"></span>đ</div>
+            <div th:if="${product.getQuantity() == 0}">
+                <p style="color: red;">Out of stock</p>
+            </div>
+            <div th:if="${product.getQuantity() > 0}">
+                <p style="color: green;">Available</p>
+            </div>
+            <div class="description">
+                <h5>Description</h5>
+                <p th:text="${product.getDescription()}"></p>
+            </div>
+            <button class="btn btn-primary btn-lg">Add to Cart</button>
+        </div>
+    </div>
+</div>
+
+<!--Related products-->
+<div class="container mt-4 new-product">
+    <h5>Relates Products</h5>
+    <div class="swiper-container-relateproduct">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide swiper-slide-active" th:each="product : ${relatedProducts}">
+                <div class="card mb-3 h-100">
+                    <img th:src="@{${product.getImages()[0].getImageUrl()}}" class="card-img-top img-fluid" alt="Product Image">
+                    <div class="card-body d-flex flex-column">
+                        <a th:href="@{/viewproduct/{id}(id=${product.productId})}" class="card-title" th:text="${product.productName}"></a>
+                        <p>Price: <del th:text="${product.price}"></del>đ - <span th:text="${product.price - product.price / 100 * product.sales}"></span>đ</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination-relateproduct"></div>
+        <!-- Add Navigation -->
+        <div class="swiper-button-next-relateproduct"></div>
+        <div class="swiper-button-prev-relateproduct"></div>
+    </div>
+</div>
+<!--Comment-->
+<div class="container mt-4 comment-section">
+    <h5>Comments</h5>
+    <div class="comment-list" th:each="comment : ${comments}">
+        <div class="comment-item">
+            <div class="comment-author" th:text="${comment.author}"></div>
+            <div class="comment-date" th:text="${#dates.format(comment.date, 'dd MMM yyyy HH:mm')}"></div>
+            <div class="comment-content" th:text="${comment.content}"></div>
+        </div>
+    </div>
+
+    <!-- Comment Form -->
+    <h5>Leave a Comment</h5>
+    <form th:action="@{/addComment}" method="post">
+        <input type="hidden" name="productId" th:value="${product.productId}" />
+        <div class="form-group">
+            <label for="author">Name</label>
+            <input type="text" class="form-control" id="author" name="author" placeholder="Your Name" required />
+        </div>
+        <div class="form-group">
+            <label for="content">Comment</label>
+            <textarea class="form-control" id="content" name="content" rows="3" placeholder="Your Comment" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Comment</button>
+    </form>
+</div>
+
+<!-- Footer -->
+<footer class="footer bg-light mt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <span class="text-muted">G5 Badminton Store</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <a href="#" class="text-muted">
+                    <i class="mdi mdi-instagram"></i> Instagram
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="#" class="text-muted">
+                    <i class="mdi mdi-facebook"></i> Facebook
+                </a>
+            </div>
+            <div class="col-sm-2">
+                <span class="text-muted">
+                    <i class="mdi mdi-phone"></i> 0378486271
+                </span>
+            </div>
+            <div class="col-md-4">
+                <span class="text-muted">
+                    <i class="mdi mdi-email"></i> chinhvdhe176611@fpt.edu.vn
+                </span>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- JavaScript -->
+<!-- Swiper JS -->
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    // Swiper for product images
+    var swiperProductImages = new Swiper('.swiper-container.product-images-swiper', {
+        slidesPerView: 1,
+        spaceBetween: 10,
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        loop: true,
+        observer: true, // Observe changes to slides
+        observeParents: true, // Observe changes to parent elements
+        on: {
+            slideChange: function () {
+                // Optionally, you can add additional logic here if needed
+            },
+        },
+    });
+
+    // Swiper for related products
+    var swiperNewProduct = new Swiper('.swiper-container-relateproduct', {
+        slidesPerView: 4,  // Number of products to show per slide
+        spaceBetween: 15, // Space between slides
+        navigation: {
+            nextEl: '.swiper-button-next-relateproduct',
+            prevEl: '.swiper-button-prev-relateproduct',
+        },
+        pagination: {
+            el: '.swiper-pagination-relateproduct',
+            clickable: true,
+        },
+        breakpoints: {
+            320: {
+                slidesPerView: 2,
+                spaceBetween: 5,
+            },
+            768: {
+                slidesPerView: 3,
+                spaceBetween: 10,
+            },
+            1024: {
+                slidesPerView: 4,
+                spaceBetween: 15,
+            },
+        },
+    });
+
+</script>
 </body>
 </html>
