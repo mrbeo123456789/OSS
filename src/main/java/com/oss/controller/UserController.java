@@ -65,17 +65,17 @@ public class UserController {
                 case 1:
                     return "redirect:/home";
                 case 2:
-                    return "redirect:/home";
+                    return "redirect:/";
                 case 3:
                     return "redirect:/products";
                 case 4:
                     return "redirect:/user/list";
                 default:
-                    return "redirect:/home";
+                    return "redirect:/";
             }
         } else {
             model.addAttribute("error", "Invalid email or password");
-            return "redirect:/home";
+            return "redirect:/";
         }
     }
 
@@ -192,5 +192,15 @@ public class UserController {
     @GetMapping("/home")
     public String showHomePage(Model model) {
         return "common/home";
+    }
+
+    @GetMapping("/profile")
+    public String showProfilePage(Model model) {
+        if (httpSession.getAttribute("user") != null) {
+            return "common/profile";
+        }else{
+            return "redirect:/login";
+        }
+
     }
 }

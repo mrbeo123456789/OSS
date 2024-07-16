@@ -41,7 +41,6 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: space-around;
-            margin-left: 15px; /* Add margin to the left of the product container */
         }
         .product-card {
             margin: 10px;
@@ -56,10 +55,12 @@
             padding-top: 20px;
             overflow-y: auto;
         }
+
         /* Ensure that the sidebar doesn't overlap content */
         body {
             padding-top: 56px; /* Height of the navbar */
         }
+
         /* Make sidebar sticky on larger screens */
         @media (min-width: 768px) {
             .sidebar {
@@ -67,10 +68,12 @@
                 top: 56px; /* Adjust as necessary to avoid overlap with the navbar */
             }
         }
+
         /* Make the product container responsive */
         .product-container {
             margin-left: 15px; /* Add margin to the left of the product container */
         }
+
         .sidebar h4 {
             padding-left: 15px;
         }
@@ -94,36 +97,13 @@
             background-color: #f0f0f0;
             color: #007bff;
         }
-
-        @media (max-width: 767.98px) {
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
-            }
-
-            .sidebar ul {
-                display: flex;
-                flex-direction: row;
-                flex-wrap: wrap;
-            }
-
-            .sidebar ul li {
-                flex: 1 1 50%;
-            }
-
-            .sidebar ul li a {
-                padding: 10px;
-                text-align: center;
-            }
-        }
     </style>
 </head>
 
 <body>
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" th:href="@{/home}">G5 Shop</a>
+    <a class="navbar-brand" th:href="@{/}">G5 Shop</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -131,7 +111,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" th:href="@{/home}">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/shop}">Shop</a>
@@ -194,17 +174,159 @@
     </div>
 </div>
 
-<!-- Bootstrap JS, Popper.js, and jQuery -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<!-- Swiper JS -->
+
+<!-- Filter Modal -->
+<div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="filterModalLabel">Filter Options</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="filter-category">Category</label>
+                    <select class="form-control" id="filter-category">
+                        <option value="all">All</option>
+                        <th:block th:each="category : ${categories}">
+                            <option th:value="${category.getCategoryId()}" th:text="${category.getCategoryName()}"></option>
+                        </th:block>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="filter-price">Price Range</label>
+                    <div id="price-range-slider"></div>
+                    <div class="d-flex justify-content-between mt-2">
+                        <input type="number" class="form-control" id="min-price-input" placeholder="Min Price">
+                        <input type="number" class="form-control" id="max-price-input" placeholder="Max Price">
+                    </div>
+                    <div class="d-flex justify-content-between mt-2">
+                        <span id="price-min">0đ</span>
+                        <span id="price-max">46.990.000đ</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="apply-filters">Apply Filters</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Footer -->
+<footer class="footer bg-light mt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <span class="text-muted">G5 Badminton Store</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <a href="#" class="text-muted">
+                    <i class="mdi mdi-instagram"></i> Instagram
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="#" class="text-muted">
+                    <i class="mdi mdi-facebook"></i> Facebook
+                </a>
+            </div>
+            <div class="col-sm-2">
+                <span class="text-muted">
+                    <i class="mdi mdi-phone"></i> 0378486271
+                </span>
+            </div>
+            <div class="col-md-4">
+                <span class="text-muted">
+                    <i class="mdi mdi-email"></i> chinhvdhe176611@fpt.edu.vn
+                </span>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- JavaScript -->
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-<!-- noUiSlider -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.7.0/nouislider.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Existing code...
+        var slider = document.getElementById('price-range-slider');
+        var minPriceInput = document.getElementById('min-price-input');
+        var maxPriceInput = document.getElementById('max-price-input');
+        var minPriceLabel = document.getElementById('price-min');
+        var maxPriceLabel = document.getElementById('price-max');
+
+        noUiSlider.create(slider, {
+            start: [0, 46990000],
+            connect: true,
+            range: {
+                'min': 0,
+                'max': 46990000
+            },
+            format: {
+                to: function(value) {
+                    return Math.round(value);
+                },
+                from: function(value) {
+                    return Number(value);
+                }
+            }
+        });
+
+        slider.noUiSlider.on('update', function(values, handle) {
+            if (handle === 0) {
+                minPriceLabel.textContent = values[handle] + 'đ';
+                minPriceInput.value = values[handle];
+            } else {
+                maxPriceLabel.textContent = values[handle] + 'đ';
+                maxPriceInput.value = values[handle];
+            }
+        });
+
+        minPriceInput.addEventListener('change', function() {
+            slider.noUiSlider.set([this.value, null]);
+        });
+
+        maxPriceInput.addEventListener('change', function() {
+            slider.noUiSlider.set([null, this.value]);
+        });
+
+        document.getElementById('apply-filters').addEventListener('click', function() {
+            var minPrice = parseFloat(minPriceInput.value);
+            var maxPrice = parseFloat(maxPriceInput.value);
+            applyFilters(minPrice, maxPrice);
+        });
+
+        function applyFilters(minPrice, maxPrice) {
+            const category = document.getElementById('filter-category').value;
+            const searchQuery = document.getElementById('search-input').value.toLowerCase();
+            const products = document.querySelectorAll('.product-card');
+
+            products.forEach(product => {
+                const productCategory = product.dataset.category;
+                const productPrice = parseFloat(product.dataset.price);
+                const productName = product.querySelector('.card-title').textContent.toLowerCase();
+
+                const categoryMatch = category === 'all' || productCategory === category;
+                const priceMatch = productPrice >= minPrice && productPrice <= maxPrice;
+                const searchMatch = productName.includes(searchQuery);
+
+                if (categoryMatch && priceMatch && searchMatch) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+            $('#filterModal').modal('hide');
+        }
 
         // Event listener for category links
         document.querySelectorAll('.category-link').forEach(link => {
