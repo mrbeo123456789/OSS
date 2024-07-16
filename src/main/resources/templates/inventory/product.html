@@ -339,11 +339,17 @@
                                 <div class="mb-3 row">
                                     <div class="col-md-3">
                                         Image
-                                        <div th:each="image : ${imagelist}">
-                                            <img th:src="@{${image.imageUrl.substring(1)}}"
-                                                 alt="Product Image"
-                                                 id="previewImage"
-                                                 class="mt-3 img-fluid">
+
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div th:each="image : ${imagelist}">
+                                                    <img th:src="@{${image.imageUrl}}"
+                                                         alt="Product Image"
+                                                         id="previewImage"
+                                                         class="mt-3 img-fluid">
+                                                </div>
+                                            </div>
+
                                         </div>
 
 
@@ -403,10 +409,17 @@
                                             </div>
                                         </div>
 
+                                        <div class="mb-3 row">
+                                            <div class="col-md-3">
+                                                <label for="productPrice" class="form-label">Added Date</label>
+                                                <p th:text="${#dates.format(productdetail.addedDate, 'dd-MMM-yyyy')}"></p>
+                                            </div>
+                                        </div>
+
                                         <div class="mb-3">
                                             <label for="pdescription" class="form-label">Description</label>
                                             <textarea class="form-control" name="pdescription"
-                                                      th:placeholder="${productdetail.getDescription()}"></textarea>
+                                                      th:value="${productdetail.getDescription()}" th:placeholder="${productdetail.getDescription()}"></textarea>
                                         </div>
 
                                         <div class="mb-3 row">

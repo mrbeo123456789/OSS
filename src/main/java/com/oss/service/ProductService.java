@@ -12,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class ProductService {
 
@@ -49,5 +51,10 @@ public class ProductService {
 
     public List<Product> getBestSellerProducts() {
         return productRepository.findTop10BestSellingProducts();
+    }
+
+    public List<Product> getRelatedProducts(Long productId) {
+        Long categoryId = getProductById(productId).getCategory().getCategoryId();
+        return productRepository.findProductsByCategoryId(categoryId);
     }
 }
