@@ -55,27 +55,27 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam String email, @RequestParam String password, Model model) {
-        User user = userService.login(email, password);
-        httpSession.setAttribute("user", user);
+    public String login(@RequestParam String username, @RequestParam String password, Model model) {
+        User user = userService.login(username, password);
         if (user != null) {
+            httpSession.setAttribute("user", user);
             model.addAttribute("user", user);
             Long userRoleId = user.getRole().getRoleId();
-            switch (Integer.parseInt(userRoleId.toString())) {
+            switch (userRoleId.intValue()) {
                 case 1:
-                    return "redirect:/home";
+                    return "redirect:/manager";
                 case 2:
-                    return "redirect:/home";
+                    return "redirect:/warehousestaff";
                 case 3:
-                    return "redirect:/products";
+                    return "redirect:/salestaff";
                 case 4:
-                    return "redirect:/user/list";
+                    return "redirect:/customer";
                 default:
                     return "redirect:/home";
             }
         } else {
-            model.addAttribute("error", "Invalid email or password");
-            return "redirect:/home";
+            model.addAttribute("error", "Invalid username or password");
+            return "redirect:/login";
         }
     }
 
@@ -188,7 +188,22 @@ public class UserController {
         }
         return "common/register";
     }
-
+    @GetMapping("/manager")
+    public String ManagerDashBoard(Model model) {
+        return "manager/dashboard";
+    }
+    @GetMapping("/warehousestaff")
+    public String WHSDashBoard(Model model) {
+        return "inventory/dashboard";
+    }
+    @GetMapping("/salestaff")
+    public String SSDashBoard(Model model) {
+        return "sale/dashboard";
+    }
+    @GetMapping("/customer")
+    public String CustomerDashBoard(Model model) {
+        return "customer/shop";
+    }
     @GetMapping("/home")
     public String showHomePage(Model model) {
         return "common/home";
