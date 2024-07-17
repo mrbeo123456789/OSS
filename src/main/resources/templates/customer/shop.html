@@ -151,6 +151,12 @@
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/login}">Login</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/cart/viewcart}">
+                    <i class="mdi mdi-cart"></i>
+                    <span class="badge badge-pill badge-danger">0</span>
+                </a>
+            </li>
         </ul>
     </div>
 </nav>
@@ -185,6 +191,7 @@
                             <div class="card-body">
                                 <a th:href="@{/viewproduct/{id}(id=${product.productId})}" class="card-title" th:text="${product.productName}"></a>
                                 <p>Price: <del th:text="${product.price}"></del>đ - <span th:text="${product.price - product.price / 100 * product.sales}"></span>đ</p>
+                                <button class="btn btn-outline-primary add-to-cart-btn" th:data-product-id="${product.productId}">Add to Cart</button>
                             </div>
                         </div>
                     </div>
@@ -202,34 +209,76 @@
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <!-- noUiSlider -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.7.0/nouislider.min.js"></script>
-<script>
+<!-- Custom JavaScript -->
+<script th:inline="javascript">
     document.addEventListener('DOMContentLoaded', function() {
-        // Existing code...
+        var addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
 
-        // Event listener for category links
-        document.querySelectorAll('.category-link').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const categoryId = this.getAttribute('data-category');
-                filterByCategory(categoryId);
+        addToCartButtons.forEach(function(button) {
+            button.addEventListener('click', async function(event) {
+                event.preventDefault();
+
+                var productId = button.getAttribute('data-product-id');
+
+                if (!productId || productId.trim() === "") {
+                    console.error('Product ID is invalid');
+                    return;
+                }
+
+                try {
+                    let response = await fetch('/cart/add-to-cart', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ productId: productId })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+
+                    let data = await response.json();
+                    updateCartSize(data.cartSize);
+                } catch (error) {
+                    console.error('Error adding product to cart:', error);
+                }
             });
         });
 
-        function filterByCategory(categoryId) {
-            const products = document.querySelectorAll('.product-card');
-
-            products.forEach(product => {
-                const productCategory = product.dataset.category;
-
-                if (categoryId === 'all' || productCategory === categoryId) {
-                    product.style.display = 'block';
-                } else {
-                    product.style.display = 'none';
-                }
-            });
+        function updateCartSize(cartSize) {
+            const cartSizeElement = document.querySelector('.badge.badge-pill.badge-danger');
+            if (cartSizeElement) {
+                cartSizeElement.textContent = cartSize;
+            }
         }
 
+        async function fetchCartSize() {
+            try {
+                let response = await fetch('/cart/add-to-cart', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ fetchSizeOnly: true }) // Indicate that we only want to fetch the cart size
+                });
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                let data = await response.json();
+                console.log(data.cartSize);
+                updateCartSize(data.cartSize);
+            } catch (error) {
+                console.error('Error fetching cart size:', error);
+                updateCartSize(0);
+            }
+        }
+
+        fetchCartSize(); // Fetch the cart size when the page loads
     });
 </script>
+
+
+
 </body>
 </html>
