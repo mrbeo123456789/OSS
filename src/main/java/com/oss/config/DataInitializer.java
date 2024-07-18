@@ -31,12 +31,12 @@ public class DataInitializer {
             Role salesStaffRole = new Role();
             salesStaffRole.setRoleName("salestaff");
 
+
             // Save roles to the database
             roleRepository.save(adminRole);
             roleRepository.save(customerRole);
-            roleRepository.save(warehouseStaffRole);
             roleRepository.save(salesStaffRole);
-
+            roleRepository.save(warehouseStaffRole);
             // Initialize categories
             Category shoesCategory = new Category();
             shoesCategory.setCategoryName("Shoes");

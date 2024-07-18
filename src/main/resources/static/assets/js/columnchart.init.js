@@ -40,7 +40,7 @@ var options1 = {
     },
     yaxis: {
         title: {
-            text: 'Patients',
+            text: 'Customer',
 
             style: {
                 colors: ['#8492a6'],
@@ -56,7 +56,7 @@ var options1 = {
     tooltip: {
         y: {
             formatter: function (val) {
-                return val + " Patients"
+                return val + " Customer"
             }
         }
     }
@@ -101,14 +101,14 @@ var options2 = {
                     color: '#8997bd',
                     formatter: function (w) {
                         // By default this function returns the average of all series. The below is just an example to show the use of custom formatter function
-                        return 249
+                        return 59
                     }
                 }
             }
         }
     },
-    series: [44, 55, 67, 83],
-    labels: ['Cardilogram', 'Gynecology', 'Dental Care', 'Neurology'],
+    series: [25, 47, 23, 5],
+    labels: ['Delivered', 'Shipping', 'New Order', 'Cancelled'],
 }
 var chart2 = new ApexCharts(document.querySelector("#department"),options2);
 

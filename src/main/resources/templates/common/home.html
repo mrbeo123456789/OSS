@@ -152,6 +152,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="#">Contact</a>
             </li>
+
         </ul>
         <form class="form-inline my-2 my-lg-0 mr-3" id="search-form">
             <input class="form-control mr-sm-2 custom-search-input" type="search" placeholder="Search" aria-label="Search" id="search-input">
@@ -397,6 +398,65 @@
                 spaceBetween: 15,
             },
         },
+    });
+</script>
+<script th:inline="javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        var addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+
+        addToCartButtons.forEach(function(button) {
+            button.addEventListener('click', async function(event) {
+                event.preventDefault();
+
+                var productId = button.getAttribute('data-product-id');
+
+                if (!productId || productId.trim() === "") {
+                    console.error('Product ID is invalid');
+                    return;
+                }
+
+                try {
+                    let response = await fetch('/cart/add-to-cart', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ productId: productId })
+                    });
+
+
+
+                    let data = await response.json();
+
+                } catch (error) {
+                    console.error('Error adding product to cart:', error);
+                }
+            });
+        });
+
+
+
+        async function fetchCartSize() {
+            try {
+                let response = await fetch('/cart/add-to-cart', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({})
+                });
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                let data = await response.json();
+                updateCartSize(data.cartSize);
+            } catch (error) {
+                console.error('Error fetching cart size:', error);
+                updateCartSize(0);
+            }
+        }
+
+
     });
 </script>
 </body>

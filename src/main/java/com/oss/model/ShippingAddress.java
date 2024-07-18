@@ -16,14 +16,12 @@ public class ShippingAddress {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String recipientName;
     private String address;
     private String district;
     private String city;
     private String province;
     private String phone;
-    private Date createdAt;
-    private Date updatedAt;
+   private String name;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

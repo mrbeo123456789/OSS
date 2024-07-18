@@ -28,33 +28,31 @@
     <!-- Css -->
     <link th:href="@{/assets/css/style.min.css}" rel="stylesheet" type="text/css" id="theme-opt"/>
     <link th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css}" rel="stylesheet">
-    <style>
-        .table td, .table th {
-            vertical-align: middle;
-        }
+    <!--    <style>-->
+    <!--        .table td, .table th {-->
+    <!--            vertical-align: middle;-->
+    <!--        }-->
 
-        .action-button {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 18px;
-            padding: 5px;
-        }
+    <!--        .action-button {-->
+    <!--            background: none;-->
+    <!--            border: none;-->
+    <!--            cursor: pointer;-->
+    <!--            font-size: 18px;-->
+    <!--            padding: 5px;-->
+    <!--        }-->
 
-        .edit-button {
-            color: #4CAF50; /* Green for edit */
-        }
+    <!--        .edit-button {-->
+    <!--            color: #4CAF50; /* Green for edit */-->
+    <!--        }-->
 
-        .delete-button {
-            color: #F44336; /* Red for delete */
-        }
+    <!--        .delete-button {-->
+    <!--            color: #F44336; /* Red for delete */-->
+    <!--        }-->
 
-        #sidebar {
-            background-color: #ffffff; /* Change this to your desired color */
-        }
-    </style>
-</head>
-
+    <!--        #sidebar {-->
+    <!--            background-color: #ffffff; /* Change this to your desired color */-->
+    <!--        }-->
+    <!--    </style>-->
 <body>
 <!-- Loader -->
 <div id="preloader">
@@ -71,30 +69,365 @@
     <nav id="sidebar" class="sidebar-wrapper">
         <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
             <div class="sidebar-brand">
-                <a th:href="@{/common/login.html}">
-                    <img src="#" height="24" class="logo-light-mode" alt="">
-                    <img src="#" height="24" class="logo-dark-mode" alt="">
+                <a href="index.html">
+                    <img src="../../static/assets/images/logo-dark.png" height="24" class="logo-light-mode" alt="">
+                    <img src="../../static/assets/images/logo-light.png" height="24" class="logo-dark-mode" alt="">
                 </a>
             </div>
 
             <ul class="sidebar-menu pt-3">
-                <li><a th:href="@{/login}">Dashboard</a></li>
-                <li><a th:href="@{/products}">Product</a></li>
+                <li><a href="index.html"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a></li>
+                <li><a href="stock.html"><i class="uil uil-box me-2 d-inline-block"></i>Stock</a></li>
+                <li><a href="orders.html"><i class="uil uil-shopping-cart me-2 d-inline-block"></i>Orders</a></li>
+                <li><a href="products.html"><i class="uil uil-package me-2 d-inline-block"></i>Products</a></li>
                 <li class="sidebar-dropdown">
-                    <a href="javascript:void(0)">Category</a>
+                    <a href="javascript:void(0)"><i class="uil uil-list-ul me-2 d-inline-block"></i>Category</a>
                     <div class="sidebar-submenu">
                         <ul>
-                            <li><a href="#">Category 1</a></li>
-                            <li><a href="#">Category 2</a></li>
-                            <li><a href="#">Add new category</a></li>
+                            <li th:each="category : ${categorylist}"><a href="#" th:text="${category.getCategoryName()}"></a></li>
+                            <li><a id="addCategoryButton">Add New Category</a></li>
+                            <li id="newCategoryInput" class="d-none">
+                                <form th:action="@{/addcategory}" method="post">
+                                    <input type="text" class="form-control" id="newCategoryName" name="categoryname" placeholder="Enter Category Name" required>
+                                    <button type="submit">Save</button>
+                                </form>
+                            </li>
                         </ul>
                     </div>
                 </li>
-                <li><a href="#">Order</a></li>
             </ul>
+            <!-- sidebar-menu  -->
         </div>
+        <!-- sidebar-content  -->
     </nav>
     <!-- sidebar-wrapper  -->
+
+    <!-- Start Page Content -->
+    <main class="page-content bg-light">
+        <div class="top-header">
+            <div class="header-bar d-flex justify-content-between border-bottom">
+                <div class="d-flex align-items-center">
+                    <a href="#" class="logo-icon">
+                        <img src="../../static/assets/images/logo-icon.png" height="30" class="small" alt="">
+                        <span class="big">
+                                    <img src="../../static/assets/images/logo-dark.png" height="24" class="logo-light-mode" alt="">
+                                    <img src="../../static/assets/images/logo-light.png" height="24" class="logo-dark-mode" alt="">
+                                </span>
+                    </a>
+                    <a id="close-sidebar" class="btn btn-icon btn-pills btn-soft-primary ms-2" href="#">
+                        <i class="uil uil-bars"></i>
+                    </a>
+                </div>
+                <li class="list-inline-item mb-0 ms-1">
+                </li>
+
+                <li class="list-inline-item mb-0 ms-1">
+                    <div class="dropdown dropdown-primary">
+                        <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../../static/assets/images/doctors/01.jpg" class="avatar avatar-ex-small rounded-circle" alt=""></button>
+                        <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow border-0 mt-3 py-3" style="min-width: 200px;">
+                            <a class="dropdown-item d-flex align-items-center text-dark" href="https://shreethemes.in/doctris/layouts/admin/profile.html">
+                                <img src="../../static/assets/images/doctors/01.jpg" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
+                                <div class="flex-1 ms-2">
+                                    <span class="d-block mb-1">Manager</span>
+                                    <small class="text-muted">Manager</small>
+                                </div>
+                            </a>
+                            <a class="dropdown-item text-dark" href="/manager"><span class="mb-0 d-inline-block me-1"><i class="uil uil-dashboard align-middle h6"></i></span> Dashboard</a>
+                            <a class="dropdown-item text-dark" href="dr-profile.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
+                            <div class="dropdown-divider border-top"></div>
+                            <a class="dropdown-item text-dark" href="lock-screen.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
+                        </div>
+                    </div>
+                </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="layout-specing">
+                <h5 class="mb-0">Dashboard</h5>
+
+                <div class="row">
+                    <div class="col-xl-2 col-lg-4 col-md-4 mt-4">
+                        <div class="card features feature-primary rounded border-0 shadow p-4">
+
+                        </div>
+                    </div><!--end col-->
+
+                    <div class="col-xl-2 col-lg-4 col-md-4 mt-4">
+                        <div class="card features feature-primary rounded border-0 shadow p-4">
+                            <div class="d-flex align-items-center">
+                                <div class="icon text-center rounded-md">
+                                    <i class="uil uil-file-medical-alt h3 mb-0"></i>
+                                </div>
+                                <div class="flex-1 ms-2">
+                                    <h5 class="mb-0">$2216</h5>
+                                    <p class="text-muted mb-0">Income</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--end col-->
+
+                    <div class="col-xl-2 col-lg-4 col-md-4 mt-4">
+                        <div class="card features feature-primary rounded border-0 shadow p-4">
+                            <div class="d-flex align-items-center">
+                                <div class="icon text-center rounded-md">
+                                    <i class="uil uil-social-distancing h3 mb-0"></i>
+                                </div>
+                                <div class="flex-1 ms-2">
+                                    <h5 class="mb-0">25</h5>
+                                    <p class="text-muted mb-0">Staff Members</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--end col-->
+
+                    <div class="col-xl-2 col-lg-4 col-md-4 mt-4">
+                        <div class="card features feature-primary rounded border-0 shadow p-4">
+                            <div class="d-flex align-items-center">
+                                <div class="icon text-center rounded-md">
+                                    <i class="uil uil-ambulance h3 mb-0"></i>
+                                </div>
+                                <div class="flex-1 ms-2">
+                                    <h5 class="mb-0">59</h5>
+                                    <p class="text-muted mb-0">Orders</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div><!--end col-->
+
+                    <div class="col-xl-2 col-lg-4 col-md-4 mt-4">
+                    </div><!--end col-->
+
+                    <div class="col-xl-2 col-lg-4 col-md-4 mt-4">
+                    </div><!--end col-->
+                </div><!--end row-->
+
+                <div class="row">
+                    <div class="col-xl-4 col-lg-6 mt-4">
+                        <div class="card border-0 shadow rounded">
+                            <div class="d-flex justify-content-between align-items-center p-4 border-bottom">
+                                <h6 class="mb-0"><i class="uil uil-calender text-primary me-1 h5"></i>New Orders</h6>
+                            </div>
+
+                            <ul class="list-unstyled mb-0 p-4">
+                                <li>
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div class="d-inline-flex">
+                                            <img src="../../static/assets/images/client/01.jpg" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
+                                            <div class="ms-3">
+                                                <h6 class="text-dark mb-0 d-block">Hoang Anh</h6>
+                                                <small class="text-muted">Order on 15th July, 2024</small>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <a href="#" class="btn btn-icon btn-pills btn-soft-success"><i class="uil uil-check icons"></i></a>
+                                            <a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i class="uil uil-times icons"></i></a>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="mt-4">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div class="d-inline-flex">
+                                            <img src="../../static/assets/images/client/02.jpg" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
+                                            <div class="ms-3">
+                                                <h6 class="text-dark mb-0 d-block">Anh Tu</h6>
+                                                <small class="text-muted">Order on 15th July, 2024</small>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <a href="#" class="btn btn-icon btn-pills btn-soft-success"><i class="uil uil-check icons"></i></a>
+                                            <a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i class="uil uil-times icons"></i></a>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="mt-4">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div class="d-inline-flex">
+                                            <img src="../../static/assets/images/client/03.jpg" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
+                                            <div class="ms-3">
+                                                <h6 class="text-dark mb-0 d-block">Chinh</h6>
+                                                <small class="text-muted">Order on 15th July, 2024</small>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <a href="#" class="btn btn-icon btn-pills btn-soft-success"><i class="uil uil-check icons"></i></a>
+                                            <a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i class="uil uil-times icons"></i></a>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="mt-4">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div class="d-inline-flex">
+                                            <img src="../../static/assets/images/client/04.jpg" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
+                                            <div class="ms-3">
+                                                <h6 class="text-dark mb-0 d-block">Duc Canh</h6>
+                                                <small class="text-muted">Order on 15th July, 2024</small>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <a href="#" class="btn btn-icon btn-pills btn-soft-success"><i class="uil uil-check icons"></i></a>
+                                            <a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i class="uil uil-times icons"></i></a>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="mt-4">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div class="d-inline-flex">
+                                            <img src="../../static/assets/images/client/05.jpg" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
+                                            <div class="ms-3">
+                                                <h6 class="text-dark mb-0 d-block">Cuong</h6>
+                                                <small class="text-muted">Order on 15th July, 2024</small>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <a href="#" class="btn btn-icon btn-pills btn-soft-success"><i class="uil uil-check icons"></i></a>
+                                            <a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i class="uil uil-times icons"></i></a>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div><!--end col-->
+
+                    <div class="col-xl-4 col-lg-6 mt-4">
+                        <div class="card chat chat-person border-0 shadow rounded">
+                            <div class="d-flex justify-content-between align-items-center p-4 border-bottom">
+                                <h6 class="mb-0"><i class="uil uil-calender text-primary me-1 h5"></i>Products</h6>
+                                <div class="mb-0 position-relative">
+                                    <select class="form-select form-control" id="products">
+                                        <option selected>Most Viewed</option>
+                                        <option value="bestsale">Best Seller</option>
+                                        <option value="newproduct">New Products</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <ul class="list-unstyled mb-0 p-4">
+                                <li>
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div class="d-inline-flex">
+                                            <img src="../../static/assets/images/client/01.jpg" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
+                                            <div class="ms-3">
+                                                <h6 class="text-dark mb-0 d-block">Product 1</h6>
+                                                <small class="text-muted">Category 1</small>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <a href="#" class="btn btn-icon btn-pills btn-soft-success"><i class="uil uil-check icons"></i></a>
+                                            <a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i class="uil uil-times icons"></i></a>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="mt-4">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div class="d-inline-flex">
+                                            <img src="../../static/assets/images/client/02.jpg" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
+                                            <div class="ms-3">
+                                                <h6 class="text-dark mb-0 d-block">Product 2</h6>
+                                                <small class="text-muted">Category 1</small>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <a href="#" class="btn btn-icon btn-pills btn-soft-success"><i class="uil uil-check icons"></i></a>
+                                            <a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i class="uil uil-times icons"></i></a>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="mt-4">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div class="d-inline-flex">
+                                            <img src="../../static/assets/images/client/03.jpg" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
+                                            <div class="ms-3">
+                                                <h6 class="text-dark mb-0 d-block">Product 3</h6>
+                                                <small class="text-muted">Category 2</small>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <a href="#" class="btn btn-icon btn-pills btn-soft-success"><i class="uil uil-check icons"></i></a>
+                                            <a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i class="uil uil-times icons"></i></a>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="mt-4">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div class="d-inline-flex">
+                                            <img src="../../static/assets/images/client/04.jpg" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
+                                            <div class="ms-3">
+                                                <h6 class="text-dark mb-0 d-block">Product 4</h6>
+                                                <small class="text-muted">Category 1</small>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <a href="#" class="btn btn-icon btn-pills btn-soft-success"><i class="uil uil-check icons"></i></a>
+                                            <a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i class="uil uil-times icons"></i></a>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="mt-4">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div class="d-inline-flex">
+                                            <img src="../../static/assets/images/client/05.jpg" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
+                                            <div class="ms-3">
+                                                <h6 class="text-dark mb-0 d-block">Product 5</h6>
+                                                <small class="text-muted">Category 3</small>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <a href="#" class="btn btn-icon btn-pills btn-soft-success"><i class="uil uil-check icons"></i></a>
+                                            <a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i class="uil uil-times icons"></i></a>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div><!--end col-->
+
+                    <div class="col-xl-4 col-lg-5 mt-4">
+                        <div class="card shadow border-0 p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h6 class="align-items-center mb-0">Orders Status</h6>
+
+                                <div class="mb-0 position-relative">
+                                    <select class="form-select form-control" id="dailychart">
+                                        <option selected>Today</option>
+                                        <option value="2024">Yesterday</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div id="department" class="apex-chart"></div>
+                        </div>
+                    </div><!--end col-->
+                </div><!--end row-->
+            </div>
+        </div><!--end container-->
+
+        <!-- Footer Start -->
+        <footer class="bg-white shadow py-3">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="text-sm-start text-center">
+                            <p class="mb-0 text-muted"><script>document.write(new Date().getFullYear())</script> © Doctris. Design with <i class="mdi mdi-heart text-danger"></i> by <a href="/manager" target="_blank" class="text-reset">Shreethemes</a>.</p>
+                        </div>
+                    </div><!--end col-->
+                </div><!--end row-->
+            </div><!--end container-->
+        </footer><!--end footer-->
+        <!-- End -->
+    </main>
+    <!--End page-content" -->
+</div>
+<!-- page-wrapper -->
 
 
 <!-- Javascript -->

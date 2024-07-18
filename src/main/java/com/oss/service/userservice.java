@@ -55,11 +55,18 @@ public class userservice {
         return userRepository.getReferenceById(Long.parseLong(userid));
     }
     public void deleteUserById(Long userId) {
+        User user = userRepository.getReferenceById(userId);
+        user.setDelete(true);
+        userRepository.save(user);
 
-        userRepository.deleteById(userId);
+
     }
-    public User login(String email, String password) {
-        User user = userRepository.findByEmail(email);
+    public User findByUsername(String username) {
+        return userRepository.findUserByUsername(username);
+    }
+
+    public User login(String username, String password) {
+        User user = findByUsername(username);
         if (user != null && passwordEncoder.matches(password, user.getPassword())) {
             return user;
         }

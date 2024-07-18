@@ -1,10 +1,309 @@
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
 
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Premium Bootstrap 4 Landing Page Template" />
+    <meta name="keywords" content="Appointment, Booking, System, Dashboard, Health" />
+    <meta name="author" content="Shreethemes" />
+    <meta name="email" content="support@shreethemes.in" />
+    <meta name="website" content="../../../index.html" />
+    <meta name="Version" content="v1.2.0" />
+    <link th:href="@{/assets/images/favicon.ico.png}" rel="shortcut icon">
+
+    <!-- Bootstrap -->
+    <link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+
+    <!-- simplebar -->
+    <link th:href="@{/assets/css/simplebar.css}" rel="stylesheet" type="text/css">
+
+    <!-- Icons -->
+    <link th:href="@{/assets/css/materialdesignicons.min.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/assets/css/remixicon.css}" rel="stylesheet" type="text/css">
+
+    <!-- Unicons (external link) -->
+    <link href="https://unicons.iconscout.com/release/v3.0.6/css/line.css" rel="stylesheet">
+
+    <!-- Css -->
+    <link th:href="@{/assets/css/style.min.css}" rel="stylesheet" type="text/css" id="theme-opt">
+
+</head>
+
+<body>
+<style>
+    .scrollable-table-container {
+        max-height: 400px; /* Adjust the height as needed */
+        overflow-y: auto;
+    }
+</style>
+<!-- Loader -->
+<div id="preloader">
+    <div id="status">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+</div>
+<!-- Loader -->
+
+<div class="page-wrapper doctris-theme toggled">
+    <nav id="sidebar" class="sidebar-wrapper">
+        <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
+
+
+            <ul class="sidebar-menu pt-3">
+
+
+                <li class="sidebar-dropdown">
+                    <a href="javascript:void(0)"><i class="uil uil-shopping-cart me-2 d-inline-block"></i>Shop</a>
+                    <div class="sidebar-submenu">
+                        <ul>
+                            <li><a href="/home">Home</a></li>
+                            <li><a href="/shop">Shop</a></li>
+                            <li><a href="/cart/viewcart">My cart</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+            <!-- sidebar-menu  -->
+        </div>
+        <!-- sidebar-content  -->
+        <ul class="sidebar-footer list-unstyled mb-0">
+            <li class="list-inline-item mb-0 ms-1">
+                <a href="#" class="btn btn-icon btn-pills btn-soft-primary">
+                    <i class="uil uil-comment icons"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <!-- sidebar-wrapper  -->
+
+    <!-- Start Page Content -->
+    <main class="page-content bg-light">
+        <div class="top-header">
+            <div class="header-bar d-flex justify-content-between border-bottom">
+                <div class="d-flex align-items-center">
+                    <a href="#" class="logo-icon">
+                        <img src="../assets/images/logo-icon.png" height="30" class="small" alt="">
+                        <span class="big">
+                                    <img src="../assets/images/logo-dark.png" height="24" class="logo-light-mode" alt="">
+                                    <img src="../assets/images/logo-light.png" height="24" class="logo-dark-mode" alt="">
+                                </span>
+                    </a>
+                    <a id="close-sidebar" class="btn btn-icon btn-pills btn-soft-primary ms-2" href="#">
+                        <i class="uil uil-bars"></i>
+                    </a>
+
+                </div>
+
+                <ul class="list-unstyled mb-0">
+                    <li class="list-inline-item mb-0 ms-1">
+                        <a href="/cart" class="btn btn-icon btn-pills btn-soft-primary position-relative">
+                            <i data-feather="shopping-cart" class="fea icon-sm"></i>
+
+                        </a>
+                    </li>
+
+
+
+                    <li th:if="${session.user != null}" class="list-inline-item mb-0 ms-1">
+                        <div class="dropdown dropdown-primary">
+                            <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../assets/images/doctors/01.jpg" class="avatar avatar-ex-small rounded-circle" alt=""></button>
+                            <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow border-0 mt-3 py-3" style="min-width: 200px;">
+                                <a class="dropdown-item d-flex align-items-center text-dark" href="https://shreethemes.in/doctris/layouts/admin/profile.html">
+                                    <img th:src="@{${session.user.avatar}}" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
+                                    <div class="flex-1 ms-2">
+                                        <span class="d-block mb-1" th:text="${session.user.fullName}"></span>
+                                    </div>
+
+                                </a>
+                                <a class="dropdown-item text-dark" href="index.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-dashboard align-middle h6"></i></span> Dashboard</a>
+                                <a class="dropdown-item text-dark" href="dr-profile.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
+                                <div class="dropdown-divider border-top"></div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="layout-specing">
+                <div class="d-md-flex justify-content-between">
+                    <h5 class="mb-0">Shopcart</h5>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="table-responsive bg-white shadow rounded">
+                            <div th:if="${cartItems.size() == 0}">
+                                <p>Your cart is empty.</p>
+                            </div>
+                            <div th:if="${cartItems.size() > 0}">
+                                <div class="scrollable-table-container">
+                                    <table class="table table-center table-padding mb-0" id="cartTable">
+                                        <thead>
+                                        <tr>
+                                            <th class="border-bottom p-3" style="min-width:20px"></th>
+                                            <th class="border-bottom p-3" style="min-width: 300px;">Product</th>
+                                            <th class="border-bottom text-center p-3" style="min-width: 160px;">Price</th>
+                                            <th class="border-bottom text-center p-3" style="min-width: 190px;">Qty</th>
+                                            <th class="border-bottom text-end p-3" style="min-width: 50px;">Total</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="cartItem : ${cartItems}">
+                                            <td class="h5 p-3 text-center">
+                                                <a href="#" class="text-danger" th:attr="data-product-id=${cartItem.product.productId}" onclick="removeFromCart(this)">
+                                                    <i class="uil uil-times"></i>
+                                                </a>
+                                            </td>
+
+                                            <td class="p-3">
+                                                <div class="d-flex align-items-center">
+                                                    <img th:src="@{${cartItem.product.images[0].imageUrl}}"
+                                                         th:alt="${cartItem.product.productName}"
+                                                         class="img-fluid avatar avatar-small rounded shadow"
+                                                         style="height:auto;">
+                                                    <h6 class="mb-0 ms-3" th:text="${cartItem.product.productName}">Product Name</h6>
+                                                </div>
+                                            </td>
+                                            <td class="text-center p-3" th:data-price="${cartItem.product.price}" th:text=" ${cartItem.product.price} +'VND '">$0.00</td>
+                                            <td class="text-center shop-list p-3">
+                                                <div class="qty-icons">
+                                                    <button th:attr="data-product-id=${cartItem.product.productId}" onclick="stepDownAndUpdate(this)" class="btn btn-icon btn-primary minus">-</button>
+                                                    <input min="0" name="quantity" th:attr="data-product-id=${cartItem.product.productId}" th:value="${cartItem.quantity}" type="number" class="btn btn-icon btn-primary qty-btn quantity" oninput="updateQuantity(this)">
+                                                    <button th:attr="data-product-id=${cartItem.product.productId}" onclick="stepUpAndUpdate(this)" class="btn btn-icon btn-primary plus">+</button>
+                                                </div>
+                                            </td>
+                                            <td class="text-end font-weight-bold p-3 total-price" th:text=" ${cartItem.product.price * cartItem.quantity} +'VND' ">$0.00</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-8 col-md-6 mt-4 pt-2">
+                                    <a href="/shop" class="btn btn-primary">Shop More</a>
+                                </div>
+                                <div th:if="${cartItems.size() > 0}" class="col-lg-4 col-md-6 ms-auto mt-4 pt-2">
+                                    <div class="table-responsive bg-white rounded shadow mt-4">
+                                        <table class="table table-center table-padding mb-0">
+                                            <tbody>
+                                            <tr class="bg-light">
+                                                <td class="h6 p-3">Total</td>
+                                                <td class="text-end font-weight-bold p-3" id="totalPrice">VND 0.00</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        <div th:if="${cartItems.size() > 0}" class="mt-4 pt-2 text-end">
+                            <a href="/checkout" class="btn btn-primary">Proceed to checkout</a>
+                        </div>
+                    </div><!--end col-->
+                </div><!--end row-->
+            </div>
+        </div><!--end container-->
+
+    </main>
+
+<!-- Offcanvas End -->
+
+<!-- Start Modal -->
+
+<!-- End modal -->
+
+<!-- javascript -->
+<script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
+<!-- Simplebar -->
+<script th:src="@{/assets/js/simplebar.min.js}"></script>
+<!-- Icons -->
+<script th:src="@{/assets/js/feather.min.js}"></script>
+<!-- Main Js -->
+<script th:src="@{/assets/js/app.js}"></script>
+
+
+
+    <script>
+        function updateQuantity(inputElement) {
+            const productId = inputElement.getAttribute('data-product-id');
+            const quantity = inputElement.value;
+            fetch('/cart/update-cart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ productId: productId, quantity: quantity })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    updateTotalPrice();
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function stepDownAndUpdate(buttonElement) {
+            const inputElement = buttonElement.parentNode.querySelector('input[type=number]');
+            inputElement.stepDown();
+            updateQuantity(inputElement);
+        }
+
+        function stepUpAndUpdate(buttonElement) {
+            const inputElement = buttonElement.parentNode.querySelector('input[type=number]');
+            inputElement.stepUp();
+            updateQuantity(inputElement);
+        }
+
+        function updateTotalPrice() {
+            let total = 0;
+            document.querySelectorAll('#cartTable tbody tr').forEach(function(row) {
+                const priceElement = row.querySelector('[data-price]');
+                const quantityElement = row.querySelector('.quantity');
+                const price = parseFloat(priceElement.getAttribute('data-price'));
+                const quantity = parseInt(quantityElement.value);
+                const rowTotal = price * quantity;
+                row.querySelector('.total-price').textContent = '$ ' + rowTotal.toFixed(2);
+                total += rowTotal;
+            });
+            const totalPriceElement = document.getElementById('totalPrice');
+            if (totalPriceElement) {
+                totalPriceElement.textContent = '$ ' + total.toFixed(2);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateTotalPrice();
+        });
+
+        function removeFromCart(linkElement) {
+            const productId = linkElement.getAttribute('data-product-id');
+            fetch('/cart/remove-from-cart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ productId: productId })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    linkElement.closest('tr').remove();
+                    updateTotalPrice();
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateTotalPrice();
+        });
+    </script>
+</div>
 </body>
+
 </html>
