@@ -10,14 +10,24 @@
     <!-- favicon -->
     <link rel="shortcut icon" href="path/to/your/favicon.ico">
     <!-- Bootstrap -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"
+          type="text/css"/>
     <!-- Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet" type="text/css"/>
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet"
+          type="text/css"/>
     <!-- Main Css -->
-    <link href="styles.css" rel="stylesheet" type="text/css"/>
     <!-- Swiper -->
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.7.0/nouislider.min.css">
+    <!-- simplebar -->
+    <link th:href="@{/assets/css/simplebar.css}" rel="stylesheet" type="text/css"/>
+    <!-- Select2 -->
+    <link th:href="@{/assets/css/select2.min.css}" rel="stylesheet"/>
+    <!-- Date picker -->
+    <link th:href="@{/assets/css/flatpickr.min.css}" rel="stylesheet">
+    <link th:href="@{/assets/css/jquery.timepicker.min.css}" rel="stylesheet" type="text/css"/>
+    <!-- Css -->
+    <link th:href="@{/assets/css/style.min.css}" rel="stylesheet" type="text/css" id="theme-opt"/>
+    <link th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css}" rel="stylesheet">
     <style>
         .swiper-slide {
             display: flex;
@@ -41,7 +51,6 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: space-around;
-            margin-left: 15px; /* Add margin to the left of the product container */
         }
         .product-card {
             margin: 10px;
@@ -56,10 +65,12 @@
             padding-top: 20px;
             overflow-y: auto;
         }
+
         /* Ensure that the sidebar doesn't overlap content */
         body {
-            padding-top: 56px; /* Height of the navbar */
+            padding-top: 0px; /* Height of the navbar */
         }
+
         /* Make sidebar sticky on larger screens */
         @media (min-width: 768px) {
             .sidebar {
@@ -67,10 +78,12 @@
                 top: 56px; /* Adjust as necessary to avoid overlap with the navbar */
             }
         }
+
         /* Make the product container responsive */
         .product-container {
             margin-left: 15px; /* Add margin to the left of the product container */
         }
+
         .sidebar h4 {
             padding-left: 15px;
         }
@@ -95,27 +108,40 @@
             color: #007bff;
         }
 
-        @media (max-width: 767.98px) {
-            .sidebar {
+        .navbar .avatar-ex-small {
+            width: 32px; /* Adjust width as needed */
+            height: 32px; /* Adjust height as needed */
+            border-radius: 50%;
+        }
+
+        @media (max-width: 1366px) {
+            .dropdown-menu {
                 width: 100%;
-                height: auto;
-                position: relative;
+                justify-content:center;
+                left: 0;
+                right: 0;
+                position:fixed;
             }
+        }
 
-            .sidebar ul {
-                display: flex;
-                flex-direction: row;
-                flex-wrap: wrap;
-            }
+        .dropdown-toggle {
+            margin-right: 10px;
+        }
 
-            .sidebar ul li {
-                flex: 1 1 50%;
-            }
+        .footer {
+            background-color: #f1f1f1;
+            padding: 20px;
+            margin-top: 40px;
+        }
 
-            .sidebar ul li a {
-                padding: 10px;
-                text-align: center;
-            }
+        .footer .col-md-6, .footer .col-md-2 {
+            display: flex;
+            align-items: center;
+        }
+
+        .footer .mdi {
+            font-size: 24px;
+            margin-right: 10px;
         }
     </style>
 </head>
@@ -123,15 +149,16 @@
 <body>
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" th:href="@{/home}">G5 Shop</a>
+    <a class="navbar-brand" th:href="@{/}">G5 Shop</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" th:href="@{/home}">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/shop}">Shop</a>
@@ -147,7 +174,7 @@
             <input class="form-control mr-sm-2 custom-search-input" type="search" placeholder="Search" aria-label="Search" id="search-input">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
-        <ul class="navbar-nav">
+        <ul th:if="${session.user==null}" class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/login}">Login</a>
             </li>
@@ -158,8 +185,42 @@
                 </a>
             </li>
         </ul>
+        <ul th:if="${session.user!=null}" class="navbar-nav">
+            <li class="list-inline-item mb-0 ms-1">
+                <div class="dropdown dropdown-primary">
+                    <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
+                            th:src="@{${session.user.getAvatar()}}" class="avatar avatar-ex-small rounded-circle" alt=""></button>
+                    <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow border-0 mt-3 py-3"
+                         style="min-width: 200px;">
+                        <a class="dropdown-item d-flex align-items-center text-dark"
+                           th:href="@{#}">
+                            <img th:src="@{${session.user.getAvatar()}}" class="avatar avatar-md-sm rounded-circle border shadow" alt=""><p th:text="${session.user.getUsername()}"></p>
+                            <div class="flex-1 ms-2">
+                                <span class="d-block mb-1">Name</span>
+                                <small class="text-muted">Role</small>
+                            </div>
+                        </a>
+                        <a class="dropdown-item text-dark" th:href="@{/profile}"><span
+                                class="mb-0 d-inline-block me-1"><i
+                                class="uil uil-dashboard align-middle h6"></i></span> Profile</a>
+                        <a class="dropdown-item text-dark" th:href="@{/cart/viewcart}"><span
+                                class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span>
+                            Cart</a>
+                        <a class="dropdown-item text-dark" th:href="@{/order}"><span
+                                class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span>
+                            Order</a>
+                        <div class="dropdown-divider border-top"></div>
+                        <a class="dropdown-item text-dark" th:href="@{/logout}"><span
+                                class="mb-0 d-inline-block me-1"><i
+                                class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
     </div>
 </nav>
+
 
 <!-- Main Content -->
 <div class="container mt-4">
@@ -201,18 +262,184 @@
     </div>
 </div>
 
-<!-- Bootstrap JS, Popper.js, and jQuery -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<!-- Swiper JS -->
+
+<!-- Filter Modal -->
+<div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="filterModalLabel">Filter Options</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="filter-category">Category</label>
+                    <select class="form-control" id="filter-category">
+                        <option value="all">All</option>
+                        <th:block th:each="category : ${categories}">
+                            <option th:value="${category.getCategoryId()}" th:text="${category.getCategoryName()}"></option>
+                        </th:block>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="filter-price">Price Range</label>
+                    <div id="price-range-slider"></div>
+                    <div class="d-flex justify-content-between mt-2">
+                        <input type="number" class="form-control" id="min-price-input" placeholder="Min Price">
+                        <input type="number" class="form-control" id="max-price-input" placeholder="Max Price">
+                    </div>
+                    <div class="d-flex justify-content-between mt-2">
+                        <span id="price-min">0đ</span>
+                        <span id="price-max">46.990.000đ</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="apply-filters">Apply Filters</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Footer -->
+<footer class="footer bg-light mt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <span class="text-muted">G5 Badminton Store</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <a href="#" class="text-muted">
+                    <i class="mdi mdi-instagram"></i> Instagram
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="#" class="text-muted">
+                    <i class="mdi mdi-facebook"></i> Facebook
+                </a>
+            </div>
+            <div class="col-sm-2">
+                <span class="text-muted">
+                    <i class="mdi mdi-phone"></i> 0378486271
+                </span>
+            </div>
+            <div class="col-md-4">
+                <span class="text-muted">
+                    <i class="mdi mdi-email"></i> chinhvdhe176611@fpt.edu.vn
+                </span>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- JavaScript -->
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/assets/js/simplebar.min.js}"></script>
+<script th:src="@{/assets/js/select2.min.js}"></script>
+<script th:src="@{/assets/js/flatpickr.min.js}"></script>
+<script th:src="@{/assets/js/jquery.timepicker.js}"></script>
+<script th:src="@{/assets/js/feather.min.js}"></script>
+<script th:src="@{/assets/js/switcher.js}"></script>
+<script th:src="@{/assets/js/app.js}"></script>
+<script th:src="@{/assets/js/switcher.js}"></script>
+
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-<!-- noUiSlider -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.7.0/nouislider.min.js"></script>
 <!-- Custom JavaScript -->
 <script th:inline="javascript">
     document.addEventListener('DOMContentLoaded', function() {
+
+        var slider = document.getElementById('price-range-slider');
+        var minPriceInput = document.getElementById('min-price-input');
+        var maxPriceInput = document.getElementById('max-price-input');
+        var minPriceLabel = document.getElementById('price-min');
+        var maxPriceLabel = document.getElementById('price-max');
+
+        noUiSlider.create(slider, {
+            start: [0, 46990000],
+            connect: true,
+            range: {
+                'min': 0,
+                'max': 46990000
+            },
+            format: {
+                to: function(value) {
+                    return Math.round(value);
+                },
+                from: function(value) {
+                    return Number(value);
+                }
+            }
+        });
+
+        slider.noUiSlider.on('update', function(values, handle) {
+            if (handle === 0) {
+                minPriceLabel.textContent = values[handle] + 'đ';
+                minPriceInput.value = values[handle];
+            } else {
+                maxPriceLabel.textContent = values[handle] + 'đ';
+                maxPriceInput.value = values[handle];
+            }
+        });
+
+        minPriceInput.addEventListener('change', function() {
+            slider.noUiSlider.set([this.value, null]);
+        });
+
+        maxPriceInput.addEventListener('change', function() {
+            slider.noUiSlider.set([null, this.value]);
+        });
+
+        document.getElementById('apply-filters').addEventListener('click', function() {
+            var minPrice = parseFloat(minPriceInput.value);
+            var maxPrice = parseFloat(maxPriceInput.value);
+            applyFilters(minPrice, maxPrice);
+        });
+
+        function applyFilters(minPrice, maxPrice) {
+            const category = document.getElementById('filter-category').value;
+            const searchQuery = document.getElementById('search-input').value.toLowerCase();
+            const products = document.querySelectorAll('.product-card');
+
+            products.forEach(product => {
+                const productCategory = product.dataset.category;
+                const productPrice = parseFloat(product.dataset.price);
+                const productName = product.querySelector('.card-title').textContent.toLowerCase();
+
+                const categoryMatch = category === 'all' || productCategory === category;
+                const priceMatch = productPrice >= minPrice && productPrice <= maxPrice;
+                const searchMatch = productName.includes(searchQuery);
+
+                if (categoryMatch && priceMatch && searchMatch) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+            $('#filterModal').modal('hide');
+        }
+
+        // Event listener for category links
+        document.querySelectorAll('.category-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const categoryId = this.getAttribute('data-category');
+                filterByCategory(categoryId);
+            });
+        });
+
         var addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+
 
         addToCartButtons.forEach(function(button) {
             button.addEventListener('click', async function(event) {

@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>G5 - Badminton Store</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Welcome to our online shop!"/>
+    <meta name="keywords" content="online shop, ecommerce, products, shopping"/>
+    <meta name="author" content="Your Name"/>
+    <!-- favicon -->
+    <link rel="shortcut icon" href="path/to/your/favicon.ico">
+    <!-- Bootstrap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <!-- Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet" type="text/css"/>
+    <!-- Main Css -->
+    <link href="styles.css" rel="stylesheet" type="text/css"/>
+    <!-- Swiper -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .navbar {
+            padding: 15px 20px;
+            background-color: #f8f9fa;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            color: #ff5722;
+        }
+
+        .profile-header {
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+        }
+
+        .avatar-container {
+            position: relative;
+            width: 200px; /* Increased size for avatar */
+            height: 200px; /* Increased size for avatar */
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .avatar-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .avatar-container:hover .change-btn {
+            display: flex;
+        }
+
+        .change-btn {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .profile-header h2 {
+            font-size: 32px; /* Larger font size for header */
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .profile-header .user-info {
+            font-size: 18px; /* Larger font size for user info */
+        }
+
+        .profile-header .user-info .info-item {
+            margin-bottom: 15px; /* Increased margin for better spacing */
+        }
+
+        .profile-header .user-info .info-item span {
+            font-weight: bold;
+        }
+
+        .password-section {
+            background: #fff;
+            padding: 20px; /* Reduced padding for password section */
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .password-section h4 {
+            margin-bottom: 15px; /* Increased margin for better spacing */
+            color: #333;
+            font-size: 24px; /* Larger font size for header */
+        }
+
+        .password-section .form-group {
+            margin-bottom: 15px;
+        }
+
+        .password-section .form-group label {
+            font-weight: bold;
+        }
+
+        .footer {
+            background-color: #f1f1f1;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        .footer .col-md-6, .footer .col-md-2 {
+            display: flex;
+            align-items: center;
+        }
+
+        .footer .mdi {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+
+        .navbar .avatar-ex-small {
+            width: 32px; /* Adjust width as needed */
+            height: 32px; /* Adjust height as needed */
+            border-radius: 50%;
+        }
+
+        @media (max-width: 1366px) {
+            .dropdown-menu {
+                width: 100%;
+                justify-content:center;
+                left: 0;
+                right: 0;
+                position:fixed;
+            }
+        }
+
+        .dropdown-toggle {
+            margin-right: 10px;
+        }
+
+    </style>
+</head>
+
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light">
+    <a class="navbar-brand" href="/">G5 Shop</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/shop">Shop</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">About Us</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Contact</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav">
+            <!-- Display login/logout based on user session -->
+            <li class="nav-item" th:if="${user == null}">
+                <a class="nav-link" href="/login">Login</a>
+            </li>
+            <li class="nav-item dropdown" th:if="${user != null}">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img th:src="@{${user.getAvatar()}}" class="avatar avatar-ex-small rounded-circle" alt="User Avatar">
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/profile">Profile</a>
+                    <a class="dropdown-item" href="/cart/viewcart">Cart</a>
+                    <a class="dropdown-item" href="/order">Order</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/logout">Logout</a>
+                </div>
+            </li>
+
+        </ul>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="container mt-4">
+    <div class="profile-header">
+        <div class="avatar-container ml-6">
+            <img th:src="@{${user.getAvatar()}}" alt="User Avatar">
+            <div class="change-btn" onclick="document.getElementById('image').click();">Change</div>
+        </div>
+        <p th:if="${updateAvtMsg != null}" th:text="${updateAvtMsg}"></p>
+        <form action="/changeavatar" method="post" enctype="multipart/form-data" style="display: none;">
+            <input type="file" class="form-control" id="image" name="newavatar" accept="image/*" required onchange="this.form.submit()">
+        </form>
+        <div class="user-details col-md-5"> <!-- Increased width for user details -->
+            <h2 th:text="${user.getFullName()}">User Name</h2>
+            <div class="user-info">
+                <div class="info-item">
+                    <span>Username:</span> <span th:text="${user.getUsername()}">Username</span>
+                </div>
+                <div class="info-item">
+                    <span>Email:</span>
+                    <span id="email-text" th:text="${user.getEmail()}">Email</span>
+                    <button class="btn btn-link" id="change-email-btn" onclick="toggleEdit('email')">Change</button>
+                    <form action="changeemail" method="post">
+                        <input type="email" name="newemail" id="email-input" class="form-control" style="display:none;" th:value="${user.getEmail()}">
+                        <button class="btn btn-primary" id="save-email-btn" style="display:none;" onclick="save('email')">Save</button>
+                        <button class="btn btn-secondary" id="cancel-email-btn" style="display:none;" onclick="cancel('email')">Cancel</button>
+                    </form>
+                </div>
+                <div class="info-item">
+                    <span>Mobile:</span>
+                    <span id="mobile-text" th:text="${user.getMobile()}">Mobile</span>
+                    <button class="btn btn-link" id="change-mobile-btn" onclick="toggleEdit('mobile')">Change</button>
+                    <form action="changephonenumber" method="post">
+                        <input type="tel" id="mobile-input" name="newnumber" class="form-control" style="display:none;"
+                               th:value="${user.getMobile()}" pattern="0[0-9]{9}"
+                               title="Invalid phone number">
+                        <button class="btn btn-primary" id="save-mobile-btn" style="display:none;" onclick="save('mobile')">Save</button>
+                        <button class="btn btn-secondary" id="cancel-mobile-btn" style="display:none;" onclick="cancel('mobile')">Cancel</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+        <div class="change-password col-md-4">
+            <div class="user-info">
+                <h4>Change Password</h4>
+                <form action="/changepassword" method="post" onsubmit="return validatePasswords();">
+                    <div class="form-group">
+                        <p th:if="${wrongpwmessage != null}"><span style="color:red;"  th:text="${wrongpwmessage}"></span></p>
+                        <label for="currentPassword">Current Password</label>
+                        <input type="password" class="form-control" id="currentPassword" name="currentPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}"
+                               required title="Must contain at least one number, one uppercase and lowercase letter, one special character, and at least 8 or more characters">
+                    </div>
+                    <div class="form-group">
+                        <label for="newPassword">New Password</label>
+                        <input type="password" class="form-control" id="newPassword" name="newPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}"
+                               required title="Must contain at least one number, one uppercase and lowercase letter, one special character, and at least 8 or more characters">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm New Password</label>
+                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                        <p id="passwordError" style="color: red; display: none;">New Password and Confirm New Password do not match.</p>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Change Password</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer bg-light mt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <span class="text-muted">G5 Badminton Store</span>
+            </div>
+            <div class="col-md-2">
+                <a href="#" class="text-muted">
+                    <i class="mdi mdi-instagram"></i> Instagram
+                </a>
+            </div>
+            <div class="col-md-2">
+                <a href="#" class="text-muted">
+                    <i class="mdi mdi-facebook"></i> Facebook
+                </a>
+            </div>
+            <div class="col-md-2">
+                <span class="text-muted">
+                    <i class="mdi mdi-phone"></i> 0378486271
+                </span>
+            </div>
+            <div class="col-md-2">
+                <span class="text-muted">
+                    <i class="mdi mdi-email"></i> chinhvdhe176611@fpt.edu.vn
+                </span>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script>
+    function validatePasswords() {
+        var newPassword = document.getElementById("newPassword").value;
+        var confirmPassword = document.getElementById("confirmPassword").value;
+        var errorElement = document.getElementById("passwordError");
+
+        if (newPassword !== confirmPassword) {
+            errorElement.style.display = 'block';
+            return false;
+        } else {
+            errorElement.style.display = 'none';
+        }
+        return true;
+    }
+
+    function toggleEdit(field) {
+        var textElement = document.getElementById(field + "-text");
+        var inputElement = document.getElementById(field + "-input");
+        var changeBtn = document.getElementById("change-" + field + "-btn");
+        var saveBtn = document.getElementById("save-" + field + "-btn");
+        var cancelBtn = document.getElementById("cancel-" + field + "-btn");
+
+        if (textElement.style.display === "inline") {
+            textElement.style.display = "none";
+            inputElement.style.display = "inline";
+            changeBtn.style.display = "none";
+            saveBtn.style.display = "inline";
+            cancelBtn.style.display = "inline"; // Show cancel button
+        } else {
+            textElement.style.display = "inline";
+            inputElement.style.display = "none";
+            changeBtn.style.display = "inline";
+            saveBtn.style.display = "none";
+            cancelBtn.style.display = "none"; // Hide cancel button
+        }
+    }
+
+    function save(field) {
+        var textElement = document.getElementById(field + "-text");
+        var inputElement = document.getElementById(field + "-input").value;
+
+        // Update the displayed text with the new value
+        textElement.innerText = inputElement;
+
+        // Toggle back to the original view
+        toggleEdit(field);
+
+        // Here you would typically have logic to save the new value to your server/database
+        // Example: Send an AJAX request to save the updated value
+        // Replace this with actual logic to save the updated value
+        console.log("New " + field + " saved: " + inputElement);
+    }
+
+    function cancel(field) {
+        var textElement = document.getElementById(field + "-text");
+        var inputElement = document.getElementById(field + "-input");
+
+        // Reset input field value
+        inputElement.value = textElement.innerText;
+
+        // Toggle back to the original view without saving
+        toggleEdit(field);
+    }
+</script>
+</body>
+</html>

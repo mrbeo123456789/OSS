@@ -46,6 +46,19 @@ public class EmailService {
         }
     }
 
+    public void sendVerifycationCode(String toEmail, String verificationCode) {
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        try {
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+            helper.setTo(toEmail);
+            helper.setSubject("Here your verification code");
+            helper.setText(verificationCode, true);
 
+            mailSender.send(mimeMessage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 }
 

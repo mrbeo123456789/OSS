@@ -45,8 +45,7 @@ public class ProductService {
         return productImageRepository.findByProduct(product);
     }
     public List<Product> getTop10NewestProducts() {
-        Pageable topTen = PageRequest.of(0, 10);
-        return productRepository.findTop10Products(topTen);
+        return productRepository.findTop10Products();
     }
 
     public List<Product> getBestSellerProducts() {
