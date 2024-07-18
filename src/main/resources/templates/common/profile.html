@@ -10,25 +10,27 @@
     <!-- favicon -->
     <link rel="shortcut icon" href="path/to/your/favicon.ico">
     <!-- Bootstrap -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"
-          type="text/css"/>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <!-- Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet"
-          type="text/css"/>
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet" type="text/css"/>
     <!-- Main Css -->
     <link href="styles.css" rel="stylesheet" type="text/css"/>
     <!-- Swiper -->
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
     <style>
-        .btn-primary {
-            font-size: 14px;
-            padding: 5px 10px;
+        body {
+            font-family: 'Roboto', sans-serif;
         }
 
-        h5 {
-            display: flex;
-            justify-content: center;
-            color: orange;
+        .navbar {
+            padding: 15px 20px;
+            background-color: #f8f9fa;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            color: #ff5722;
         }
 
         .profile-header {
@@ -37,26 +39,55 @@
             border-radius: 8px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
             margin-bottom: 30px;
+            display: flex;
+            align-items: center;
         }
 
-        .profile-header .avatar {
-            width: 120px;
-            height: 120px;
+        .avatar-container {
+            position: relative;
+            width: 200px; /* Increased size for avatar */
+            height: 200px; /* Increased size for avatar */
             border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .avatar-container img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
         }
 
+        .avatar-container:hover .change-btn {
+            display: flex;
+        }
+
+        .change-btn {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
         .profile-header h2 {
-            font-size: 24px;
+            font-size: 32px; /* Larger font size for header */
             color: #333;
+            margin-bottom: 10px;
         }
 
         .profile-header .user-info {
-            font-size: 16px;
+            font-size: 18px; /* Larger font size for user info */
         }
 
         .profile-header .user-info .info-item {
-            margin-bottom: 10px;
+            margin-bottom: 15px; /* Increased margin for better spacing */
         }
 
         .profile-header .user-info .info-item span {
@@ -65,14 +96,15 @@
 
         .password-section {
             background: #fff;
-            padding: 30px;
+            padding: 20px; /* Reduced padding for password section */
             border-radius: 8px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
         }
 
         .password-section h4 {
-            margin-bottom: 20px;
+            margin-bottom: 15px; /* Increased margin for better spacing */
             color: #333;
+            font-size: 24px; /* Larger font size for header */
         }
 
         .password-section .form-group {
@@ -88,12 +120,43 @@
             padding: 20px;
             margin-top: 40px;
         }
+
+        .footer .col-md-6, .footer .col-md-2 {
+            display: flex;
+            align-items: center;
+        }
+
+        .footer .mdi {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+
+        .navbar .avatar-ex-small {
+            width: 32px; /* Adjust width as needed */
+            height: 32px; /* Adjust height as needed */
+            border-radius: 50%;
+        }
+
+        @media (max-width: 1366px) {
+            .dropdown-menu {
+                width: 100%;
+                justify-content:center;
+                left: 0;
+                right: 0;
+                position:fixed;
+            }
+        }
+
+        .dropdown-toggle {
+            margin-right: 10px;
+        }
+
     </style>
 </head>
 
 <body>
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light">
     <a class="navbar-brand" href="/">G5 Shop</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -117,12 +180,12 @@
         </ul>
         <ul class="navbar-nav">
             <!-- Display login/logout based on user session -->
-            <li class="nav-item" th:if="${session.user == null}">
+            <li class="nav-item" th:if="${user == null}">
                 <a class="nav-link" href="/login">Login</a>
             </li>
-            <li class="nav-item dropdown" th:if="${session.user != null}">
+            <li class="nav-item dropdown" th:if="${user != null}">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img th:src="@{${session.user.getAvatar()}}" class="avatar avatar-ex-small rounded-circle" alt="User Avatar">
+                    <img th:src="@{${user.getAvatar()}}" class="avatar avatar-ex-small rounded-circle" alt="User Avatar">
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="/profile">Profile</a>
@@ -132,51 +195,77 @@
                     <a class="dropdown-item" href="/logout">Logout</a>
                 </div>
             </li>
+
         </ul>
     </div>
 </nav>
 
 <!-- Main Content -->
 <div class="container mt-4">
-    <div class="profile-header d-flex align-items-center">
-        <img th:src="@{${session.user.getAvatar()}}" class="avatar mr-4" alt="User Avatar">
-        <form action="/changeavatar" method="post" enctype="multipart/form-data">
-            <input type="file" class="form-control" id="image" name="newavatar" accept="image/*" required>
-            <input type="submit" name="changeavt" value="Change" class="btn btn-primary mt-2">
+    <div class="profile-header">
+        <div class="avatar-container ml-6">
+            <img th:src="@{${user.getAvatar()}}" alt="User Avatar">
+            <div class="change-btn" onclick="document.getElementById('image').click();">Change</div>
+        </div>
+        <p th:if="${updateAvtMsg != null}" th:text="${updateAvtMsg}"></p>
+        <form action="/changeavatar" method="post" enctype="multipart/form-data" style="display: none;">
+            <input type="file" class="form-control" id="image" name="newavatar" accept="image/*" required onchange="this.form.submit()">
         </form>
-        <div class="user-details ml-4">
-            <h2 th:text="${session.user.getFullName()}">User Name</h2>
+        <div class="user-details col-md-5"> <!-- Increased width for user details -->
+            <h2 th:text="${user.getFullName()}">User Name</h2>
             <div class="user-info">
                 <div class="info-item">
-                    <span>Username:</span> <span th:text="${session.user.getUsername()}">Username</span>
+                    <span>Username:</span> <span th:text="${user.getUsername()}">Username</span>
                 </div>
                 <div class="info-item">
-                    <span>Email:</span> <span th:text="${session.user.getEmail()}">Email</span>
+                    <span>Email:</span>
+                    <span id="email-text" th:text="${user.getEmail()}">Email</span>
+                    <button class="btn btn-link" id="change-email-btn" onclick="toggleEdit('email')">Change</button>
+                    <form action="changeemail" method="post">
+                        <input type="email" name="newemail" id="email-input" class="form-control" style="display:none;" th:value="${user.getEmail()}">
+                        <button class="btn btn-primary" id="save-email-btn" style="display:none;" onclick="save('email')">Save</button>
+                        <button class="btn btn-secondary" id="cancel-email-btn" style="display:none;" onclick="cancel('email')">Cancel</button>
+                    </form>
                 </div>
                 <div class="info-item">
-                    <span>Mobile:</span> <span th:text="${session.user.getMobile()}">Mobile</span>
+                    <span>Mobile:</span>
+                    <span id="mobile-text" th:text="${user.getMobile()}">Mobile</span>
+                    <button class="btn btn-link" id="change-mobile-btn" onclick="toggleEdit('mobile')">Change</button>
+                    <form action="changephonenumber" method="post">
+                        <input type="tel" id="mobile-input" name="newnumber" class="form-control" style="display:none;"
+                               th:value="${user.getMobile()}" pattern="0[0-9]{9}"
+                               title="Invalid phone number">
+                        <button class="btn btn-primary" id="save-mobile-btn" style="display:none;" onclick="save('mobile')">Save</button>
+                        <button class="btn btn-secondary" id="cancel-mobile-btn" style="display:none;" onclick="cancel('mobile')">Cancel</button>
+                    </form>
                 </div>
+
             </div>
         </div>
-    </div>
-
-    <div class="password-section mt-4">
-        <h4>Change Password</h4>
-        <form action="/change-password" method="post">
-            <div class="form-group">
-                <label for="currentPassword">Current Password</label>
-                <input type="password" class="form-control" id="currentPassword" name="currentPassword" required>
+        <div class="change-password col-md-4">
+            <div class="user-info">
+                <h4>Change Password</h4>
+                <form action="/changepassword" method="post" onsubmit="return validatePasswords();">
+                    <div class="form-group">
+                        <p th:if="${wrongpwmessage != null}"><span style="color:red;"  th:text="${wrongpwmessage}"></span></p>
+                        <label for="currentPassword">Current Password</label>
+                        <input type="password" class="form-control" id="currentPassword" name="currentPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}"
+                               required title="Must contain at least one number, one uppercase and lowercase letter, one special character, and at least 8 or more characters">
+                    </div>
+                    <div class="form-group">
+                        <label for="newPassword">New Password</label>
+                        <input type="password" class="form-control" id="newPassword" name="newPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}"
+                               required title="Must contain at least one number, one uppercase and lowercase letter, one special character, and at least 8 or more characters">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm New Password</label>
+                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                        <p id="passwordError" style="color: red; display: none;">New Password and Confirm New Password do not match.</p>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Change Password</button>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="newPassword">New Password</label>
-                <input type="password" class="form-control" id="newPassword" name="newPassword" required>
-            </div>
-            <div class="form-group">
-                <label for="confirmPassword">Confirm New Password</label>
-                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Change Password</button>
-        </form>
+        </div>
     </div>
 </div>
 
@@ -216,6 +305,69 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script>
+    function validatePasswords() {
+        var newPassword = document.getElementById("newPassword").value;
+        var confirmPassword = document.getElementById("confirmPassword").value;
+        var errorElement = document.getElementById("passwordError");
 
+        if (newPassword !== confirmPassword) {
+            errorElement.style.display = 'block';
+            return false;
+        } else {
+            errorElement.style.display = 'none';
+        }
+        return true;
+    }
+
+    function toggleEdit(field) {
+        var textElement = document.getElementById(field + "-text");
+        var inputElement = document.getElementById(field + "-input");
+        var changeBtn = document.getElementById("change-" + field + "-btn");
+        var saveBtn = document.getElementById("save-" + field + "-btn");
+        var cancelBtn = document.getElementById("cancel-" + field + "-btn");
+
+        if (textElement.style.display === "inline") {
+            textElement.style.display = "none";
+            inputElement.style.display = "inline";
+            changeBtn.style.display = "none";
+            saveBtn.style.display = "inline";
+            cancelBtn.style.display = "inline"; // Show cancel button
+        } else {
+            textElement.style.display = "inline";
+            inputElement.style.display = "none";
+            changeBtn.style.display = "inline";
+            saveBtn.style.display = "none";
+            cancelBtn.style.display = "none"; // Hide cancel button
+        }
+    }
+
+    function save(field) {
+        var textElement = document.getElementById(field + "-text");
+        var inputElement = document.getElementById(field + "-input").value;
+
+        // Update the displayed text with the new value
+        textElement.innerText = inputElement;
+
+        // Toggle back to the original view
+        toggleEdit(field);
+
+        // Here you would typically have logic to save the new value to your server/database
+        // Example: Send an AJAX request to save the updated value
+        // Replace this with actual logic to save the updated value
+        console.log("New " + field + " saved: " + inputElement);
+    }
+
+    function cancel(field) {
+        var textElement = document.getElementById(field + "-text");
+        var inputElement = document.getElementById(field + "-input");
+
+        // Reset input field value
+        inputElement.value = textElement.innerText;
+
+        // Toggle back to the original view without saving
+        toggleEdit(field);
+    }
+</script>
 </body>
 </html>

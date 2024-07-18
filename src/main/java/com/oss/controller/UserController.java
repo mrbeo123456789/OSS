@@ -1,18 +1,30 @@
 package com.oss.controller;
 
+import com.oss.model.ProductImage;
 import com.oss.model.Role;
 import com.oss.model.User;
+import com.oss.service.EmailService;
 import com.oss.service.roleservice;
 import com.oss.service.userservice;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Random;
+import java.util.UUID;
 
 
 @Controller
@@ -23,7 +35,10 @@ public class UserController {
     private roleservice roleService;
     @Autowired
     private HttpSession httpSession;
-
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    private EmailService emailService;
 
 
     @GetMapping("/user/list")
@@ -194,13 +209,148 @@ public class UserController {
         return "common/home";
     }
 
+
     @GetMapping("/profile")
     public String showProfilePage(Model model) {
-        if (httpSession.getAttribute("user") != null) {
+        User reqUser = (User) httpSession.getAttribute("user");
+        //check if user is logged in
+        if ( reqUser!= null) {
+            //load user profile
+            User user = userService.getUserByUserid(reqUser.getId().toString());
+            model.addAttribute("user", user);
             return "common/profile";
         }else{
             return "redirect:/login";
         }
 
+    }
+
+    @PostMapping("/changeavatar")
+    public String changeAvatar(Model model,
+                                @RequestParam("newavatar") MultipartFile avatar){
+        User reqUser = (User) httpSession.getAttribute("user");
+        //save new avatar image
+        // Upload file
+        if (avatar.isEmpty()) {
+            model.addAttribute("message", "Image is required");
+        } else {
+            String uploadFolder = "Avt/"; // adjust this path
+            try {
+                // Generate a unique filename for the image
+                String filename = UUID.randomUUID().toString() + "_" + avatar.getOriginalFilename();
+                Path path = Paths.get(uploadFolder + filename);
+
+                // Ensure the directory exists
+                Files.createDirectories(path.getParent());
+
+                // Delete current image
+                if(reqUser.getAvatar()!=null){
+                    Files.delete(Path.of(reqUser.getAvatar()));
+                }
+
+                // Save image file to the system
+                byte[] bytes = avatar.getBytes();
+                Files.write(path, bytes);
+
+                // Change avatar path for user
+                User user = userService.getUserByUserid(reqUser.getId().toString());
+                user.setAvatar("./Avt/" + filename);
+                userService.updateUser(user);
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                model.addAttribute("message", "Failed to upload file");
+                return "redirect:/profile";
+            }
+        }
+        return "redirect:/profile";
+
+    }
+
+    @PostMapping("/changepassword")
+    public String changeUserPassword(Model model,
+                                     @RequestParam("currentPassword") String currentPassword,
+                                     @RequestParam("newPassword") String newPassword) throws IOException {
+        User reqUser = (User) httpSession.getAttribute("user");
+
+        // Check current password is correct
+        if (userService.login(reqUser.getEmail(), currentPassword) == null) {
+            model.addAttribute("wrongpwmessage", "Password is incorrect");
+        } else {
+            // Change password
+            User user = userService.getUserByUserid(reqUser.getId().toString());
+            user.setPassword(passwordEncoder.encode(newPassword));
+            userService.updateUser(user);
+        }
+
+        return "redirect:/profile";
+    }
+
+
+    @GetMapping("/logout")
+    public String logOut(){
+        httpSession.removeAttribute("user");
+        return "redirect:/";
+    }
+
+    @PostMapping("changeemail")
+    public String sendOtp(@RequestParam("newemail") String newEmail,Model model){
+        //generate verify code
+        String verifyCode = generateOTP(6);
+        //set timer for verify code
+        httpSession.setMaxInactiveInterval(360);
+        //save verify code to session
+        httpSession.setAttribute("verifyCode", verifyCode);
+
+        String message = "<p>Here your verification code</p></br>"+
+                "<p>Your verification code will expire in 5 minutes</p>";
+
+        User user = (User) httpSession.getAttribute("user");
+
+        //send verification code to old
+        emailService.sendVerifycationCode(user.getEmail(),message+verifyCode);
+        model.addAttribute("newemail", newEmail);
+        return "common/otpcheck";
+    }
+
+    public static String generateOTP(int length) {
+        String digits = "0123456789";
+        Random random = new Random();
+        StringBuilder otp = new StringBuilder(length);
+
+        for (int i = 0; i < length; i++) {
+            otp.append(digits.charAt(random.nextInt(digits.length())));
+        }
+
+        return otp.toString();
+    }
+
+    @PostMapping("verifychangeemail")
+    public String verifyChangeEmail(Model model,
+                                    @RequestParam("newemail") String newEmail,
+                                    @RequestParam("verifycode") String verifyCode) throws IOException {
+        String code = httpSession.getAttribute("verifyCode").toString();
+        if(!verifyCode.equals(code)){
+            model.addAttribute("wrongcodemsg", "Wrong verify code, please enter again");
+            model.addAttribute("newemail", newEmail);
+            return "common/otpcheck";
+        }else{
+            User reqUser = (User) httpSession.getAttribute("user");
+            User user = userService.getUserByUserid(reqUser.getId().toString());
+            user.setEmail(newEmail);
+            userService.updateUser(user);
+            httpSession.removeAttribute("user");
+            return "redirect:/";
+        }
+    }
+
+    @PostMapping("changephonenumber")
+    public String changePhoneNumber(Model model, @RequestParam("newnumber") String newNumber) throws IOException {
+        User reqUser = (User) httpSession.getAttribute("user");
+        User user = userService.getUserByUserid(reqUser.getId().toString());
+        user.setMobile(newNumber);
+        userService.updateUser(user);
+        return "redirect:/profile";
     }
 }

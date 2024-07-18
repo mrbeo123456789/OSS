@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Verification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #666;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .resend {
+            margin-top: 20px;
+        }
+
+        .resend a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .resend a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="otp-box">
+        <h2>Verify OTP</h2>
+        <p>We have sent an otp to your email, please enter the otp.</p>
+        <form id="otpForm" action="verifychangeemail" method="post">
+            <p th:if="${wrongcodemsg != null}"><span th:text="${wrongcodemsg}"></span></p>
+            <input type="hidden" name="newemail" th:value="${newemail}">
+            <input type="text" id="otp" name="verifycode" placeholder="Enter Verify Code" maxlength="6" required>
+            <button type="submit">Verify</button>
+        </form>
+        <p class="resend">Didn't receive the OTP? <a href="resendotp" id="resendOtp">Resend OTP</a></p>
+    </div>
+</div>
+</body>
+</html>
