@@ -96,8 +96,14 @@ private ShippingAddressService shippingAddressService;
             orderService.saveOrderItem(orderItem);
         }
 
-        model.addAttribute("successMessage", "Order placed successfully!");
-        return "common/thankyou";
+        if ("VNPAY".equals(paymentMethod)) {
+            // Redirect to VNpay controller
+            return "redirect:/initiate_payment?orderId=" + order.getOrderId();
+        } else {
+            model.addAttribute("successMessage", "Order placed successfully!");
+            return "common/thankyou";
+        }
+
     }
 
     @GetMapping("/api/districts")

@@ -4,6 +4,7 @@ import com.oss.model.Cart;
 import com.oss.model.CartItem;
 import com.oss.model.Product;
 import com.oss.model.User;
+import com.oss.repository.CartItemsRepository;
 import com.oss.repository.CartRepository;
 import com.oss.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,8 @@ import org.springframework.stereotype.Service;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +27,10 @@ public class CartService {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private CartItemsRepository cartItemRepository;
+    ;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -82,15 +87,17 @@ public class CartService {
         Cart cart = cartRepository.findByUser(user).orElseGet(() -> {
             Cart newCart = new Cart();
             newCart.setUser(user);
-            cartRepository.save(newCart);
             return newCart;
         });
+
+        cartRepository.save(cart); // Ensure the cart is saved before adding items
 
         Set<CartItem> cartItems = cart.getCartItems();
         boolean productExists = false;
         for (CartItem item : cartItems) {
             if (item.getProduct().getProductId().equals(Long.valueOf(productId))) {
                 item.setQuantity(item.getQuantity() + 1); // Update quantity
+                cartItemRepository.save(item); // Save the updated item
                 productExists = true;
                 break;
             }
@@ -106,11 +113,12 @@ public class CartService {
                 newItem.setCart(cart);
                 newItem.setQuantity(1);
                 cartItems.add(newItem);
+                cartItemRepository.save(newItem); // Save the new item
             }
         }
 
         cart.setCartItems(cartItems);
-        cartRepository.save(cart);
+        cartRepository.save(cart); // Save the cart with updated items
     }
 
     @Transactional
@@ -142,6 +150,7 @@ public class CartService {
                     .orElse(0);
         }
     }
+
     @Transactional
     public void updateCart(HttpSession session, String productId, int quantity, User user) {
         if (user == null) {
@@ -150,6 +159,7 @@ public class CartService {
             updateUserCart(user, productId, quantity);
         }
     }
+
     @Transactional
     public void updateUserCart(User user, String productId, int quantity) {
         if (productId == null || productId.trim().isEmpty()) {
@@ -165,13 +175,15 @@ public class CartService {
         for (CartItem item : cartItems) {
             if (item.getProduct().getProductId().equals(Long.valueOf(productId))) {
                 item.setQuantity(quantity);
+                cartItemRepository.save(item); // Save the updated item
                 break;
             }
         }
 
         cart.setCartItems(cartItems);
-        cartRepository.save(cart);
+        cartRepository.save(cart); // Save the cart with updated items
     }
+
     @Transactional
     public void updateTemporaryCart(HttpSession session, String productId, int quantity) {
         if (productId == null || productId.trim().isEmpty()) {
@@ -190,6 +202,7 @@ public class CartService {
             }
         }
     }
+
     @Transactional
     public void removeFromCart(HttpSession session, String productId, User user) {
         if (user == null) {
@@ -228,6 +241,6 @@ public class CartService {
         cartItems.removeIf(item -> item.getProduct().getProductId().equals(Long.valueOf(productId)));
 
         cart.setCartItems(cartItems);
-        cartRepository.save(cart);
+        cartRepository.save(cart); // Save the cart with updated items
     }
 }
