@@ -55,8 +55,11 @@ public class userservice {
         return userRepository.getReferenceById(Long.parseLong(userid));
     }
     public void deleteUserById(Long userId) {
+        User user = userRepository.getReferenceById(userId);
+        user.setDelete(true);
+        userRepository.save(user);
 
-        userRepository.deleteById(userId);
+
     }
     public User findByUsername(String username) {
         return userRepository.findUserByUsername(username);

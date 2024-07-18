@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class OrderController {
@@ -58,7 +56,7 @@ private ShippingAddressService shippingAddressService;
             Model model) {
 
         // Assume user is retrieved from the session or authentication context
-        User user = (User) session.getAttribute("user");
+
 
         // Create and save the order
         Order order = new Order();
@@ -68,7 +66,11 @@ private ShippingAddressService shippingAddressService;
         order.setCreatedAt(new Date());
         order.setUpdatedAt(new Date());
         order.setStatus("SUBMITTED");
-        order.setUser(user);
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            order.setUser(user);
+        }
+
 
         orderService.saveOrder(order);
         ShippingAddress sa = new ShippingAddress();
@@ -77,7 +79,9 @@ private ShippingAddressService shippingAddressService;
         sa.setAddress(address);
         sa.setName(name);
         sa.setPhone(phone);
-        shippingAddressService.save(sa);
+        Set<Order> orders = new HashSet<>();
+        orders.add(order);
+        sa.setOrders(orders);
         // Retrieve cart items from session or other context
         List<CartItem> cartItems = cartService.getCart(session);
 

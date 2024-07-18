@@ -82,6 +82,7 @@ public class CartService {
         Cart cart = cartRepository.findByUser(user).orElseGet(() -> {
             Cart newCart = new Cart();
             newCart.setUser(user);
+            cartRepository.save(newCart);
             return newCart;
         });
 

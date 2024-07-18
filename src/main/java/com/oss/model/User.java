@@ -23,8 +23,9 @@ public class User {
     private Date registeredDate;
     private Date lastLogin;
     private String avatar;
-     private String verificationCode;
+    private String verificationCode;
     private boolean verified;
+    private boolean isDelete;
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;

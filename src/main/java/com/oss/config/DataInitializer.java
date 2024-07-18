@@ -22,20 +22,21 @@ public class DataInitializer {
             Role adminRole = new Role();
             adminRole.setRoleName("admin");
 
+            Role customerRole = new Role();
+            customerRole.setRoleName("customer");
+
             Role warehouseStaffRole = new Role();
             warehouseStaffRole.setRoleName("warehousestaff");
 
             Role salesStaffRole = new Role();
             salesStaffRole.setRoleName("salestaff");
 
-            Role customerRole = new Role();
-            customerRole.setRoleName("customer");
+
             // Save roles to the database
             roleRepository.save(adminRole);
-            roleRepository.save(warehouseStaffRole);
-            roleRepository.save(salesStaffRole);
             roleRepository.save(customerRole);
-
+            roleRepository.save(salesStaffRole);
+            roleRepository.save(warehouseStaffRole);
             // Initialize categories
             Category shoesCategory = new Category();
             shoesCategory.setCategoryName("Shoes");

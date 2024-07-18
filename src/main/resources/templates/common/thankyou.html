@@ -54,8 +54,11 @@
                                 <i class="uil uil-thumbs-up h1 mb-0"></i>
                             </div>
                         </div>
-                        <h1 class="my-4 font-weight-bold">Register Successfully</h1>
-                        <p class="text-muted para-desc mx-auto">Thank you for register</p>
+                        <h1 class="my-4 font-weight-bold" th:if="${successMessage}" th:text="${successMessage}"></h1>
+                        <h1 class="my-4 font-weight-bold" th:unless="${successMessage}" > Thank you for ordering</h1>
+                        <p class="text-muted para-desc mx-auto" th:if="${successMessage}" th:text="${successMessage}"></p>
+                        <p class="text-muted para-desc mx-auto" th:unless="${successMessage}">Thank you for registering</p>
+
                         <a href="/home" class="btn btn-soft-primary mt-3">Go To Home</a>
                     </div><!---->
                 </div> <!--end col-->
