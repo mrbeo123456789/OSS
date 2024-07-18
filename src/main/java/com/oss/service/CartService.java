@@ -9,15 +9,12 @@ import com.oss.repository.CartRepository;
 import com.oss.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.servlet.http.HttpSession;
-import jakarta.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+
+import java.util.*;
 
 @Service
 public class CartService {
@@ -30,7 +27,6 @@ public class CartService {
 
     @Autowired
     private CartItemsRepository cartItemRepository;
-    ;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -40,6 +36,7 @@ public class CartService {
         if (user == null) {
             addToTemporaryCart(session, productId);
         } else {
+            createCartIfNotExist(user);
             addToUserCart(user, productId);
         }
     }
@@ -78,7 +75,6 @@ public class CartService {
         }
     }
 
-    @Transactional
     public void addToUserCart(User user, String productId) {
         if (productId == null || productId.trim().isEmpty()) {
             throw new IllegalArgumentException("Product ID is invalid");
@@ -87,12 +83,16 @@ public class CartService {
         Cart cart = cartRepository.findByUser(user).orElseGet(() -> {
             Cart newCart = new Cart();
             newCart.setUser(user);
+            cartRepository.save(newCart);
             return newCart;
         });
 
-        cartRepository.save(cart); // Ensure the cart is saved before adding items
-
         Set<CartItem> cartItems = cart.getCartItems();
+        if (cartItems == null) {
+            cartItems = new HashSet<>();
+            cart.setCartItems(cartItems);
+        }
+
         boolean productExists = false;
         for (CartItem item : cartItems) {
             if (item.getProduct().getProductId().equals(Long.valueOf(productId))) {
@@ -120,7 +120,6 @@ public class CartService {
         cart.setCartItems(cartItems);
         cartRepository.save(cart); // Save the cart with updated items
     }
-
     @Transactional
     public List<CartItem> getCart(HttpSession session) {
         List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
@@ -156,6 +155,7 @@ public class CartService {
         if (user == null) {
             updateTemporaryCart(session, productId, quantity);
         } else {
+            createCartIfNotExist(user);
             updateUserCart(user, productId, quantity);
         }
     }
@@ -242,5 +242,15 @@ public class CartService {
 
         cart.setCartItems(cartItems);
         cartRepository.save(cart); // Save the cart with updated items
+    }
+
+    @Transactional
+    public void createCartIfNotExist(User user) {
+        cartRepository.findByUser(user).orElseGet(() -> {
+            Cart newCart = new Cart();
+            newCart.setUser(user);
+            cartRepository.save(newCart);
+            return newCart;
+        });
     }
 }

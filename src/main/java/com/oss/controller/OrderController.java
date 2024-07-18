@@ -47,7 +47,6 @@ private ShippingAddressService shippingAddressService;
             @RequestParam("phone") String phone,
             @RequestParam("province") String province,
             @RequestParam("district") String district,
-            @RequestParam("ward") String ward,
             @RequestParam("address") String address,
             @RequestParam("paymentMethod") String paymentMethod,
             @RequestParam("totalPrice") String totalPrice,
