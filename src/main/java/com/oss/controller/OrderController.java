@@ -152,4 +152,13 @@ private ShippingAddressService shippingAddressService;
         model.addAttribute("order", order);
         return "/customer/orderdetail";
     }
+
+    @PostMapping("/cancelorder")
+    public String cancelOrder(@RequestParam("orderid") Long orderId,
+                                  Model model){
+        Order order = orderService.getOrderById(orderId);
+        order.setStatus("Canceled");
+        orderService.saveOrder(order);
+        return "redirect:/order";
+    }
 }

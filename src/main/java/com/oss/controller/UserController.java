@@ -294,7 +294,7 @@ public class UserController {
         User reqUser = (User) httpSession.getAttribute("user");
 
         // Check current password is correct
-        if (userService.login(reqUser.getEmail(), currentPassword) == null) {
+        if (userService.login(reqUser.getUsername(), currentPassword) == null) {
             model.addAttribute("wrongpwmessage", "Password is incorrect");
         } else {
             // Change password

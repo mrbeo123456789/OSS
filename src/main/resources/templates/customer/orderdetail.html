@@ -71,19 +71,20 @@
                     </tr>
                     </thead>
                     <tbody id="order-items">
-                    <tr th:each="item : ${order}">
-                        <td th:text="${item}"></td>
-                        <td>1</td>
-                        <td>$10.00</td>
-                        <td>$10.00</td>
+                    <tr th:each="product : ${order.getOrderItems()}">
+                        <td th:text="${product.getProduct().getProductName()}"></td>
+                        <td th:text="${product.getQuantity()}"></td>
+                        <td th:text="${product.getPrice()}"></td>
+                        <td th:text="${product.getQuantity() * product.getPrice()}"></td>
                     </tr>
-                    <!-- More rows can be added here -->
                     </tbody>
                 </table>
-                <h5>Total: $<span id="order-total">10.00</span></h5>
-                <div class="mt-3">
-                    <button class="btn btn-primary" onclick="viewOrderDetails()">View Details</button>
-                    <button class="btn btn-danger" onclick="cancelOrder()">Cancel Order</button>
+                <h5>Total: $<span id="order-total" th:text="${order.getTotalAmount()}"></span></h5>
+                <div th:if="${order.getStatus()!='Canceled'}">
+                    <form action="/cancelorder" method="post">
+                        <input type="hidden" name="orderid" th:value="${order.getOrderId()}">
+                        <button class="btn btn-danger btn-sm" type="submit">Cancel</button>
+                    </form>
                 </div>
             </div>
         </div>

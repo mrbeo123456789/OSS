@@ -152,10 +152,12 @@
                                             <input type="hidden" name="orderid" th:value="${order.getOrderId()}">
                                             <button class="btn btn-primary btn-sm" type="submit">View</button>
                                         </form>
-                                        <form action="/cancelorder" method="post">
-                                            <input type="hidden" name="orderid" th:value="${order.getOrderId()}">
-                                            <button class="btn btn-danger btn-sm" type="submit">Cancel</button>
-                                        </form>
+                                        <div th:if="${order.getStatus()!='Canceled'}">
+                                            <form action="/cancelorder" method="post">
+                                                <input type="hidden" name="orderid" th:value="${order.getOrderId()}">
+                                                <button class="btn btn-danger btn-sm" type="submit">Cancel</button>
+                                            </form>
+                                        </div>
 
                                     </td>
                                 </tr>
