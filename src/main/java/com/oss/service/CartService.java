@@ -208,6 +208,7 @@ public class CartService {
         if (user == null) {
             removeFromTemporaryCart(session, productId);
         } else {
+            System.out.println("hello delte ussr");
             removeFromUserCart(user, productId);
         }
     }
@@ -238,10 +239,18 @@ public class CartService {
         }
 
         Set<CartItem> cartItems = cart.getCartItems();
-        cartItems.removeIf(item -> item.getProduct().getProductId().equals(Long.valueOf(productId)));
+        CartItem itemToRemove = cartItems.stream()
+                .filter(item -> item.getProduct().getProductId().equals(Long.valueOf(productId)))
+                .findFirst()
+                .orElse(null);
+        System.out.println(itemToRemove);
+        if (itemToRemove != null) {
+            cartItems.remove(itemToRemove);
+            cart.setCartItems(cartItems);
 
-        cart.setCartItems(cartItems);
-        cartRepository.save(cart); // Save the cart with updated items
+            cartItemRepository.delete(itemToRemove);
+        }
+        cartRepository.save(cart);
     }
 
     @Transactional
@@ -253,4 +262,13 @@ public class CartService {
             return newCart;
         });
     }
+    @Transactional
+    public void deleteCart(User user){
+        Optional<Cart> cartOptional = cartRepository.findByUser(user);
+        if (cartOptional.isPresent()) {
+            Cart cart = cartOptional.get();
+            cartRepository.deleteById(cart.getCartId());
+        }
+    }
+
 }

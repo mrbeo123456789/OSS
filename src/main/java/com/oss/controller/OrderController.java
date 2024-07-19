@@ -37,7 +37,16 @@ private ShippingAddressService shippingAddressService;
     @GetMapping("/checkout")
     public String Checkout(Model model, HttpSession session) {
         Map<String, String> provinces = ghnService.getProvinces();
-        List<CartItem> cartItems = cartService.getCart(session);
+        User user = (User) session.getAttribute("user");
+        List<CartItem> cartItems = new ArrayList<>();
+        if(user == null) {
+           cartItems = cartService.getCart(session);
+        }
+        else{
+            cartItems = cartService.getCartByUser(user);
+        }
+
+
 
         model.addAttribute("provinces", provinces);
         model.addAttribute("cartItems", cartItems);
@@ -68,8 +77,12 @@ private ShippingAddressService shippingAddressService;
         order.setUpdatedAt(new Date());
         order.setStatus("SUBMITTED");
         User user = (User) session.getAttribute("user");
+        System.out.println(user);
+        List<CartItem> cartItems = cartService.getCart(session);
+
         if (user != null) {
             order.setUser(user);
+            cartItems = cartService.getCartByUser(user);
         }
 
 
@@ -84,7 +97,6 @@ private ShippingAddressService shippingAddressService;
         orders.add(order);
         sa.setOrders(orders);
         // Retrieve cart items from session or other context
-        List<CartItem> cartItems = cartService.getCart(session);
 
         // Create and save order items
         for (CartItem cartItem : cartItems) {
@@ -95,6 +107,7 @@ private ShippingAddressService shippingAddressService;
             orderItem.setPrice(cartItem.getProduct().getPrice());
 
             orderService.saveOrderItem(orderItem);
+            cartService.removeFromCart(session, String.valueOf(cartItem.getProduct().getProductId()), user);
         }
 
         if ("VNPAY".equals(paymentMethod)) {
