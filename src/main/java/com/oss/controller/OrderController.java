@@ -66,7 +66,12 @@ private ShippingAddressService shippingAddressService;
             Model model) {
 
         // Assume user is retrieved from the session or authentication context
+        User user = (User) session.getAttribute("user");
+        List<CartItem> cartItems = cartService.getCart(session);
 
+        if (user != null) {
+            cartItems = cartService.getCartByUser(user);
+        }
 
         // Create and save the order
         Order order = new Order();
@@ -76,17 +81,14 @@ private ShippingAddressService shippingAddressService;
         order.setCreatedAt(new Date());
         order.setUpdatedAt(new Date());
         order.setStatus("SUBMITTED");
-        User user = (User) session.getAttribute("user");
-        System.out.println(user);
-        List<CartItem> cartItems = cartService.getCart(session);
 
         if (user != null) {
             order.setUser(user);
-            cartItems = cartService.getCartByUser(user);
         }
 
-
         orderService.saveOrder(order);
+
+        // Create and save the shipping address
         ShippingAddress sa = new ShippingAddress();
         sa.setProvince(province);
         sa.setDistrict(district);
@@ -96,7 +98,9 @@ private ShippingAddressService shippingAddressService;
         Set<Order> orders = new HashSet<>();
         orders.add(order);
         sa.setOrders(orders);
-        // Retrieve cart items from session or other context
+
+        // Collect items to remove
+        List<CartItem> itemsToRemove = new ArrayList<>();
 
         // Create and save order items
         for (CartItem cartItem : cartItems) {
@@ -107,6 +111,11 @@ private ShippingAddressService shippingAddressService;
             orderItem.setPrice(cartItem.getProduct().getPrice());
 
             orderService.saveOrderItem(orderItem);
+            itemsToRemove.add(cartItem);
+        }
+
+        // Remove items from cart
+        for (CartItem cartItem : itemsToRemove) {
             cartService.removeFromCart(session, String.valueOf(cartItem.getProduct().getProductId()), user);
         }
 
@@ -117,8 +126,8 @@ private ShippingAddressService shippingAddressService;
             model.addAttribute("successMessage", "Order placed successfully!");
             return "common/thankyou";
         }
-
     }
+
 
     @GetMapping("/api/districts")
     @ResponseBody

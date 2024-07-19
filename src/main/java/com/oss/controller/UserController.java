@@ -80,13 +80,12 @@ public class UserController {
                 case 1:
                     return "redirect:/manager";
                 case 2:
-
-                    return "redirect:/warehousestaff";
-
+                    return "redirect:/customer";
                 case 3:
                     return "redirect:/salestaff";
                 case 4:
-                    return "redirect:/customer";
+                    return "redirect:/warehousestaff";
+
                 default:
                     return "redirect:/";
             }
