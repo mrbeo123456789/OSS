@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,5 +32,9 @@ public class OrderService {
     public  Order getOrderById(Long orderId) {
         Optional<Order> optionalOrder = orderRepository.findById(orderId);
         return optionalOrder.orElse(null); // Hoặc throw exception nếu không tìm thấy
+    }
+
+    public List<Order> findOrdersByUserId(Long userId){
+        return orderRepository.findOrdersByUserId(userId);
     }
 }

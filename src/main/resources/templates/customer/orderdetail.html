@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><!DOCTYPE html>
+        <html lang="en">
+
+        <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Order Detail</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="/assets/css/style.min.css" rel="stylesheet">
+</head>
+
+<body>
+<!-- Loader -->
+<div id="preloader">
+    <div id="status">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+</div>
+<!-- Loader -->
+
+<div class="page-wrapper">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">My Shop</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/shop">Shop</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/cart/viewcart">Cart</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/order">Orders</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h2>Order Detail</h2>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Order #<span id="order-id">12345</span></h5>
+                <p class="card-text">Date: <span id="order-date">2024-07-19</span></p>
+                <p class="card-text">Status: <span id="order-status">Pending</span></p>
+                <hr>
+                <h5>Order Items</h5>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                    </tr>
+                    </thead>
+                    <tbody id="order-items">
+                    <tr th:each="item : ${order}">
+                        <td th:text="${item}"></td>
+                        <td>1</td>
+                        <td>$10.00</td>
+                        <td>$10.00</td>
+                    </tr>
+                    <!-- More rows can be added here -->
+                    </tbody>
+                </table>
+                <h5>Total: $<span id="order-total">10.00</span></h5>
+                <div class="mt-3">
+                    <button class="btn btn-primary" onclick="viewOrderDetails()">View Details</button>
+                    <button class="btn btn-danger" onclick="cancelOrder()">Cancel Order</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        function viewOrderDetails() {
+            const orderId = document.getElementById('order-id').textContent;
+            window.location.href = '/order/view/' + orderId;
+        }
+
+        function cancelOrder() {
+            const orderId = document.getElementById('order-id').textContent;
+            if (confirm('Are you sure you want to cancel this order?')) {
+                fetch('/order/cancel/' + orderId, {
+                    method: 'POST'
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('Order canceled successfully');
+                            window.location.href = '/order';
+                        } else {
+                            alert('Failed to cancel order');
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+        }
+    </script>
+</div>
+</body>
+
+</html>
+</title>
+</head>
+<body>
+
+</body>
+</html>

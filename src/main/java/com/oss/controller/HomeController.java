@@ -22,7 +22,9 @@ public class HomeController {
     public String home(Model model) {
         List<Product> getAllProducts = productService.getAllProducts();
         List<Category> getAllCategories = categoryService.getAllCategories();
+        //lấy 10 sản phẩm mới nhất theo thời gian được quản lý kho thêm vào
         List<Product> getNewProducts = productService.getTop10NewestProducts();
+        //lấy 10 sản phẩm được giảm giá cao nhất theo %
         List<Product> getBestSellerProducts = productService.getBestSellerProducts();
         model.addAttribute("products", getAllProducts);
         model.addAttribute("categories", getAllCategories);

@@ -139,9 +139,12 @@ public class ProductController {
         return "customer/shop";
     }
 
+
     @GetMapping("/viewproduct/{id}")
     public String viewProduct(@PathVariable Long id, Model model) {
+        //lấy thông tin sản phẩm
         Product product = productService.getProductById(id);
+        //sản phẩm liên quan, lấy cùng một category
         List<Product> relatedProducts = productService.getRelatedProducts(id);
         if (product == null) {
             // Handle product not found, maybe redirect to an error page

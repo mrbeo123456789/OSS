@@ -16,6 +16,8 @@ import java.util.*;
 @Controller
 public class OrderController {
     private final GhnService ghnService;
+    @Autowired
+    private HttpSession httpSession;
 
     @Autowired
     public OrderController(GhnService ghnService) {
@@ -120,5 +122,21 @@ private ShippingAddressService shippingAddressService;
     @ResponseBody
     public double getShippingFee( @RequestParam String toWard, @RequestParam String toDistrictId, @RequestParam int  weight, @RequestParam int length, @RequestParam int width, @RequestParam int height) {
         return ghnService.calculateShippingFee(toWard, toDistrictId, weight, length, width, height);
+    }
+
+    @GetMapping("/order")
+    public String getMyOrders(Model model){
+        User user = (User) httpSession.getAttribute("user");
+        List<Order> orders = orderService.findOrdersByUserId(user.getId());
+        model.addAttribute("orders", orders);
+        return "customer/myorder";
+    }
+
+    @PostMapping("/orderdetail")
+    public String loadOrderDetail(@RequestParam("orderid") Long orderId,
+                                  Model model){
+        Order order = orderService.getOrderById(orderId);
+        model.addAttribute("order", order);
+        return "/customer/orderdetail";
     }
 }
