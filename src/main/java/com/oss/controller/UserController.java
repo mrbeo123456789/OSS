@@ -224,8 +224,8 @@ public class UserController {
         return "customer/shop";
     }
     @GetMapping("/home")
-    public String showHomePage(Model model) {
-        return "common/home";
+    public String showHomePage() {
+        return "redirect:/";
     }
 
 

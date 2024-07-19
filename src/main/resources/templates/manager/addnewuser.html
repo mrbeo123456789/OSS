@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8" />
-    <title>Doctris - Doctor Appointment Booking System</title>
+    <title>Add use</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Premium Bootstrap 4 Landing Page Template" />
     <meta name="keywords" content="Appointment, Booking, System, Dashboard, Health" />
@@ -85,6 +85,7 @@
                         <i class="uil uil-bars"></i>
                     </a>
 
+                </div>
 
                 <ul class="list-unstyled mb-0">
 
@@ -97,14 +98,14 @@
                                 <a class="dropdown-item d-flex align-items-center text-dark" href="https://shreethemes.in/doctris/layouts/admin/profile.html">
                                     <img src="/static/assets/images/doctors/01.jpg" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
                                     <div class="flex-1 ms-2">
-                                        <span class="d-block mb-1">Calvin Carlo</span>
-                                        <small class="text-muted">Orthopedic</small>
+                                        <span class="d-block mb-1" th:text="${session.user.fullName}"></span>
+
                                     </div>
                                 </a>
                                 <a class="dropdown-item text-dark" href="index.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-dashboard align-middle h6"></i></span> Dashboard</a>
                                 <a class="dropdown-item text-dark" href="dr-profile.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
                                 <div class="dropdown-divider border-top"></div>
-                                <a class="dropdown-item text-dark" href="lock-screen.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
+                                <a class="dropdown-item text-dark" href="/home"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
                             </div>
                         </div>
                     </li>
@@ -139,13 +140,12 @@
                                 </div><!--end col-->
                             </div><!--end row-->
 
-                            <form class="mt-4" th:action="@{/user/add}" method="post">
+                            <form class="mt-4" th:action="@{/user/add}" method="post" onsubmit="return validateForm()">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label class="form-label">User Name</label>
-                                            <input name="username" id="name" type="text" class="form-control" placeholder="User Name :">
-
+                                            <input name="username" id="username" type="text" class="form-control" placeholder="User Name :" required minlength="3">
                                         </div>
                                         <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
                                     </div><!--end col-->
@@ -153,28 +153,28 @@
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label class="form-label">Full Name</label>
-                                            <input name="fullname" id="name2" type="text" class="form-control" placeholder="Full Name :">
+                                            <input name="fullname" id="fullname" type="text" class="form-control" placeholder="Full Name :" required>
                                         </div>
                                     </div><!--end col-->
 
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label class="form-label">Your Email</label>
-                                            <input name="email" id="email" type="email" class="form-control" placeholder="Your email :">
+                                            <input name="email" id="email" type="email" class="form-control" placeholder="Your email :" required>
                                         </div>
                                     </div><!--end col-->
 
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label class="form-label">Phone no.</label>
-                                            <input name="number" id="number" type="text" class="form-control" placeholder="Phone no. :">
+                                            <input name="number" id="number" type="text" class="form-control" placeholder="Phone no. :" required pattern="\d{10}">
                                         </div>
                                     </div><!--end col-->
 
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label class="form-label">Roles</label>
-                                            <select name="department" class="form-control department-name select2input">
+                                            <select name="department" class="form-control department-name select2input" required>
                                                 <option th:each="role : ${roles}" th:value="${role.roleId}" th:text="${role.roleName}"></option>
                                             </select>
                                         </div>
