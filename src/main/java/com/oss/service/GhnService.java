@@ -100,7 +100,7 @@ public class GhnService {
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", "application/json");
-        headers.set("Token", "b2ba9319-16c9-11ef-be43-f60ece3fb56e");
+        headers.set("Token", ");
         headers.set("ShopId", "5079342");
 
         JsonObject requestBody = new JsonObject();
